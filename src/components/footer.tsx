@@ -271,24 +271,6 @@ const Footer = ({ newsletterComponent }: any) => (
               />
             </svg>
           </a>
-          <a href="https://www.facebook.com/prisma.io">
-            <svg
-              viewBox="0 0 13 22"
-              fill="none"
-              role="img"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-labelledby="footerIconFacebook"
-            >
-              <title id="footerIconFacebook">Find us on Facebook</title>
-              <path
-                d="M12 1H9a5 5 0 00-5 5v3H1v4h3v8h4v-8h3l1-4H8V6a1 1 0 011-1h3V1z"
-                stroke={theme.colors.gray500}
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </a>
           <a href="https://www.youtube.com/prismadata">
             <svg
               viewBox="0 0 25 18"
