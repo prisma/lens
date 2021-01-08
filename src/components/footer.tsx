@@ -360,7 +360,7 @@ const Footer = ({ newsletterComponent }: any) => (
             </svg>
           </a>
         </div>
-        <p className="copyright">Prisma © 2018-2021.</p>
+        <p className="copyright">Prisma © 2018-{new Date().getFullYear()}.</p>
         <p className="berlin">Made with ❤️ in Berlin and worldwide</p>
       </div>
     </div>
