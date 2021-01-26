@@ -29,7 +29,7 @@ const FooterSection = styled.div`
     text-transform: uppercase;
     color: ${theme.colors.gray500};
   }
-  
+
   .column .link {
     display: block;
     margin-top: ${theme.space[24]};
@@ -157,7 +157,7 @@ const Footer = ({ newsletterComponent }: any) => (
         >
           Prisma Client
         </a>
-        <a className="link" href="/prisma">
+        <a className="link" href="/studio">
           Prisma Studio
         </a>
         <a className="link" href="https://app.prisma.io/login">
@@ -193,7 +193,6 @@ const Footer = ({ newsletterComponent }: any) => (
         <a className="link" href="https://www.prisma.io/dataguide/">
           Data Guide
         </a>
-
       </div>
       <div className="group">
         <h3 className="header">Prisma With</h3>
@@ -259,7 +258,7 @@ const Footer = ({ newsletterComponent }: any) => (
           className="link"
           href="https://www.notion.so/prismaio/What-Prisma-Cares-About-32946d99f9ea4925a796663dc8945c42"
         >
-          Causes 
+          Causes
         </a>
         <a className="link" href="/blog/">
           Blog
