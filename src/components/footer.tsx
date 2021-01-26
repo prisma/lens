@@ -157,6 +157,9 @@ const Footer = ({ newsletterComponent }: any) => (
         >
           Prisma Client
         </a>
+        <a className="link" href="/prisma">
+          Prisma Studio
+        </a>
         <a className="link" href="https://app.prisma.io/login">
           Prisma 1 Cloud
         </a>
