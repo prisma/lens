@@ -3,10 +3,10 @@ Theme file loosely based on System UI Theme Specification
 https://system-ui.com/theme/
 */
 
-const colorPrimitives = {
+export const colorPrimitives = {
   black: "#000000",
   white: "#FFFFFF",
-  whiteFade50: "rgba(255,255,255,0.5",
+  whiteFade50: "rgba(255,255,255,0.5)",
   gray100: "#F7FAFC",
   gray200: "#EDF2F7",
   gray300: "#E2E8F0",
