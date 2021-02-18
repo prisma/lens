@@ -36,3 +36,13 @@ npm run dev
 ```
 
 ### Publishing
+
+Publishes to NPM happen automatically when you push to the `main` branch, either directly, or via a pull request merge.
+
+To publish manually, you should:
+
+```
+yarn login # Login to NPM
+yarn version --patch # Bump up the version
+yarn publish # Publish package
+```
