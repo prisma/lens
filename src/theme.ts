@@ -3,7 +3,7 @@ Theme file loosely based on System UI Theme Specification
 https://system-ui.com/theme/
 */
 
-export const colorPrimitives = {
+const colorPrimitives = {
   black: "#000000",
   white: "#FFFFFF",
   whiteFade50: "rgba(255,255,255,0.5)",
@@ -222,4 +222,4 @@ const theme = {
   buttons,
 };
 
-export default theme;
+export { theme, colorPrimitives };

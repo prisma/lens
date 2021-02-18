@@ -1,6 +1,6 @@
 import React from "react";
-import theme from "../../theme";
 import styled from "styled-components";
+import { theme } from "../theme";
 
 const FooterSection = styled.div`
   margin: ${theme.space[96]} auto ${theme.space[256]} auto;
@@ -139,7 +139,7 @@ const FooterSection = styled.div`
   }
 `;
 
-const Footer = ({ newsletterComponent }: any) => (
+const WebsiteFooter = ({ newsletterComponent }: any) => (
   <FooterSection>
     <div className="column one">
       <img
@@ -369,4 +369,4 @@ const Footer = ({ newsletterComponent }: any) => (
   </FooterSection>
 );
 
-export default Footer;
+export { WebsiteFooter };

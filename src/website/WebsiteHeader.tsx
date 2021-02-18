@@ -1,6 +1,6 @@
 import React, { Component, RefObject, createRef } from "react";
-import theme from "../../theme";
 import styled from "styled-components";
+import { theme } from "../theme";
 
 const NavLinksWrapper = styled.div`
   color: ${theme.colors.gray400};
@@ -218,10 +218,10 @@ const HeaderWrapper = styled.div`
   padding: 0 ${theme.space[16]};
   display: flex;
 `;
-const Header = () => (
+const WebsiteHeader = () => (
   <HeaderWrapper>
     <Nav />
     <MobileNav />
   </HeaderWrapper>
 );
-export default Header;
+export { WebsiteHeader };

@@ -1,5 +1,5 @@
 import React from "react";
-import Eyebrow from "./Eyebrow";
+import { Eyebrow } from "./Eyebrow";
 
 export default {
   title: "Typography/Eyebrow",

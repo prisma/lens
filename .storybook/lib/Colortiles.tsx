@@ -1,13 +1,13 @@
 import React from "react";
-import theme, { colorPrimitives } from "../../src/theme";
+import { theme, colorPrimitives } from "../../src/theme";
 import styled from "styled-components";
 
 const StyledColor = styled.div<{ bgColor: string; textColor: string }>`
   display: flex;
   padding: 32px;
   font-family: ${theme.fonts.text};
-  background: ${(p) => p.bgColor};
-  color: ${(p) => p.textColor};
+  background: ${p => p.bgColor};
+  color: ${p => p.textColor};
 `;
 
 const Colortiles = () => {
@@ -25,7 +25,7 @@ const Colortiles = () => {
   ));
 };
 
-const colorForBg = (colorName) => {
+const colorForBg = colorName => {
   if (
     Number(colorName.slice(colorName.length - 3)) > 600 ||
     colorName == "black"

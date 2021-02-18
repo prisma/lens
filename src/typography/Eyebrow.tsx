@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import theme from "../../theme";
+import { theme } from "../theme";
 
 /**
  *  Eyebrows are to be used above heading elements for additional context
@@ -14,4 +14,4 @@ const Eyebrow = styled.p`
   color: ${theme.colors.gray500};
 `;
 
-export default Eyebrow;
+export { Eyebrow };

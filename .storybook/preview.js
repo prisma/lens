@@ -1,20 +1,20 @@
-import React from 'react'
-import BaseStyle from '../src/components/BaseStyle'
-import {createGlobalStyle} from 'styled-components'
-import theme from '../src/theme'
-// Global decorator to apply the styles to all stories
+import React from "react";
+import { createGlobalStyle } from "styled-components";
 
-//HACK - remove when we have proper normalize in BaseStyle
-const TempooraryGlobalStyle = createGlobalStyle`
+import theme from "../src/theme";
+import BaseStyle from "./lib/BaseStyle";
+
+// TODO:: remove when we have proper normalize in BaseStyle
+const TemporaryGlobalStyle = createGlobalStyle`
  html{
   font-family: ${theme.fonts.text}
  }
-`
+`;
 
 export const decorators = [
   Story => (
     <>
-      <TempooraryGlobalStyle/>
+      <TemporaryGlobalStyle />
       <BaseStyle />
       <Story />
     </>
@@ -23,5 +23,5 @@ export const decorators = [
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
-  layout: 'centered',
-}
+  layout: "centered",
+};
