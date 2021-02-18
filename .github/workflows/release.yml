@@ -1,32 +1,24 @@
-name: "Release"
+name: "Publish on NPM"
 on:
   push
   # push:
   #   branches:
   #     - main
 jobs:
-  chromatic-deployment:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - name: Install dependencies
         run: yarn
-      - name: Bump version and push tag
-        id: tag_version
-        uses: mathieudutour/github-tag-action@v5.2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Create a GitHub release
-        uses: actions/create-release@v1
+      - name: Publish to NPM
+        run: |
+          yarn version --patch
+          yarn publish
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.tag_version.outputs.new_tag }}
-          release_name: Release ${{ steps.tag_version.outputs.new_tag }}
-          body: ${{ steps.tag_version.outputs.changelog }}
-      # - name: Publish
-      #   run: |
-      #     npm version patch
-      #     npm publish
-      #   env:
-      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Tag commit
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git push origin --tags

@@ -9,16 +9,6 @@ Prisma Lens is a Design System, Guidelines and Component Library for the family 
 - **Visually low level** - The system should be recognizable at the level of typography and spacing, to make sure we have flexible theming options
 - **Code as source of truth -** it's more likely that there's going to be some sort of syncing happening from github / react elements to figma than the other way around. What's shipped or in this repository is the system, and also the deliverable. It is on the designers to make tools to support that easier.
 
-## Local Development
-
-Prisma Lens uses [Storybook](https://storybook.js.org/) as a preview mechanism for local development.
-
-```
-npm run storybook
-```
-
-Makre sure to run `npm run build` before pushing too to make sure client repositories pick it up on update.
-
 ## Artifacts
 
 ### Base Theme
@@ -37,6 +27,12 @@ Should loosely follow [the theme spec](https://system-ui.com/theme) with followi
 
 - [Feather](https://feathericons.com) icons for now
 
-### React Components
+## Local Development
 
-- built with `styled-components` and `styled-normalize`.
+Prisma Lens uses [Storybook](https://storybook.js.org/) as a preview mechanism for local development.
+
+```
+npm run dev
+```
+
+### Publishing
