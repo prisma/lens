@@ -13,12 +13,11 @@ jobs:
         run: yarn
       - name: Publish to NPM
         run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           yarn version --patch
           yarn publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Tag commit
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git push origin --tags
+        run: git push origin --tags
