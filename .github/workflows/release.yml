@@ -4,7 +4,7 @@ on:
     tags-ignore:
       - "*.*"
     branches:
-      - main
+      - master
 jobs:
   release:
     runs-on: ubuntu-latest
