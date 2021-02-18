@@ -1,7 +1,7 @@
 import React from "react";
 import { createGlobalStyle } from "styled-components";
 
-import theme from "../src/theme";
+import { theme } from "../src/theme";
 import BaseStyle from "./lib/BaseStyle";
 
 // TODO:: remove when we have proper normalize in BaseStyle
