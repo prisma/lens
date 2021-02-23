@@ -5,14 +5,14 @@ import React, {
   ReactElement,
   useRef,
   forwardRef,
-  useContext,
 } from "react";
+import cn from "classnames";
+import { useHover } from "@react-aria/interactions";
+import { FocusRing } from "@react-aria/focus";
 import { useButton } from "@react-aria/button";
-import { mergeProps } from "@react-aria/utils";
-
-import { LensContext } from "../lens-context";
 
 type Props = PropsWithChildren<{
+  autoFocus?: boolean;
   isDisabled?: boolean;
   onPress?: () => void;
   onFocus?: () => void;
@@ -20,21 +20,27 @@ type Props = PropsWithChildren<{
 }>;
 
 function Button(props: Props, forwardedRef: Ref<HTMLButtonElement>) {
-  const ref = forwardedRef || useRef<HTMLButtonElement>(null);
-  const context = useContext(LensContext);
-  const { buttonProps, isPressed } = useButton(
-    mergeProps(context, props),
-    ref as RefObject<HTMLButtonElement>
-  ); // This explicit type cast is required to convince TS that we know what we're doing
+  const ref = (forwardedRef || useRef<HTMLButtonElement>(null)) as RefObject<
+    HTMLButtonElement
+  >;
+  const { buttonProps, isPressed } = useButton(props, ref);
+  const { hoverProps, isHovered } = useHover(props);
 
+  // TODO:: Use isHovered, isPressed to add classes instead of tailwind hover:*, active:*
   return (
-    <button
-      ref={ref}
-      {...buttonProps}
-      tw="text-white bg-gray-700 rounded-md p-2 text-sm hover:bg-gray-800 active:bg-gray-500"
-    >
-      {props.children}
-    </button>
+    <FocusRing autoFocus={props.autoFocus} focusRingClass="tailwind-classes">
+      <button
+        ref={ref}
+        {...buttonProps}
+        {...hoverProps}
+        className={cn("text-white bg-gray-700 rounded-md p-2 text-sm", {
+          "bg-gray-800": isPressed,
+          "bg-gray-500": isHovered,
+        })}
+      >
+        {props.children}
+      </button>
+    </FocusRing>
   );
 }
 
