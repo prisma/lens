@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Install dependencies
-        run: yarn
+        run: npm install
       - name: Deploy
         uses: chromaui/action@v1
         with:

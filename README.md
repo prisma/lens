@@ -42,7 +42,7 @@ Publishes to NPM happen automatically when you push to the `main` branch, either
 To publish manually, you should:
 
 ```
-yarn login # Login to NPM
-yarn version --patch # Bump up the version
-yarn publish # Publish package
+npm login # Login to NPM
+npm version patch # Bump up the version
+npm publish # Publish package
 ```

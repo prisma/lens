@@ -16,13 +16,13 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           scope: "@prisma"
       - name: Install dependencies
-        run: yarn
+        run: npm install
       - name: Publish to NPM
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          yarn version --patch
-          yarn publish
+          npm version patch
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Push changes
