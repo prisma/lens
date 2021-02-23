@@ -1,23 +1,21 @@
 import React from "react";
 import { createGlobalStyle } from "styled-components";
 
-import { theme } from "../src/theme";
-import BaseStyle from "./lib/BaseStyle";
+import { LensProvider } from "../src/provider/LensProvider";
 
 // TODO:: remove when we have proper normalize in BaseStyle
 const TemporaryGlobalStyle = createGlobalStyle`
  html{
-  font-family: ${theme.fonts.text}
+  font-family: ${props => props.theme.fonts.text}
  }
 `;
 
 export const decorators = [
   Story => (
-    <>
+    <LensProvider>
       <TemporaryGlobalStyle />
-      <BaseStyle />
       <Story />
-    </>
+    </LensProvider>
   ),
 ];
 
