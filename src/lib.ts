@@ -1,3 +1,6 @@
+// Globals
+export * from "./provider/LensProvider";
+
 // Themes
 export * from "./theme";
 
