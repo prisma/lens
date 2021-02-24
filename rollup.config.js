@@ -28,6 +28,6 @@ export default {
     typescript({
       clean: true,
     }),
-    babel({ babelHelpers: "runtime" }),
+    babel({ babelHelpers: "bundled" }),
   ],
 };
