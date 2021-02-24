@@ -118,9 +118,9 @@ type Props = {
 
 export function LensProvider({ children }: Props) {
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <BaseStyles />
-      {children}
-    </ThemeProvider>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    </>
   );
 }
