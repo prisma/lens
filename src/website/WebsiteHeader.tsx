@@ -25,7 +25,7 @@ const NavLinksWrapper = styled.div`
   @media (max-width: ${theme.breakpoints.phone}) {
     a[href] {
       display: block;
-      padding: ${props => `${props.theme.space[8]} ${props.theme.space[12]}`};
+      padding: ${theme.space[8]} ${theme.space[12]};
     }
 
     .github {
