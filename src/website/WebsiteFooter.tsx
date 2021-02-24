@@ -4,14 +4,13 @@ import styled from "styled-components";
 import { theme } from "../theme";
 
 const FooterSection = styled.div`
-  margin: ${props => props.theme.space[96]} auto
-    ${props => props.theme.space[256]} auto;
+  margin: ${theme.space[96]} auto ${theme.space[256]} auto;
   display: flex;
   width: 100%;
   max-width: 1200px;
   padding: 0;
-  padding-top: ${props => props.theme.space[80]};
-  border-top: 1px solid ${props => props.theme.colors.gray300};
+  padding-top: ${theme.space[80]};
+  border-top: 1px solid ${theme.colors.gray300};
   .logo {
     height: 24px;
   }
@@ -25,47 +24,47 @@ const FooterSection = styled.div`
 
   .column .header {
     font-weight: bold;
-    font-family: ${props => props.theme.fonts.display};
-    font-size: ${props => props.theme.fontSizes[18]};
+    font-family: ${theme.fonts.display};
+    font-size: ${theme.fontSizes[18]};
     line-height: 1;
     text-transform: uppercase;
-    color: ${props => props.theme.colors.gray500};
+    color: ${theme.colors.gray500};
   }
 
   .column .link {
     display: block;
-    margin-top: ${props => props.theme.space[24]};
-    font-size: ${props => props.theme.fontSizes[16]};
+    margin-top: ${theme.space[24]};
+    font-size: ${theme.fontSizes[16]};
     line-height: 1;
-    color: ${props => props.theme.colors.gray500};
+    color: ${theme.colors.gray500};
   }
 
   .column .link + .link {
-    margin-top: ${props => props.theme.space[16]};
+    margin-top: ${theme.space[16]};
   }
 
   .column .link:hover {
-    color: ${props => props.theme.colors.gray600};
+    color: ${theme.colors.gray600};
   }
 
   .column .link:active {
-    color: ${props => props.theme.colors.gray700};
+    color: ${theme.colors.gray700};
   }
 
   .column .group + .group {
-    margin-top: ${props => props.theme.space[48]};
+    margin-top: ${theme.space[48]};
   }
 
   .jobs .tag {
     display: inline-block;
     border-radius: 6px;
-    margin-left: ${props => props.theme.space[8]};
-    padding: ${props => props.theme.space[4]} ${props => props.theme.space[8]};
-    background: ${props => props.theme.colors.green500};
-    font-size: ${props => props.theme.fontSizes[12]};
+    margin-left: ${theme.space[8]};
+    padding: ${theme.space[4]} ${theme.space[8]};
+    background: ${theme.colors.green500};
+    font-size: ${theme.fontSizes[12]};
     font-weight: bold;
     color: white;
-    transition: transform ${props => props.theme.transitions.standard};
+    transition: transform ${theme.transitions.standard};
   }
 
   .jobs:hover .tag {
@@ -73,33 +72,33 @@ const FooterSection = styled.div`
   }
 
   .jobs .tag.black {
-    background: ${props => props.theme.colors.black};
+    background: ${theme.colors.black};
   }
 
   .logo {
-    fill: ${props => props.theme.colors.gray500};
+    fill: ${theme.colors.gray500};
   }
 
   .four .description {
-    margin-top: ${props => props.theme.space[16]};
-    font-size: ${props => props.theme.fontSizes[16]};
+    margin-top: ${theme.space[16]};
+    font-size: ${theme.fontSizes[16]};
     line-height: 1.375;
-    color: ${props => props.theme.colors.gray500};
+    color: ${theme.colors.gray500};
   }
 
   .social {
-    margin-top: ${props => props.theme.space[32]};
+    margin-top: ${theme.space[32]};
     display: flex;
     max-width: 100px;
   }
   .social a + a {
-    margin-left: ${props => props.theme.space[16]};
+    margin-left: ${theme.space[16]};
   }
 
   .social svg {
     width: 24px;
     height: 24px;
-    transition: transform ${props => props.theme.transitions.standard};
+    transition: transform ${theme.transitions.standard};
   }
 
   .social svg:hover {
@@ -107,10 +106,10 @@ const FooterSection = styled.div`
   }
 
   .copyright {
-    margin-top: ${props => props.theme.space[32]};
-    font-size: ${props => props.theme.fontSizes[16]};
+    margin-top: ${theme.space[32]};
+    font-size: ${theme.fontSizes[16]};
     line-height: 1;
-    color: ${props => props.theme.colors.gray500};
+    color: ${theme.colors.gray500};
   }
 
   a.cookie-pref {
@@ -119,24 +118,24 @@ const FooterSection = styled.div`
   }
 
   .berlin {
-    margin-top: ${props => props.theme.space[8]};
-    font-size: ${props => props.theme.fontSizes[16]};
+    margin-top: ${theme.space[8]};
+    font-size: ${theme.fontSizes[16]};
     line-height: 1;
-    color: ${props => props.theme.colors.gray500};
+    color: ${theme.colors.gray500};
   }
 
-  @media (max-width: ${props => props.theme.breakpoints.tablet}) {
-    margin-top: ${props => props.theme.space[48]};
-    margin-bottom: ${props => props.theme.space[48]};
+  @media (max-width: ${theme.breakpoints.tablet}) {
+    margin-top: ${theme.space[48]};
+    margin-bottom: ${theme.space[48]};
     flex-direction: column;
     padding: 0 24px;
 
     .column {
-      margin-top: ${props => props.theme.space[48]};
+      margin-top: ${theme.space[48]};
     }
 
     .column .group + .group {
-      margin-top: ${props => props.theme.space[48]};
+      margin-top: ${theme.space[48]};
     }
   }
 `;

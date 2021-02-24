@@ -121,6 +121,7 @@ export function LensProvider({ children }: Props) {
     <>
       <BaseStyles />
       <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      {/* {children} */}
     </>
   );
 }

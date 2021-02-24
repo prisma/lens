@@ -1,12 +1,13 @@
 import React from "react";
 import { createGlobalStyle } from "styled-components";
 
+import { theme } from "../src/theme";
 import { LensProvider } from "../src/provider/LensProvider";
 
 // TODO:: remove when we have proper normalize in BaseStyle
 const TemporaryGlobalStyle = createGlobalStyle`
  html{
-  font-family: ${props => props.theme.fonts.text}
+  font-family: ${theme.fonts.text}
  }
 `;
 

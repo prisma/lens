@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-import { colorPrimitives } from "../../src/theme";
+import { colorPrimitives, theme } from "../../src/theme";
 
 const StyledColor = styled.div<{ bgColor: string; textColor: string }>`
   display: flex;
   padding: 32px;
-  font-family: ${props => props.theme.fonts.text};
+  font-family: ${theme.fonts.text};
   background: ${p => p.bgColor};
   color: ${p => p.textColor};
 `;

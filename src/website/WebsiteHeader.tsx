@@ -1,26 +1,28 @@
 import React, { Component, RefObject, createRef } from "react";
 import styled from "styled-components";
 
+import { theme } from "../theme";
+
 const NavLinksWrapper = styled.div`
-  color: ${props => props.theme.colors.gray400};
+  color: ${theme.colors.gray400};
   font-weight: 600;
-  font-size: ${props => props.theme.fontSizes[14]};
+  font-size: ${theme.fontSizes[14]};
 
   a {
-    transition: color ${props => props.theme.transitions.standard};
-    padding: 0 ${props => props.theme.space[12]};
-    margin: 0 ${props => props.theme.space[8]};
+    transition: color ${theme.transitions.standard};
+    padding: 0 ${theme.space[12]};
+    margin: 0 ${theme.space[8]};
   }
 
   a:hover {
-    color: ${props => props.theme.colors.white};
+    color: ${theme.colors.white};
   }
 
   .github {
     display: none;
   }
 
-  @media (max-width: ${props => props.theme.breakpoints.phone}) {
+  @media (max-width: ${theme.breakpoints.phone}) {
     a[href] {
       display: block;
       padding: ${props => `${props.theme.space[8]} ${props.theme.space[12]}`};
@@ -54,10 +56,10 @@ const MobileNavWrapper = styled.nav`
     outline: none;
     text-transform: uppercase;
     font-weight: bold;
-    font-size: ${props => props.theme.fontSizes[16]};
+    font-size: ${theme.fontSizes[16]};
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: ${props => props.theme.colors.gray300};
+    color: ${theme.colors.gray300};
   }
 
   .list {
@@ -66,16 +68,16 @@ const MobileNavWrapper = styled.nav`
     right: 0;
     background: blue;
     text-align: right;
-    padding: ${props => props.theme.space[16]} 0;
+    padding: ${theme.space[16]} 0;
     border-radius: 6px;
-    background: ${props => props.theme.colors.gray800};
+    background: ${theme.colors.gray800};
   }
 
   .list[data-open="true"] {
     display: block;
   }
 
-  @media (max-width: ${props => props.theme.breakpoints.phone}) {
+  @media (max-width: ${theme.breakpoints.phone}) {
     display: block;
   }
 `;
@@ -148,12 +150,12 @@ const NavWrapper = styled.nav`
 
   .logo {
     height: 24px;
-    fill: ${props => props.theme.colors.white};
+    fill: ${theme.colors.white};
   }
 
   .github {
-    transition: transform ${props => props.theme.transitions.standard};
-    margin-left: ${props => props.theme.space[24]};
+    transition: transform ${theme.transitions.standard};
+    margin-left: ${theme.space[24]};
   }
 
   .github:hover {
@@ -162,14 +164,14 @@ const NavWrapper = styled.nav`
 
   .github svg {
     height: 24px;
-    fill: ${props => props.theme.colors.white};
+    fill: ${theme.colors.white};
   }
 
   .menu {
     display: flex;
   }
 
-  @media (max-width: ${props => props.theme.breakpoints.phone}) {
+  @media (max-width: ${theme.breakpoints.phone}) {
     .menu {
       display: none;
     }
@@ -214,7 +216,7 @@ const Nav = () => (
 );
 
 const HeaderWrapper = styled.div`
-  padding: 0 ${props => props.theme.space[16]};
+  padding: 0 ${theme.space[16]};
   display: flex;
 `;
 const WebsiteHeader = () => (
