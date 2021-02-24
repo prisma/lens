@@ -19,7 +19,6 @@ export default {
       sourcemap: true,
     },
   ],
-  external: [/@babel\/runtime/],
   plugins: [
     peerDepsExternal(),
     resolve(),
