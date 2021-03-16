@@ -11,9 +11,10 @@ import {
   useOverlayPosition,
 } from "@react-aria/overlays";
 import { useButton } from "@react-aria/button";
-import { FocusScope, FocusRing } from "@react-aria/focus";
+import { FocusScope } from "@react-aria/focus";
 import { mergeProps } from "@react-aria/utils";
 import { Label } from "../label/Label";
+import { FocusRing } from "../focus-ring/FocusRing";
 
 /** Value for a single Option inside this Select */
 export type SelectItem = {
@@ -112,11 +113,8 @@ function SelectContainer({
         isDisabled={isDisabled}
         name={name}
       />
-      <FocusRing
-        autoFocus={autoFocus}
-        focusRingClass="ring-2 ring-offset-2 ring-blue-400"
-      >
-        <section className="flex flex-grow relative">
+      <section className="flex flex-grow relative">
+        <FocusRing autoFocus={autoFocus}>
           <button
             ref={ref}
             {...buttonProps}
@@ -124,10 +122,11 @@ function SelectContainer({
               "flex flex-grow",
               "rounded-md shadow-sm border border-gray-300 dark:border-gray-700",
               "px-3 py-1.5",
-              "bg-white dark:bg-gray-900 text-sm",
+              "text-sm",
               {
                 "text-gray-400 dark:text-gray-4s00": isDisabled,
                 "bg-gray-100 dark:bg-gray-800": isDisabled,
+                "bg-white dark:bg-gray-900": !isDisabled,
                 "cursor-not-allowed": isDisabled,
               }
             )}
@@ -150,15 +149,11 @@ function SelectContainer({
               ▽
             </span>
           </button>
-          {state.isOpen && (
-            <SelectOptions
-              state={state}
-              menuProps={menuProps}
-              buttonRef={ref}
-            />
-          )}
-        </section>
-      </FocusRing>
+        </FocusRing>
+        {state.isOpen && (
+          <SelectOptions state={state} menuProps={menuProps} buttonRef={ref} />
+        )}
+      </section>
     </div>
   );
 }
@@ -194,20 +189,20 @@ function SelectOptions({ menuProps, state, buttonRef }: SelectOptionsProps) {
   const listBoxRef = useRef<HTMLUListElement>(null);
   const { listBoxProps } = useListBox(
     {
+      ...menuProps,
       disallowEmptySelection: true,
       autoFocus: state.focusStrategy || true,
-      ...menuProps,
     },
     state,
     listBoxRef
   );
 
   return (
-    <FocusScope autoFocus restoreFocus>
+    <FocusScope autoFocus restoreFocus contain>
       <div
         ref={overlayRef}
         {...mergeProps(overlayProps, positionProps)}
-        className={cn("left-0 right-0")}
+        className="left-0 right-0"
       >
         <DismissButton onDismiss={state.close} />
         <ul
@@ -222,6 +217,7 @@ function SelectOptions({ menuProps, state, buttonRef }: SelectOptionsProps) {
               "animate-slide-top": placement === "bottom",
             }
           )}
+          style={{ maxHeight: "inherit" }}
         >
           {[...state.collection].map(item => (
             <SelectOption item={item} state={state} />
@@ -245,16 +241,13 @@ function SelectOption({ item, state }: SelectOptionProps) {
   const ref = useRef<HTMLLIElement>(null);
 
   const isDisabled = state.disabledKeys.has(item.key);
-  const isSelected = state.selectionManager.isSelected(item.key);
   const isFocused = state.selectionManager.focusedKey === item.key;
   const { optionProps } = useOption(
     {
       key: item.key,
-      isSelected,
       isDisabled,
       shouldSelectOnPressUp: true,
       shouldFocusOnHover: true,
-      shouldUseVirtualFocus: true,
     },
     state,
     ref
@@ -269,7 +262,6 @@ function SelectOption({ item, state }: SelectOptionProps) {
         "cursor-default",
         {
           "bg-gray-100 dark:bg-gray-800": isFocused,
-          "bg-gray-200 dark:bg-gray-700": isSelected,
         },
         "hover:bg-gray-100"
       )}

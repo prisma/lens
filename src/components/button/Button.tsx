@@ -1,9 +1,9 @@
 import React, { forwardRef, useRef } from "react";
 import cn from "classnames";
 import { useButton } from "@react-aria/button";
-import { FocusRing } from "@react-aria/focus";
 import { useHover } from "@react-aria/interactions";
 import { mergeProps } from "@react-aria/utils";
+import { FocusRing } from "../focus-ring/FocusRing";
 
 type ButtonProps = React.PropsWithChildren<{
   /** Controls if this button should steal focus when mounted */
@@ -38,10 +38,7 @@ function Button(
   const { hoverProps, isHovered } = useHover({ isDisabled });
 
   return (
-    <FocusRing
-      autoFocus={autoFocus}
-      focusRingClass="ring-2 ring-offset-2 ring-blue-400"
-    >
+    <FocusRing autoFocus={autoFocus}>
       <button
         id={id}
         ref={ref}
@@ -60,14 +57,15 @@ function Button(
             "bg-gray-900": variant === "primary" && isPressed,
           },
           {
-            "bg-gray-200 text-black": variant === "secondary",
+            "bg-gray-200 text-gray-900": variant === "secondary",
             "text-gray-500": variant === "secondary" && isDisabled,
             "bg-gray-300": variant === "secondary" && isHovered,
             "bg-gray-400": variant === "secondary" && isPressed,
           },
           {
-            "shadow-none text-black": variant === "quiet",
-            "text-gray-400": variant === "quiet" && isDisabled,
+            "shadow-none text-gray-900 dark:text-gray-100": variant === "quiet",
+            "text-gray-400 dark:text-gray-500":
+              variant === "quiet" && isDisabled,
             "text-gray-500": variant === "quiet" && isPressed,
           },
           {
