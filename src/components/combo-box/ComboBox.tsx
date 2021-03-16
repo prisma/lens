@@ -199,7 +199,7 @@ function ComboBoxOptions({
   );
 
   return (
-    <FocusScope autoFocus restoreFocus contain>
+    <FocusScope restoreFocus>
       <div
         {...overlayProps}
         ref={overlayRef}

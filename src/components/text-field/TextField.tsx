@@ -93,7 +93,7 @@ function TextField(
           "text-sm"
         )}
       >
-        <span className={cn("text-gray-300")}>{prefix}</span>
+        <span className={cn("text-gray-300 select-none")}>{prefix}</span>
         <input
           ref={ref}
           {...mergeProps(
