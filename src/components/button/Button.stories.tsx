@@ -1,9 +1,34 @@
+import { storiesOf } from "@storybook/react";
 import { Button } from "./Button";
 
-// TODO:: Uncomment when Buttons are ready to be demoed
-// export default {
-//   title: "Lens/Button",
-//   component: Button,
-// };
-
-export const Primary = () => <Button>Button</Button>;
+storiesOf("Lens/Button", module)
+  .add("Primary variant", () => (
+    <>
+      <Button>Primary</Button>
+      <Button isDisabled>Disabled</Button>
+    </>
+  ))
+  .add("Secondary variant", () => (
+    <>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="secondary" isDisabled>
+        Disabled
+      </Button>
+    </>
+  ))
+  .add("Quiet variant", () => (
+    <>
+      <Button variant="quiet">Button</Button>
+      <Button variant="quiet" isDisabled>
+        Disabled
+      </Button>
+    </>
+  ))
+  .add("Link variant", () => (
+    <>
+      <Button variant="link">Button</Button>
+      <Button variant="link" isDisabled>
+        Disabled
+      </Button>
+    </>
+  ));
