@@ -10,7 +10,13 @@ type LabelProps = {
 
 export function Label({ label, labelProps }: LabelProps) {
   return (
-    <label {...labelProps} className={cn("ml-4 mr-8", "text-sm font-semibold")}>
+    <label
+      {...labelProps}
+      className={cn(
+        "ml-4 mr-8",
+        "text-sm font-semibold text-gray-900 dark:text-gray-100"
+      )}
+    >
       {label}
     </label>
   );

@@ -1,11 +1,7 @@
-import React, { ReactElement } from "react";
-
+import React from "react";
 import "../global.css";
 
-type Props = {
-  children: ReactElement;
-};
-
+type Props = React.PropsWithChildren<{}>;
 export function LensProvider({ children }: Props) {
-  return <>{children}</>;
+  return children;
 }

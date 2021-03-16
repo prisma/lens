@@ -11,7 +11,7 @@ import { DismissButton, useOverlay } from "@react-aria/overlays";
 import { Label } from "../label/Label";
 import { FocusScope } from "@react-aria/focus";
 
-/** A single Option inside this ComboBox */
+/** Value for a single Option inside this ComboBox */
 export type ComboBoxItem = {
   /** A string that uniquely identifies this option */
   key: string | number;
@@ -20,7 +20,7 @@ export type ComboBoxItem = {
 };
 
 type ComboBoxContainerProps = {
-  /** Controls is this ComboBox should steal focus when first rendered */
+  /** Controls if this ComboBox should steal focus when first rendered */
   autoFocus?: boolean;
   /** A list of Options to render inside this ComboBox */
   children: CollectionChildren<ComboBoxItem>;

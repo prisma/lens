@@ -5,12 +5,17 @@ import { SelectState, useSelectState } from "@react-stately/select";
 import { Item } from "@react-stately/collections";
 import { CollectionChildren, Node } from "@react-types/shared";
 import { useListBox, useOption } from "@react-aria/listbox";
-import { DismissButton, useOverlay } from "@react-aria/overlays";
+import {
+  DismissButton,
+  useOverlay,
+  useOverlayPosition,
+} from "@react-aria/overlays";
 import { useButton } from "@react-aria/button";
+import { FocusScope, FocusRing } from "@react-aria/focus";
+import { mergeProps } from "@react-aria/utils";
 import { Label } from "../label/Label";
-import { FocusScope } from "@react-aria/focus";
 
-/** A single Option inside this Select */
+/** Value for a single Option inside this Select */
 export type SelectItem = {
   /** A string that uniquely identifies this option */
   key: string | number;
@@ -19,7 +24,7 @@ export type SelectItem = {
 };
 
 type SelectContainerProps = {
-  /** Controls is this Select should steal focus when first rendered */
+  /** Controls if this Select should steal focus when first rendered */
   autoFocus?: boolean;
   /** A list of Options to render inside this Select */
   children: CollectionChildren<SelectItem>;
@@ -107,36 +112,53 @@ function SelectContainer({
         isDisabled={isDisabled}
         name={name}
       />
-      <section className="flex flex-grow relative">
-        <button
-          ref={ref}
-          {...buttonProps}
-          className={cn(
-            "flex flex-grow",
-            "rounded-md shadow-sm border border-gray-300",
-            "px-3 py-1.5",
-            "text-sm",
-            {
-              "text-gray-400": isDisabled,
-              "bg-gray-100": isDisabled,
-              "cursor-not-allowed": isDisabled,
-            }
-          )}
-        >
-          <span {...valueProps} className="flex flex-grow">
-            {state.selectedItem ? state.selectedItem.rendered : placeholder}
-          </span>
-          <span
-            className={cn("ml-4", "text-md", {
-              "text-gray-500": !isDisabled,
-              "text-gray-300": isDisabled,
-            })}
+      <FocusRing
+        autoFocus={autoFocus}
+        focusRingClass="ring-2 ring-offset-2 ring-blue-400"
+      >
+        <section className="flex flex-grow relative">
+          <button
+            ref={ref}
+            {...buttonProps}
+            className={cn(
+              "flex flex-grow",
+              "rounded-md shadow-sm border border-gray-300 dark:border-gray-700",
+              "px-3 py-1.5",
+              "bg-white dark:bg-gray-900 text-sm",
+              {
+                "text-gray-400 dark:text-gray-4s00": isDisabled,
+                "bg-gray-100 dark:bg-gray-800": isDisabled,
+                "cursor-not-allowed": isDisabled,
+              }
+            )}
           >
-            ▽
-          </span>
-        </button>
-        {state.isOpen && <SelectOptions state={state} menuProps={menuProps} />}
-      </section>
+            <span
+              {...valueProps}
+              className={cn("flex flex-grow", {
+                "text-gray-400 dark:text-gray-300": !state.selectedItem,
+                "text-gray-900 dark:text-gray-100": state.selectedItem,
+              })}
+            >
+              {state.selectedItem ? state.selectedItem.rendered : placeholder}
+            </span>
+            <span
+              className={cn("ml-4", "text-md", {
+                "text-gray-500": !isDisabled,
+                "text-gray-300": isDisabled,
+              })}
+            >
+              ▽
+            </span>
+          </button>
+          {state.isOpen && (
+            <SelectOptions
+              state={state}
+              menuProps={menuProps}
+              buttonRef={ref}
+            />
+          )}
+        </section>
+      </FocusRing>
     </div>
   );
 }
@@ -146,21 +168,12 @@ type SelectOptionsProps = {
   menuProps: HTMLAttributes<HTMLUListElement>;
   /** The global ComboBox state */
   state: SelectState<SelectItem>;
+  /** Ref of the Select button */
+  buttonRef: React.RefObject<HTMLButtonElement>;
 };
 
 /** An overlay that renders individual Select Options */
-function SelectOptions({ menuProps, state }: SelectOptionsProps) {
-  const ref = useRef<HTMLUListElement>(null);
-  const { listBoxProps } = useListBox(
-    {
-      disallowEmptySelection: true,
-      autoFocus: state.focusStrategy || true,
-      ...menuProps,
-    },
-    state,
-    ref
-  );
-
+function SelectOptions({ menuProps, state, buttonRef }: SelectOptionsProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
   const { overlayProps } = useOverlay(
     {
@@ -170,22 +183,44 @@ function SelectOptions({ menuProps, state }: SelectOptionsProps) {
     },
     overlayRef
   );
+  const { overlayProps: positionProps, placement } = useOverlayPosition({
+    overlayRef,
+    targetRef: buttonRef,
+    offset: 6,
+    containerPadding: 0,
+    onClose: state.close,
+  });
+
+  const listBoxRef = useRef<HTMLUListElement>(null);
+  const { listBoxProps } = useListBox(
+    {
+      disallowEmptySelection: true,
+      autoFocus: state.focusStrategy || true,
+      ...menuProps,
+    },
+    state,
+    listBoxRef
+  );
 
   return (
-    <FocusScope autoFocus restoreFocus contain>
+    <FocusScope autoFocus restoreFocus>
       <div
         ref={overlayRef}
-        {...overlayProps}
-        className={cn("absolute left-0 right-0 top-10")}
+        {...mergeProps(overlayProps, positionProps)}
+        className={cn("left-0 right-0")}
       >
         <DismissButton onDismiss={state.close} />
         <ul
-          ref={ref}
+          ref={listBoxRef}
           {...listBoxProps}
           className={cn(
-            "rounded-md shadow-md border border-gray-300",
-            "p-2",
-            "bg-white text-sm"
+            "p-2 min-w-min overflow-auto",
+            "rounded-md shadow-md border border-gray-300 dark:border-gray-700",
+            "bg-white dark:bg-gray-900 text-sm text-gray-900 dark:text-gray-100",
+            {
+              "animate-slide-bottom": placement === "top",
+              "animate-slide-top": placement === "bottom",
+            }
           )}
         >
           {[...state.collection].map(item => (
@@ -233,8 +268,8 @@ function SelectOption({ item, state }: SelectOptionProps) {
         "rounded-md px-2 py-1",
         "cursor-default",
         {
-          "bg-gray-100": isFocused,
-          "bg-gray-200": isSelected,
+          "bg-gray-100 dark:bg-gray-800": isFocused,
+          "bg-gray-200 dark:bg-gray-700": isSelected,
         },
         "hover:bg-gray-100"
       )}
