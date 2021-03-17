@@ -158,6 +158,9 @@ const WebsiteFooter = ({ newsletterComponent }: any) => (
         >
           Prisma Client
         </a>
+        <a className="link" href="/migrate">
+          Prisma Migrate
+        </a>
         <a className="link" href="/studio">
           Prisma Studio
         </a>
