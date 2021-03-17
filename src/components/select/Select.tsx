@@ -124,7 +124,7 @@ function SelectContainer({
               "px-3 py-1.5",
               "text-sm",
               {
-                "text-gray-400 dark:text-gray-4s00": isDisabled,
+                "text-gray-400 dark:text-gray-400": isDisabled,
                 "bg-gray-100 dark:bg-gray-800": isDisabled,
                 "bg-white dark:bg-gray-900": !isDisabled,
                 "cursor-not-allowed": isDisabled,
@@ -220,7 +220,7 @@ function SelectOptions({ menuProps, state, buttonRef }: SelectOptionsProps) {
           style={{ maxHeight: "inherit" }}
         >
           {[...state.collection].map(item => (
-            <SelectOption item={item} state={state} />
+            <SelectOption key={item.key} item={item} state={state} />
           ))}
         </ul>
         <DismissButton onDismiss={state.close} />
