@@ -5,7 +5,6 @@ import React, {
   useRef,
   forwardRef,
   PropsWithChildren,
-  useState,
 } from "react";
 import cn from "classnames";
 import { useTextField } from "@react-aria/textfield";
@@ -85,60 +84,53 @@ function TextField(
     inputRef
   );
 
-  const [isFocused, setFocused] = useState(false);
   const { focusWithinProps } = useFocusWithin({
     isDisabled,
-    onFocusWithinChange: isFocusWithin => {
-      isFocusWithin && inputRef.current?.focus();
-      setFocused(isFocusWithin);
-    },
+    onFocusWithin: () => inputRef.current?.focus(),
   });
 
   return (
-    <div className={cn("table-row items-center")}>
+    <div className={cn("table-row w-full")}>
       {label && <Label label={label} labelProps={labelProps} />}
-      <FocusRing autoFocus={autoFocus}>
-        <section
-          tabIndex={0}
-          {...focusWithinProps}
-          className={cn(
-            "flex-grow table-cell",
-            "rounded-md shadow-sm border border-gray-300 dark:border-gray-700",
-            "px-3 py-1.5",
-            "text-sm",
-            {
-              "bg-gray-100 dark:bg-gray-800": isDisabled,
-              "bg-white dark:bg-gray-900": !isDisabled,
-              "cursor-not-allowed": isDisabled,
-              "ring-2 ring-offset-2 ring-offset-white dark:ring-offset-gray-900 ring-blue-400": isFocused,
-            }
-          )}
-        >
+      <FocusRing autoFocus={autoFocus} within>
+        <section className="table-cell w-full">
           <div
             tabIndex={0}
+            {...focusWithinProps}
             className={cn(
-              "mr-1",
-              "text-gray-300 dark:text-gray-500",
-              "select-none"
+              "flex flex-grow",
+              "rounded-md shadow-sm border border-gray-300 dark:border-gray-700",
+              "px-3 py-1.5",
+              "text-sm",
+              {
+                "bg-gray-100 dark:bg-gray-800": isDisabled,
+                "bg-white dark:bg-gray-900": !isDisabled,
+                "cursor-not-allowed": isDisabled,
+              }
             )}
           >
-            {prefix}
+            <div
+              className={cn(
+                "mr-1",
+                "text-gray-300 dark:text-gray-500",
+                "select-none"
+              )}
+            >
+              {prefix}
+            </div>
+            <input
+              ref={inputRef}
+              {...mergeProps(
+                inputProps,
+                textFieldInputProps as React.InputHTMLAttributes<HTMLInputElement>
+              )}
+              className={cn("flex-grow", {
+                input: true,
+                disabled: isDisabled,
+              })}
+            />
+            {children}
           </div>
-          <input
-            ref={inputRef}
-            {...mergeProps(
-              inputProps,
-              textFieldInputProps as React.InputHTMLAttributes<HTMLInputElement>
-            )}
-            className={cn("flex-grow", {
-              "bg-white dark:bg-gray-900": !isDisabled,
-              "bg-gray-100 dark:bg-gray-800": isDisabled,
-              "text-gray-900 dark:text-gray-100": !isDisabled,
-              "text-gray-400 dark:text-gray-400": isDisabled,
-              "cursor-not-allowed": isDisabled,
-            })}
-          />
-          {children}
         </section>
       </FocusRing>
     </div>

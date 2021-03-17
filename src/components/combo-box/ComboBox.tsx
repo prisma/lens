@@ -7,9 +7,15 @@ import { useListBox, useOption } from "@react-aria/listbox";
 import { useButton } from "@react-aria/button";
 import { Item } from "@react-stately/collections";
 import { CollectionChildren, Node } from "@react-types/shared";
-import { DismissButton, useOverlay } from "@react-aria/overlays";
-import { Label } from "../label/Label";
+import {
+  DismissButton,
+  useOverlay,
+  useOverlayPosition,
+} from "@react-aria/overlays";
 import { FocusScope } from "@react-aria/focus";
+import { mergeProps } from "@react-aria/utils";
+import { Label } from "../label/Label";
+import { FocusRing } from "../focus-ring/FocusRing";
 
 /** Value for a single Option inside this ComboBox */
 export type ComboBoxItem = {
@@ -118,48 +124,60 @@ function ComboBoxContainer({
   const { buttonProps } = useButton({ ...triggerProps, isDisabled }, buttonRef);
 
   return (
-    <div className="flex items-center">
+    <div className="table-row">
       <Label labelProps={labelProps} label={label} />
-      <section
-        className={cn(
-          "flex flex-grow relative",
-          "rounded-md shadow-sm border border-gray-300",
-          "px-3 py-1.5",
-          "text-sm",
-          {
-            "text-gray-400": isDisabled,
-            "bg-gray-100": isDisabled,
-          }
-        )}
-      >
-        <input
-          ref={inputRef}
-          type="text"
-          {...inputProps}
-          className={cn("flex-grow", "text-gray-600", {
-            "bg-gray-100": isDisabled,
-            "cursor-not-allowed": isDisabled,
-          })}
-        />
-        <button
-          ref={buttonRef}
-          {...buttonProps}
-          className={cn("text-md", {
-            "text-gray-500": !isDisabled,
-            "text-gray-300": isDisabled,
-            "cursor-not-allowed": isDisabled,
-          })}
+      <section className="table-cell">
+        <div
+          className={cn(
+            "flex w-full relative",
+            "rounded-md shadow-sm border border-gray-300 dark:border-gray-700",
+            "px-3 py-1.5",
+            "text-sm",
+            {
+              "text-gray-400 dark:text-gray-400": isDisabled,
+              "bg-gray-100 dark:bg-gray-800": isDisabled,
+              "bg-white dark:bg-gray-900": !isDisabled,
+              "cursor-not-allowed": isDisabled,
+            }
+          )}
         >
-          ▽
-        </button>
-        {state.isOpen && (
-          <ComboBoxOptions
-            {...listBoxProps}
-            listBoxRef={listBoxRef}
-            overlayRef={overlayRef}
-            state={state}
-          />
-        )}
+          <FocusRing autoFocus={autoFocus}>
+            <>
+              <input
+                ref={inputRef}
+                type="text"
+                {...inputProps}
+                className={cn("flex-grow", {
+                  "bg-white dark:bg-gray-900": !isDisabled,
+                  "bg-gray-100 dark:bg-gray-800": isDisabled,
+                  "text-gray-900 dark:text-gray-100": !isDisabled,
+                  "text-gray-400 dark:text-gray-400": isDisabled,
+                  "cursor-not-allowed": isDisabled,
+                })}
+              />
+              <button
+                ref={buttonRef}
+                {...buttonProps}
+                className={cn("text-md", {
+                  "text-gray-500": !isDisabled,
+                  "text-gray-300 dark:text-gray-600": isDisabled,
+                  "cursor-not-allowed": isDisabled,
+                })}
+              >
+                ▽
+              </button>
+            </>
+          </FocusRing>
+          {state.isOpen && (
+            <ComboBoxOptions
+              {...listBoxProps}
+              buttonRef={buttonRef}
+              listBoxRef={listBoxRef}
+              overlayRef={overlayRef}
+              state={state}
+            />
+          )}
+        </div>
       </section>
     </div>
   );
@@ -172,6 +190,8 @@ type ComboBoxOptionsProps = {
   overlayRef: React.RefObject<HTMLDivElement>;
   /** The ComboBox's global state */
   state: ComboBoxState<ComboBoxItem>;
+  /** Ref of the ComboBox button */
+  buttonRef: React.RefObject<HTMLButtonElement>;
 };
 
 /** An overlay that renders individual ComboBox Options */
@@ -179,6 +199,7 @@ function ComboBoxOptions({
   listBoxRef,
   overlayRef,
   state,
+  buttonRef,
 }: ComboBoxOptionsProps) {
   const { listBoxProps } = useListBox(
     {
@@ -197,11 +218,18 @@ function ComboBoxOptions({
     },
     overlayRef
   );
+  const { overlayProps: positionProps, placement } = useOverlayPosition({
+    overlayRef,
+    targetRef: buttonRef,
+    offset: 6,
+    containerPadding: 0,
+    onClose: state.close,
+  });
 
   return (
     <FocusScope restoreFocus>
       <div
-        {...overlayProps}
+        {...mergeProps(overlayProps, positionProps)}
         ref={overlayRef}
         className={cn("absolute left-0 right-0 top-10")}
       >
@@ -209,11 +237,11 @@ function ComboBoxOptions({
         <ul
           ref={listBoxRef}
           {...listBoxProps}
-          className={cn(
-            "rounded-md shadow-md border border-gray-300",
-            "p-2",
-            "bg-white text-sm"
-          )}
+          className={cn("menu", {
+            "animate-slide-bottom": placement === "top",
+            "animate-slide-top": placement === "bottom",
+          })}
+          style={{ maxHeight: "inherit" }}
         >
           {[...state.collection].map(item => (
             <ComboBoxOption key={item.key} item={item} state={state} />
@@ -237,12 +265,10 @@ function ComboBoxOption({ item, state }: ComboBoxOptionProps) {
   const ref = useRef<HTMLLIElement>(null);
 
   const isDisabled = state.disabledKeys.has(item.key);
-  const isSelected = state.selectionManager.isSelected(item.key);
   const isFocused = state.selectionManager.focusedKey === item.key;
   const { optionProps } = useOption(
     {
       key: item.key,
-      isSelected,
       isDisabled,
       shouldSelectOnPressUp: true,
       shouldFocusOnHover: true,
@@ -260,8 +286,7 @@ function ComboBoxOption({ item, state }: ComboBoxOptionProps) {
         "rounded-md px-2 py-1",
         "cursor-default",
         {
-          "bg-gray-100": isFocused,
-          "bg-gray-200": isSelected,
+          "bg-gray-100 dark:bg-gray-800": isFocused,
         },
         "hover:bg-gray-100"
       )}

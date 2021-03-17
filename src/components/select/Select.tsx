@@ -103,23 +103,15 @@ function SelectContainer({
   const { buttonProps } = useButton({ ...triggerProps, isDisabled }, ref);
 
   return (
-    <div id={id} className="flex items-center">
+    <div id={id} className="table-row">
       <Label label={label} labelProps={labelProps} />
-      {/* A HiddenSelect is used to render a hidden native <select>, which enables browser form autofill support */}
-      <HiddenSelect
-        state={state}
-        triggerRef={ref}
-        label={label}
-        isDisabled={isDisabled}
-        name={name}
-      />
-      <section className="flex flex-grow relative">
+      <section className="table-cell w-full relative">
         <FocusRing autoFocus={autoFocus}>
           <button
             ref={ref}
             {...buttonProps}
             className={cn(
-              "flex flex-grow",
+              "flex w-full",
               "rounded-md shadow-sm border border-gray-300 dark:border-gray-700",
               "px-3 py-1.5",
               "text-sm",
@@ -143,7 +135,7 @@ function SelectContainer({
             <span
               className={cn("ml-4", "text-md", {
                 "text-gray-500": !isDisabled,
-                "text-gray-300": isDisabled,
+                "text-gray-300 dark:text-gray-600": isDisabled,
               })}
             >
               ▽
@@ -154,6 +146,14 @@ function SelectContainer({
           <SelectOptions state={state} menuProps={menuProps} buttonRef={ref} />
         )}
       </section>
+      {/* A HiddenSelect is used to render a hidden native <select>, which enables browser form autofill support */}
+      <HiddenSelect
+        state={state}
+        triggerRef={ref}
+        label={label}
+        isDisabled={isDisabled}
+        name={name}
+      />
     </div>
   );
 }
@@ -208,15 +208,10 @@ function SelectOptions({ menuProps, state, buttonRef }: SelectOptionsProps) {
         <ul
           ref={listBoxRef}
           {...listBoxProps}
-          className={cn(
-            "p-2 min-w-min overflow-auto",
-            "rounded-md shadow-md border border-gray-300 dark:border-gray-700",
-            "bg-white dark:bg-gray-900 text-sm text-gray-900 dark:text-gray-100",
-            {
-              "animate-slide-bottom": placement === "top",
-              "animate-slide-top": placement === "bottom",
-            }
-          )}
+          className={cn("menu", {
+            "animate-slide-bottom": placement === "top",
+            "animate-slide-top": placement === "bottom",
+          })}
           style={{ maxHeight: "inherit" }}
         >
           {[...state.collection].map(item => (
