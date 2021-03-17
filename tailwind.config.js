@@ -4,8 +4,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Barlow", "sans-serif"],
-        mono: ["monospace"],
+        barlow: ["Barlow", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+        mono: ["JetBrainsMono", "monospace"],
       },
       animation: {
         "slide-top": "slide-top 0.1s linear forwards",
