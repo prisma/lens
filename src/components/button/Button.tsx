@@ -44,7 +44,7 @@ function Button(
         ref={ref}
         {...mergeProps(buttonProps, hoverProps)}
         className={cn(
-          "inline-flex items-center p-2 m-2",
+          "inline-flex items-center px-3 py-1.5 m-2",
           "rounded-md shadow-md",
           "text-sm whitespace-nowrap",
           {
@@ -52,13 +52,13 @@ function Button(
           },
           {
             "bg-gray-600 text-white": variant === "primary",
-            "text-gray-400": variant === "primary" && isDisabled,
+            "font-bold text-gray-400": variant === "primary" && isDisabled,
             "bg-gray-700": variant === "primary" && isHovered,
             "bg-gray-900": variant === "primary" && isPressed,
           },
           {
             "bg-gray-200 text-gray-900": variant === "secondary",
-            "text-gray-500": variant === "secondary" && isDisabled,
+            "font-bold text-gray-500": variant === "secondary" && isDisabled,
             "bg-gray-300": variant === "secondary" && isHovered,
             "bg-gray-400": variant === "secondary" && isPressed,
           },

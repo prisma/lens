@@ -12,14 +12,14 @@
   font-family: "Inter";
   font-weight: 700;
   font-display: swap;
-  src: url("/fonts/Inter-Bold.ttf");
+  src: url("/fonts/Inter-SemiBold.ttf");
 }
 
 @font-face {
   font-family: "Barlow";
   font-display: swap;
   font-weight: 700;
-  src: url("/fonts/Barlow-Bold.ttf");
+  src: url("/fonts/Barlow-SemiBold.ttf");
 }
 
 @font-face {

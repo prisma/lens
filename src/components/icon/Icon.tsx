@@ -46,7 +46,7 @@ export function Icon({ name, size = "md" }: IconProps) {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <use xlinkHref={`feather-icons.svg#${name}`} />
+      <use xlinkHref={`/feather-icons.svg#${name}`} />
     </svg>
   );
 }

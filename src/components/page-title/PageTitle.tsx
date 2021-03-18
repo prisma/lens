@@ -14,7 +14,7 @@ type PageTitleProps = {
 
 export function PageTitle({ icon, title, subtitle }: PageTitleProps) {
   return (
-    <section className="flex items-center">
+    <section className="flex items-center my-8">
       <Icon name={icon} size="lg" />
       <div className="flex-column ml-6">
         <Title>{title}</Title>
