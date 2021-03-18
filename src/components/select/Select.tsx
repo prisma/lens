@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, useRef } from "react";
+import React, { useRef } from "react";
 import cn from "classnames";
 import { useSelect, HiddenSelect } from "@react-aria/select";
 import { SelectState, useSelectState } from "@react-stately/select";
@@ -51,7 +51,7 @@ type SelectContainerProps<OptionKey extends string> = {
   /** A value to display in the TextField when it is empty */
   placeholder?: string;
   /** Callback invoked when the Select's selection changes */
-  onSelectionChange?: (key: React.Key) => void;
+  onSelectionChange?: (key: OptionKey) => void;
 };
 
 /**
@@ -81,7 +81,7 @@ function SelectContainer<OptionKey extends string>({
     isReadOnly,
     items: options,
     label,
-    onSelectionChange,
+    onSelectionChange: onSelectionChange as (k: React.Key) => void,
   });
   const { labelProps, menuProps, triggerProps, valueProps } = useSelect(
     {
@@ -95,7 +95,7 @@ function SelectContainer<OptionKey extends string>({
       items: options,
       label,
       placeholder,
-      onSelectionChange,
+      onSelectionChange: onSelectionChange as (k: React.Key) => void,
     },
     state,
     ref
@@ -154,7 +154,7 @@ function SelectContainer<OptionKey extends string>({
 
 type SelectOptionsProps<OptionKey extends string> = {
   /** Props to spread over the overlay */
-  menuProps: HTMLAttributes<HTMLUListElement>;
+  menuProps: React.HTMLAttributes<HTMLUListElement>;
   /** The global ComboBox state */
   state: SelectState<SelectOption<OptionKey>>;
   /** Ref of the Select button */

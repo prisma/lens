@@ -101,7 +101,7 @@ type MenuContentProps<OptionKey extends string> = {
    */
   options?: MenuOption<OptionKey>[];
   /** Callback invoked when the Menu's selection changes */
-  onSelectionChange?: (key: React.Key) => void;
+  onSelectionChange?: (key: OptionKey) => void;
 };
 
 /**
@@ -199,12 +199,12 @@ function MenuContent<OptionKey extends string>({
 type MenuSectionProps<OptionKey extends string> = {
   /** Title for this Section */
   title: string;
-  /** */
+  /** A group of similar options, only visual */
   section: Node<MenuOption<OptionKey>>;
   /** The global Menu state */
   state: TreeState<any>;
   /** Callback invoked when an option is selected */
-  onAction?: (key: React.Key) => void;
+  onAction?: (key: OptionKey) => void;
 };
 
 /**
@@ -257,7 +257,7 @@ type MenuOptionProps<Key extends string> = {
   /** The global Menu state */
   state: TreeState<any>;
   /** Callback invoked when this option is selected */
-  onAction?: (key: React.Key) => void;
+  onAction?: (key: Key) => void;
 };
 
 /** A single Menu Option */
@@ -273,7 +273,7 @@ function MenuOption<Key extends string>({
   const { menuItemProps: menuOptionProps } = useMenuItem(
     {
       key: option.key,
-      onAction: onAction,
+      onAction: onAction as (k: React.Key) => void,
       closeOnSelect: true,
       onClose: context.close,
     },

@@ -54,7 +54,7 @@ type ComboBoxContainerProps<OptionKey extends string> = {
   /** A value to display in the TextField when it is empty */
   placeholder?: string;
   /** Callback invoked when the ComboBox's selection changes */
-  onSelectionChange?: (key: React.Key) => void;
+  onSelectionChange?: (key: OptionKey) => void;
 };
 
 /**
@@ -88,7 +88,7 @@ function ComboBoxContainer<OptionKey extends string>({
     isReadOnly,
     items: options,
     placeholder,
-    onSelectionChange,
+    onSelectionChange: onSelectionChange as (k: React.Key) => void,
     defaultFilter: contains,
   });
 
@@ -114,7 +114,7 @@ function ComboBoxContainer<OptionKey extends string>({
       isReadOnly,
       items: options,
       placeholder,
-      onSelectionChange,
+      onSelectionChange: onSelectionChange as (k: React.Key) => void,
       inputRef,
       buttonRef,
       popoverRef: overlayRef,
