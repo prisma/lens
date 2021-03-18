@@ -15,7 +15,8 @@ export const parameters = {
   layout: "centered",
   darkMode: {
     darkClass: "dark",
-    dark: { ...themes.dark, appContentBg: "#12161e" },
+    dark: { ...themes.dark, appContentBg: "#12161E" },
+    light: { ...themes.light, appContentBg: "#F7FAFC" /* gray-100 */ },
     stylePreview: true,
   },
 };
