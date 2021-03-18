@@ -4,8 +4,8 @@ type FormProps = React.PropsWithChildren<{}>;
 
 export function Form({ children }: FormProps) {
   return (
-    <section className="table w-full" style={{ borderSpacing: "0 1rem" }}>
+    <form className="table w-full" style={{ borderSpacing: "0 1rem" }}>
       {children}
-    </section>
+    </form>
   );
 }

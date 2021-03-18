@@ -46,7 +46,7 @@ function Button(
         className={cn(
           "inline-flex items-center p-2 m-2",
           "rounded-md shadow-md",
-          "text-sm",
+          "text-sm whitespace-nowrap",
           {
             "cursor-not-allowed": isDisabled,
           },

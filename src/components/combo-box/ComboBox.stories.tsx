@@ -57,7 +57,9 @@ storiesOf("Lens/ComboBox", module)
       options={dynamicData}
       onSelectionChange={action("onSelectionChange")}
     >
-      {item => <ComboBox.Option key={item.key}>{item.title}</ComboBox.Option>}
+      {option => (
+        <ComboBox.Option key={option.key}>{option.title}</ComboBox.Option>
+      )}
     </ComboBox.Container>
   ))
   .add("With placeholder", () => (

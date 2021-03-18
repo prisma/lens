@@ -12,6 +12,7 @@ export function Title({ children, className }: SubtitleProps) {
   return (
     <div
       className={cn(
+        "py-2",
         "whitespace-nowrap font-barlow font-light text-xl text-gray-800 dark:text-gray-100",
         className
       )}

@@ -53,8 +53,7 @@
     "@react-types/shared": "3.4.0",
     "@types/classnames": "2.2.11",
     "classnames": "2.2.6",
-    "feather-icons": "^4.28.0",
-    "react-feather": "^2.0.9"
+    "feather-icons": "4.28.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "17.1.0",

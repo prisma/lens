@@ -36,7 +36,7 @@ type ComboBoxContainerProps<OptionKey extends string> = {
   /** Controls if this ComboBox will be open by default */
   defaultOpen?: boolean;
   /** Key of the Option that is selected when this ComboBox is first rendered */
-  defaultSelectedKey?: React.Key;
+  defaultSelectedKey?: OptionKey;
   /** A ID that will be attached to the rendered ComboBox. Useful when targeting the ComboBox from tests */
   id?: string;
   /** Controls if this ComboBox is disabled */
@@ -92,6 +92,7 @@ function ComboBoxContainer<OptionKey extends string>({
     defaultFilter: contains,
   });
 
+  const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -127,27 +128,29 @@ function ComboBoxContainer<OptionKey extends string>({
   return (
     <div className="table-row">
       <Label labelProps={labelProps}>{label}</Label>
-      <section className="table-cell">
-        <div
-          className={cn(
-            "flex items-center w-full relative",
-            "rounded-md shadow-sm border border-gray-300 dark:border-gray-700",
-            "px-3 py-1.5",
-            "text-sm",
-            {
-              "text-gray-400 dark:text-gray-400": isDisabled,
-              "bg-gray-100 dark:bg-gray-800": isDisabled,
-              "bg-white dark:bg-gray-900": !isDisabled,
-              "cursor-not-allowed": isDisabled,
-            }
-          )}
-        >
-          <FocusRing autoFocus={autoFocus}>
+      <section className="table-cell w-full relative">
+        <FocusRing autoFocus={autoFocus} within>
+          <div
+            ref={containerRef}
+            className={cn(
+              "flex items-center w-full relative",
+              "rounded-md shadow-sm border border-gray-300 dark:border-gray-700",
+              "px-3 py-1.5",
+              "text-sm",
+              {
+                "text-gray-400 dark:text-gray-400": isDisabled,
+                "bg-gray-100 dark:bg-gray-800": isDisabled,
+                "bg-white dark:bg-gray-900": !isDisabled,
+                "cursor-not-allowed": isDisabled,
+              }
+            )}
+          >
             <>
               <input
                 ref={inputRef}
                 type="text"
                 {...inputProps}
+                name={name}
                 className={cn("flex-grow", {
                   "bg-white dark:bg-gray-900": !isDisabled,
                   "bg-gray-100 dark:bg-gray-800": isDisabled,
@@ -156,19 +159,21 @@ function ComboBoxContainer<OptionKey extends string>({
                   "cursor-not-allowed": isDisabled,
                 })}
               />
-              <Icon name="chevron-down" size="xs" />
+              <button ref={buttonRef} {...buttonProps}>
+                <Icon name="chevron-down" size="xs" />
+              </button>
             </>
-          </FocusRing>
-          {state.isOpen && (
-            <ComboBoxOptions
-              {...listBoxProps}
-              buttonRef={buttonRef}
-              listBoxRef={listBoxRef}
-              overlayRef={overlayRef}
-              state={state}
-            />
-          )}
-        </div>
+          </div>
+        </FocusRing>
+        {state.isOpen && (
+          <ComboBoxOptions
+            {...listBoxProps}
+            containerRef={containerRef}
+            listBoxRef={listBoxRef}
+            overlayRef={overlayRef}
+            state={state}
+          />
+        )}
       </section>
     </div>
   );
@@ -181,8 +186,8 @@ type ComboBoxOptionsProps<OptionKey extends string> = {
   overlayRef: React.RefObject<HTMLDivElement>;
   /** The ComboBox's global state */
   state: ComboBoxState<ComboBoxOption<OptionKey>>;
-  /** Ref of the ComboBox button */
-  buttonRef: React.RefObject<HTMLButtonElement>;
+  /** Ref of the ComboBox container. This is used to position the overlay */
+  containerRef: React.RefObject<HTMLElement>;
 };
 
 /** An overlay that renders individual ComboBox Options */
@@ -190,7 +195,7 @@ function ComboBoxOptions<OptionKey extends string>({
   listBoxRef,
   overlayRef,
   state,
-  buttonRef,
+  containerRef,
 }: ComboBoxOptionsProps<OptionKey>) {
   const { listBoxProps } = useListBox(
     {
@@ -211,7 +216,7 @@ function ComboBoxOptions<OptionKey extends string>({
   );
   const { overlayProps: positionProps, placement } = useOverlayPosition({
     overlayRef,
-    targetRef: buttonRef,
+    targetRef: containerRef,
     offset: 6,
     containerPadding: 0,
     onClose: state.close,
@@ -222,7 +227,7 @@ function ComboBoxOptions<OptionKey extends string>({
       <div
         {...mergeProps(overlayProps, positionProps)}
         ref={overlayRef}
-        className={cn("absolute left-0 right-0 top-10")}
+        className="left-0 right-0"
       >
         <DismissButton onDismiss={state.close} />
         <ul

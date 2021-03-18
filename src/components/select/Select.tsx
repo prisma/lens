@@ -33,7 +33,7 @@ type SelectContainerProps<OptionKey extends string> = {
   /** Controls if this Select will be open by default */
   defaultOpen?: boolean;
   /** Key of the Option that is selected when this Select is first rendered */
-  defaultSelectedKey?: React.Key;
+  defaultSelectedKey?: OptionKey;
   /** A ID that will be attached to the rendered Select. Useful when targeting the Select from tests */
   id?: string;
   /** Controls if this Select is disabled */
