@@ -3,7 +3,16 @@ import { action } from "@storybook/addon-actions";
 import { Menu, MenuOption } from "./Menu";
 import { Button } from "../button/Button";
 
-const dynamicData: MenuOption[] = [
+type Action =
+  | "edit"
+  | "invite"
+  | "delete"
+  | "invite-viewer"
+  | "invite-collaborator"
+  | "invite-developer"
+  | "invite-admin";
+
+const dynamicData: MenuOption<Action>[] = [
   {
     key: "edit",
     title: "Edit",
@@ -18,7 +27,7 @@ const dynamicData: MenuOption[] = [
   },
 ];
 
-const dynamicDataWithChildren: MenuOption[] = [
+const dynamicDataWithChildren: MenuOption<Action>[] = [
   {
     key: "edit",
     title: "Edit",
@@ -72,7 +81,7 @@ storiesOf("Lens/Menu", module)
 
       <Menu.Content
         title="Project Actions"
-        items={dynamicData}
+        options={dynamicData}
         onSelectionChange={action("onSelectionChange")}
       >
         {item => <Menu.Option key={item.key}>{item.title}</Menu.Option>}
@@ -104,7 +113,7 @@ storiesOf("Lens/Menu", module)
 
       <Menu.Content
         title="Project Actions"
-        items={dynamicDataWithChildren}
+        options={dynamicDataWithChildren}
         onSelectionChange={action("onSelectionChange")}
       >
         {item => <Menu.Option key={item.key}>{item.title}</Menu.Option>}

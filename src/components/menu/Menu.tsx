@@ -29,13 +29,13 @@ type MenuContext = {
 const MenuContext = createContext<MenuContext>(null);
 
 /** Value for a single Option inside this Menu */
-export type MenuOption = {
+export type MenuOption<Key extends string> = {
   /** A string that uniquely identifies this option */
-  key: string | number;
+  key: Key;
   /** The main text to display within this option */
   title: string;
   /** Sub-options for this option */
-  children?: MenuOption[];
+  children?: MenuOption<Key>[];
 };
 
 type MenuContainerProps = {
@@ -91,38 +91,42 @@ function MenuContainer({
   );
 }
 
-type MenuContentProps = {
+type MenuContentProps<OptionKey extends string> = {
   /** Children to render */
-  children: CollectionChildren<MenuOption>;
+  children: CollectionChildren<MenuOption<OptionKey>>;
   /** A string describing what this Menu represents */
   title: string;
-  /** A (dynamic) list of items and/or sections to render within this Menu.
+  /** A (dynamic) list of options and/or sections to render within this Menu.
    * This may be provided upfront instead of providing static children.
    */
-  items?: MenuOption[];
+  options?: MenuOption<OptionKey>[];
   /** Callback invoked when the Menu's selection changes */
   onSelectionChange?: (key: React.Key) => void;
 };
 
 /**
- * Container for all Menu Sections and Items
+ * Container for all Menu Sections and Options
  */
-function MenuContent({
+function MenuContent<OptionKey extends string>({
   children,
   title,
-  items,
+  options,
   onSelectionChange,
-}: MenuContentProps) {
+}: MenuContentProps<OptionKey>) {
   const context = useContext(MenuContext);
 
   const ref = useRef<HTMLUListElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
-  const state = useTreeState({ children, items, selectionMode: "none" });
+  const state = useTreeState({
+    children,
+    items: options,
+    selectionMode: "none",
+  });
   const { menuProps } = useMenu(
     {
       children,
       "aria-label": title,
-      items,
+      items: options,
     },
     state,
     ref
@@ -161,22 +165,22 @@ function MenuContent({
           )}
           style={{ maxHeight: "inherit" }}
         >
-          {[...state.collection].map(item => {
-            if (item.type === "section") {
+          {[...state.collection].map(option => {
+            if (option.type === "section") {
               return (
                 <MenuSection
-                  key={item.key}
-                  title={item.rendered as string}
+                  key={option.key}
+                  title={option.rendered as string}
                   state={state}
-                  section={item}
+                  section={option}
                   onAction={onSelectionChange}
                 />
               );
-            } else if (item.type === "item") {
+            } else if (option.type === "item") {
               return (
                 <MenuOption
-                  key={item.key}
-                  item={item}
+                  key={option.key}
+                  option={option}
                   state={state}
                   onAction={onSelectionChange}
                 />
@@ -192,11 +196,11 @@ function MenuContent({
   );
 }
 
-type MenuSectionProps = {
+type MenuSectionProps<OptionKey extends string> = {
   /** Title for this Section */
   title: string;
   /** */
-  section: Node<MenuOption>;
+  section: Node<MenuOption<OptionKey>>;
   /** The global Menu state */
   state: TreeState<any>;
   /** Callback invoked when an option is selected */
@@ -204,10 +208,15 @@ type MenuSectionProps = {
 };
 
 /**
- * A divided section of the Menu that may contain other items within
+ * A divided section of the Menu that may contain other options within
  */
-function MenuSection({ title, section, state, onAction }: MenuSectionProps) {
-  const { groupProps, headingProps, itemProps } = useMenuSection({
+function MenuSection<OptionKey extends string>({
+  title,
+  section,
+  state,
+  onAction,
+}: MenuSectionProps<OptionKey>) {
+  const { groupProps, headingProps, itemProps: optionProps } = useMenuSection({
     heading: title,
   });
 
@@ -226,12 +235,12 @@ function MenuSection({ title, section, state, onAction }: MenuSectionProps) {
       >
         {title}
       </div>
-      <li {...itemProps}>
+      <li {...optionProps}>
         <ul>
           {[...section.childNodes].map(i => (
             <MenuOption
               key={i.key}
-              item={i}
+              option={i}
               state={state}
               onAction={onAction}
             />
@@ -242,9 +251,9 @@ function MenuSection({ title, section, state, onAction }: MenuSectionProps) {
   );
 }
 
-type MenuItemProps = {
+type MenuOptionProps<Key extends string> = {
   /** The option to render */
-  item: Node<MenuOption>;
+  option: Node<MenuOption<Key>>;
   /** The global Menu state */
   state: TreeState<any>;
   /** Callback invoked when this option is selected */
@@ -252,14 +261,18 @@ type MenuItemProps = {
 };
 
 /** A single Menu Option */
-function MenuOption({ item, state, onAction }: MenuItemProps) {
+function MenuOption<Key extends string>({
+  option,
+  state,
+  onAction,
+}: MenuOptionProps<Key>) {
   const context = useContext(MenuContext);
   const ref = useRef<HTMLLIElement>(null);
 
-  const isFocused = state.selectionManager.focusedKey === item.key;
-  const { menuItemProps } = useMenuItem(
+  const isFocused = state.selectionManager.focusedKey === option.key;
+  const { menuItemProps: menuOptionProps } = useMenuItem(
     {
-      key: item.key,
+      key: option.key,
       onAction: onAction,
       closeOnSelect: true,
       onClose: context.close,
@@ -271,7 +284,7 @@ function MenuOption({ item, state, onAction }: MenuItemProps) {
   return (
     <li
       ref={ref}
-      {...menuItemProps}
+      {...menuOptionProps}
       className={cn(
         "rounded-md px-2 py-1",
         "cursor-default",
@@ -281,7 +294,7 @@ function MenuOption({ item, state, onAction }: MenuItemProps) {
         "hover:bg-gray-100"
       )}
     >
-      {item.rendered || item.value.title}
+      {option.rendered || option.value.title}
     </li>
   );
 }

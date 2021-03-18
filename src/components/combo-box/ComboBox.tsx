@@ -19,18 +19,18 @@ import { Icon } from "../icon/Icon";
 import { FocusRing } from "../focus-ring/FocusRing";
 
 /** Value for a single Option inside this ComboBox */
-export type ComboBoxItem = {
+export type ComboBoxOption<Key extends string> = {
   /** A string that uniquely identifies this option */
-  key: string | number;
+  key: Key;
   /** The main text to display within this option */
   title: string;
 };
 
-type ComboBoxContainerProps = {
+type ComboBoxContainerProps<OptionKey extends string> = {
   /** Controls if this ComboBox should steal focus when first rendered */
   autoFocus?: boolean;
   /** A list of Options to render inside this ComboBox */
-  children: CollectionChildren<ComboBoxItem>;
+  children: CollectionChildren<ComboBoxOption<OptionKey>>;
   /** Value to be pre-populated in the input when this ComboBox is first rendered */
   defaultInputValue?: string;
   /** Controls if this ComboBox will be open by default */
@@ -43,10 +43,10 @@ type ComboBoxContainerProps = {
   isDisabled?: boolean;
   /** Controls is this ComboBox is readonly */
   isReadOnly?: boolean;
-  /** A (dynamic) list of items to render within this ComboBox.
+  /** A (dynamic) list of options to render within this ComboBox.
    * This may be provided upfront instead of providing static children.
    */
-  items?: ComboBoxItem[];
+  options?: ComboBoxOption<OptionKey>[];
   /** A string describing what this ComboBox represents */
   label: string;
   /** Name of the value held by this ComboBox when placed inside a form */
@@ -61,7 +61,7 @@ type ComboBoxContainerProps = {
  * A ComboBox is a specialized text field that only allows you its value to be one of the pre-provided options.
  * It displays a list of options below the text field. This list keeps getting shorter as you type, since fewer options match the text field's value.
  */
-function ComboBoxContainer({
+function ComboBoxContainer<OptionKey extends string>({
   autoFocus,
   children,
   defaultOpen = false,
@@ -70,12 +70,12 @@ function ComboBoxContainer({
   id,
   isDisabled = false,
   isReadOnly = false,
-  items,
+  options,
   label,
   name,
   placeholder = "Select an option",
   onSelectionChange,
-}: ComboBoxContainerProps) {
+}: ComboBoxContainerProps<OptionKey>) {
   const { contains } = useFilter({ sensitivity: "base" });
   const state = useComboBoxState({
     autoFocus,
@@ -86,7 +86,7 @@ function ComboBoxContainer({
     id,
     isDisabled,
     isReadOnly,
-    items,
+    items: options,
     placeholder,
     onSelectionChange,
     defaultFilter: contains,
@@ -111,7 +111,7 @@ function ComboBoxContainer({
       id,
       isDisabled,
       isReadOnly,
-      items,
+      items: options,
       placeholder,
       onSelectionChange,
       inputRef,
@@ -174,24 +174,24 @@ function ComboBoxContainer({
   );
 }
 
-type ComboBoxOptionsProps = {
+type ComboBoxOptionsProps<OptionKey extends string> = {
   /** A ref object that will be attached to the Options container */
   listBoxRef: React.RefObject<HTMLUListElement>;
   /** A ref object that will be attached to the overlay element */
   overlayRef: React.RefObject<HTMLDivElement>;
   /** The ComboBox's global state */
-  state: ComboBoxState<ComboBoxItem>;
+  state: ComboBoxState<ComboBoxOption<OptionKey>>;
   /** Ref of the ComboBox button */
   buttonRef: React.RefObject<HTMLButtonElement>;
 };
 
 /** An overlay that renders individual ComboBox Options */
-function ComboBoxOptions({
+function ComboBoxOptions<OptionKey extends string>({
   listBoxRef,
   overlayRef,
   state,
   buttonRef,
-}: ComboBoxOptionsProps) {
+}: ComboBoxOptionsProps<OptionKey>) {
   const { listBoxProps } = useListBox(
     {
       autoFocus: state.focusStrategy,
@@ -234,8 +234,8 @@ function ComboBoxOptions({
           })}
           style={{ maxHeight: "inherit" }}
         >
-          {[...state.collection].map(item => (
-            <ComboBoxOption key={item.key} item={item} state={state} />
+          {[...state.collection].map(option => (
+            <ComboBoxOption key={option.key} option={option} state={state} />
           ))}
         </ul>
         <DismissButton onDismiss={state.close} />
@@ -244,22 +244,25 @@ function ComboBoxOptions({
   );
 }
 
-type ComboBoxOptionProps = {
+type ComboBoxOptionProps<Key extends string> = {
   /** The option to render */
-  item: Node<ComboBoxItem>;
+  option: Node<ComboBoxOption<Key>>;
   /** The global ComboBox state */
-  state: ComboBoxState<ComboBoxItem>;
+  state: ComboBoxState<ComboBoxOption<Key>>;
 };
 
 /** A single ComboBox Option */
-function ComboBoxOption({ item, state }: ComboBoxOptionProps) {
+function ComboBoxOption<Key extends string>({
+  option,
+  state,
+}: ComboBoxOptionProps<Key>) {
   const ref = useRef<HTMLLIElement>(null);
 
-  const isDisabled = state.disabledKeys.has(item.key);
-  const isFocused = state.selectionManager.focusedKey === item.key;
+  const isDisabled = state.disabledKeys.has(option.key);
+  const isFocused = state.selectionManager.focusedKey === option.key;
   const { optionProps } = useOption(
     {
-      key: item.key,
+      key: option.key,
       isDisabled,
       shouldSelectOnPressUp: true,
       shouldFocusOnHover: true,
@@ -282,7 +285,7 @@ function ComboBoxOption({ item, state }: ComboBoxOptionProps) {
         "hover:bg-gray-100"
       )}
     >
-      {item.rendered}
+      {option.rendered}
     </li>
   );
 }

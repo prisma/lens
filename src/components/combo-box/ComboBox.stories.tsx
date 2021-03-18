@@ -1,8 +1,16 @@
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import { ComboBox, ComboBoxItem } from "./ComboBox";
+import { ComboBox, ComboBoxOption } from "./ComboBox";
 
-const dynamicData: ComboBoxItem[] = [
+type RepositoryId =
+  | "prisma"
+  | "studio"
+  | "cloud"
+  | "engines"
+  | "examples"
+  | "docs";
+
+const dynamicData: ComboBoxOption<RepositoryId>[] = [
   {
     key: "prisma",
     title: "prisma/prisma",
@@ -46,7 +54,7 @@ storiesOf("Lens/ComboBox", module)
   .add("Default (with dynamic data)", () => (
     <ComboBox.Container
       label="Repository"
-      items={dynamicData}
+      options={dynamicData}
       onSelectionChange={action("onSelectionChange")}
     >
       {item => <ComboBox.Option key={item.key}>{item.title}</ComboBox.Option>}

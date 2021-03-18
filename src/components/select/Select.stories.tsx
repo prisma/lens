@@ -1,8 +1,10 @@
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import { Select, SelectItem } from "./Select";
+import { Select, SelectOption } from "./Select";
 
-const dynamicData: SelectItem[] = [
+type ProviderId = "planetscale" | "heroku" | "aws";
+
+const dynamicData: SelectOption<ProviderId>[] = [
   {
     key: "planetscale",
     title: "PlanetScale",
@@ -31,10 +33,10 @@ storiesOf("Lens/Select", module)
   .add("Default (with dynamic data)", () => (
     <Select.Container
       label="Database Provider"
-      items={dynamicData}
+      options={dynamicData}
       onSelectionChange={action("onSelectionChange")}
     >
-      {item => <Select.Option key={item.key}>{item.title}</Select.Option>}
+      {option => <Select.Option key={option.key}>{option.title}</Select.Option>}
     </Select.Container>
   ))
   .add("With placeholder", () => (
