@@ -1,6 +1,6 @@
 import React from "react";
+import { Size, sizeToNumeric } from "../../utils/sizeToNumeric";
 
-type Size = "xs" | "sm" | "md" | "lg" | "xl";
 type IconProps = {
   /** Name of the icon to render. Reference: https://feathericons.com */
   name: string;
@@ -8,23 +8,8 @@ type IconProps = {
   size?: Size;
 };
 
-function sizeNumeric(size: Size): number {
-  switch (size) {
-    case "xs":
-      return 12;
-    case "sm":
-      return 16;
-    case "md":
-      return 24;
-    case "lg":
-      return 32;
-    case "xl":
-      return 64;
-  }
-}
-
 export function Icon({ name, size = "md" }: IconProps) {
-  const width = sizeNumeric(size);
+  const width = sizeToNumeric(size);
 
   // Exceptions to FeatherIcons
   if (name === "chevron-down") {
