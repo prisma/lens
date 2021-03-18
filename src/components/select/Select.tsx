@@ -14,6 +14,7 @@ import { useButton } from "@react-aria/button";
 import { FocusScope } from "@react-aria/focus";
 import { mergeProps } from "@react-aria/utils";
 import { Label } from "../label/Label";
+import { Icon } from "../icon/Icon";
 import { FocusRing } from "../focus-ring/FocusRing";
 
 /** Value for a single Option inside this Select */
@@ -104,14 +105,14 @@ function SelectContainer({
 
   return (
     <div id={id} className="table-row">
-      <Label label={label} labelProps={labelProps} />
+      <Label labelProps={labelProps}>{label}</Label>
       <section className="table-cell w-full relative">
         <FocusRing autoFocus={autoFocus}>
           <button
             ref={ref}
             {...buttonProps}
             className={cn(
-              "flex w-full",
+              "flex w-full items-center",
               "rounded-md shadow-sm border border-gray-300 dark:border-gray-700",
               "px-3 py-1.5",
               "text-sm",
@@ -132,14 +133,7 @@ function SelectContainer({
             >
               {state.selectedItem ? state.selectedItem.rendered : placeholder}
             </span>
-            <span
-              className={cn("ml-4", "text-md", {
-                "text-gray-500": !isDisabled,
-                "text-gray-300 dark:text-gray-600": isDisabled,
-              })}
-            >
-              ▽
-            </span>
+            <Icon name="chevron-down" size="xs" />
           </button>
         </FocusRing>
         {state.isOpen && (

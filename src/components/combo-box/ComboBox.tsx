@@ -15,6 +15,7 @@ import {
 import { FocusScope } from "@react-aria/focus";
 import { mergeProps } from "@react-aria/utils";
 import { Label } from "../label/Label";
+import { Icon } from "../icon/Icon";
 import { FocusRing } from "../focus-ring/FocusRing";
 
 /** Value for a single Option inside this ComboBox */
@@ -125,11 +126,11 @@ function ComboBoxContainer({
 
   return (
     <div className="table-row">
-      <Label labelProps={labelProps} label={label} />
+      <Label labelProps={labelProps}>{label}</Label>
       <section className="table-cell">
         <div
           className={cn(
-            "flex w-full relative",
+            "flex items-center w-full relative",
             "rounded-md shadow-sm border border-gray-300 dark:border-gray-700",
             "px-3 py-1.5",
             "text-sm",
@@ -155,17 +156,7 @@ function ComboBoxContainer({
                   "cursor-not-allowed": isDisabled,
                 })}
               />
-              <button
-                ref={buttonRef}
-                {...buttonProps}
-                className={cn("text-md", {
-                  "text-gray-500": !isDisabled,
-                  "text-gray-300 dark:text-gray-600": isDisabled,
-                  "cursor-not-allowed": isDisabled,
-                })}
-              >
-                ▽
-              </button>
+              <Icon name="chevron-down" size="xs" />
             </>
           </FocusRing>
           {state.isOpen && (
