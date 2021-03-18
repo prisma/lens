@@ -91,7 +91,7 @@ function TextField(
 
   return (
     <div className={cn("table-row w-full")}>
-      {label && <Label label={label} labelProps={labelProps} />}
+      {label && <Label labelProps={labelProps}>{label}</Label>}
       <FocusRing autoFocus={autoFocus} within>
         <section className="table-cell w-full">
           <div
