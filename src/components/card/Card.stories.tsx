@@ -7,7 +7,7 @@ import { Select } from "../select/Select";
 storiesOf("Lens/Card", module)
   .add("Default", () => (
     <Card>
-      <div className="mb-4 text-gray-900 dark:text-gray-100">Anything goes</div>
+      <div className="mb-4 text-gray-800 dark:text-gray-100">Anything goes</div>
       <TextField label="Text field" />
     </Card>
   ))

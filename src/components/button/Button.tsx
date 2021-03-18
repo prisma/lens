@@ -57,13 +57,13 @@ function Button(
             "bg-gray-900": variant === "primary" && isPressed,
           },
           {
-            "bg-gray-200 text-gray-900": variant === "secondary",
+            "bg-gray-200 text-gray-800": variant === "secondary",
             "font-bold text-gray-500": variant === "secondary" && isDisabled,
             "bg-gray-300": variant === "secondary" && isHovered,
             "bg-gray-400": variant === "secondary" && isPressed,
           },
           {
-            "shadow-none text-gray-900 dark:text-gray-100": variant === "quiet",
+            "shadow-none text-gray-800 dark:text-gray-100": variant === "quiet",
             "text-gray-400 dark:text-gray-500":
               variant === "quiet" && isDisabled,
             "text-gray-500": variant === "quiet" && isPressed,
@@ -72,7 +72,7 @@ function Button(
             "shadow-none underline text-gray-400": variant === "link",
             "text-gray-200": variant === "link" && isDisabled,
             "text-gray-800": variant === "link" && isHovered,
-            "text-gray-900": variant === "link" && isPressed,
+            "text-gray-800": variant === "link" && isPressed,
           }
         )}
       >

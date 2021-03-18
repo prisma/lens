@@ -157,7 +157,7 @@ function MenuContent<OptionKey extends string>({
           className={cn(
             "p-2 min-w-min overflow-auto",
             "rounded-md shadow-md border border-gray-300 dark:border-gray-700",
-            "bg-white dark:bg-gray-900 text-sm text-gray-900 dark:text-gray-100",
+            "bg-white dark:bg-gray-900 text-sm text-gray-800 dark:text-gray-100",
             {
               "animate-slide-bottom": placement === "top",
               "animate-slide-top": placement === "bottom",

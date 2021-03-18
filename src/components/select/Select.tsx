@@ -128,7 +128,7 @@ function SelectContainer<OptionKey extends string>({
               {...valueProps}
               className={cn("flex flex-grow", {
                 "text-gray-400 dark:text-gray-300": !state.selectedItem,
-                "text-gray-900 dark:text-gray-100": state.selectedItem,
+                "text-gray-800 dark:text-gray-100": state.selectedItem,
               })}
             >
               {state.selectedItem ? state.selectedItem.rendered : placeholder}

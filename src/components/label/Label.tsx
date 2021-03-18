@@ -14,7 +14,7 @@ export function Label({ children, labelProps }: LabelProps) {
       {...labelProps}
       className={cn(
         "table-cell align-middle pr-8",
-        "whitespace-nowrap text-sm font-semibold text-gray-900 dark:text-gray-100"
+        "whitespace-nowrap text-sm font-semibold text-gray-800 dark:text-gray-100"
       )}
     >
       {children}

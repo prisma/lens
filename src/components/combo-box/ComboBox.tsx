@@ -154,7 +154,7 @@ function ComboBoxContainer<OptionKey extends string>({
                 className={cn("flex-grow", {
                   "bg-white dark:bg-gray-900": !isDisabled,
                   "bg-gray-100 dark:bg-gray-800": isDisabled,
-                  "text-gray-900 dark:text-gray-100": !isDisabled,
+                  "text-gray-800 dark:text-gray-100": !isDisabled,
                   "text-gray-400 dark:text-gray-400": isDisabled,
                   "cursor-not-allowed": isDisabled,
                 })}
