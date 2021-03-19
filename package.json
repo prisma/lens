@@ -2,11 +2,15 @@
   "name": "@prisma/lens",
   "version": "0.0.15",
   "description": "Prisma's design system",
-  "main": "build/lib.js",
-  "module": "build/lib.esm.js",
-  "typings": "build/lib.d.ts",
+  "main": "dist/lib.js",
+  "module": "dist/lib.esm.js",
+  "typings": "dist/lib.d.ts",
+  "exports": {
+    ".": "./dist/lib.js",
+    "./web": "./dist/web.js"
+  },
   "files": [
-    "build"
+    "dist"
   ],
   "repository": {
     "type": "git",
@@ -24,9 +28,9 @@
   "homepage": "https://github.com/prisma/lens#readme",
   "scripts": {
     "dev": "start-storybook -p 6006 -s public --ci",
-    "build": "NODE_ENV=production rollup -c",
+    "build": "rm -rf dist && NODE_ENV=production rollup -c",
     "build-storybook": "build-storybook -s public",
-    "prepublishOnly": "rm -rf build && npm run build"
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@react-aria/button": "3.3.1",

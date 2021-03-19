@@ -1,11 +1,9 @@
 // Globals
 export * from "./provider/LensProvider";
 
-// Themes
-export * from "./theme";
-
 // Typography
-export * from "./typography/Eyebrow";
+export * from "./typography/title/Title";
+export * from "./typography/subtitle/Subtitle";
 
 // Components
 export * from "./components/avatar/Avatar";
@@ -21,12 +19,6 @@ export * from "./components/label/Label";
 export * from "./components/menu/Menu";
 export * from "./components/select/Select";
 export * from "./components/separator/Separator";
-export * from "./components/subtitle/Subtitle";
 export * from "./components/table/Table";
 export * from "./components/text-field/TextField";
-export * from "./components/title/Title";
 export * from "./components/title-group/TitleGroup";
-
-// Website
-export * from "./website/WebsiteHeader";
-export * from "./website/WebsiteFooter";
