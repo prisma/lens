@@ -44,12 +44,16 @@ type ReactAriaTableNode = {
   textValue: string;
 };
 
-type TableContainerProps = React.PropsWithChildren<{
-  /**  */
-}>;
+type TableContainerProps = {
+  children: React.ReactElement[];
+};
 
 function TableContainer({ children }: TableContainerProps) {
   const ref = useRef<HTMLTableElement>(null);
+
+  if (children.length < 2) {
+    throw new Error("A Table.Container must contain at least two children");
+  }
 
   const [lastChild] = children.slice(children.length - 1);
   let tableChildren = children;
