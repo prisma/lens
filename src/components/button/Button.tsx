@@ -45,32 +45,31 @@ function Button(
         {...mergeProps(buttonProps, hoverProps)}
         className={cn(
           "flex items-center px-3 py-1.5 m-2",
-          "rounded-md shadow-md",
+          "rounded-md",
           "text-sm whitespace-nowrap",
           {
             "cursor-not-allowed": isDisabled,
           },
           {
-            "bg-gray-700 text-white": variant === "primary",
+            "font-bold bg-gray-700 text-white": variant === "primary",
             "font-bold text-gray-400": variant === "primary" && isDisabled,
             "bg-gray-800": variant === "primary" && isHovered,
             "bg-gray-900": variant === "primary" && isPressed,
           },
           {
-            "bg-gray-200 text-gray-800": variant === "secondary",
+            "font-bold bg-gray-200 text-gray-800": variant === "secondary",
             "font-bold text-gray-500": variant === "secondary" && isDisabled,
             "bg-gray-300": variant === "secondary" && isHovered,
             "bg-gray-400": variant === "secondary" && isPressed,
           },
           {
-            "shadow-none text-gray-800 dark:text-gray-100": variant === "quiet",
+            "text-gray-800 dark:text-gray-100": variant === "quiet",
             "text-gray-400 dark:text-gray-500":
               variant === "quiet" && isDisabled,
             "text-gray-500": variant === "quiet" && isPressed,
           },
           {
-            "shadow-none underline text-gray-600 dark:text-gray-400":
-              variant === "link",
+            "underline text-gray-600 dark:text-gray-400": variant === "link",
             "text-gray-200 dark:text-gray-600":
               variant === "link" && isDisabled,
             "text-gray-700 dark:text-gray-500": variant === "link" && isHovered,

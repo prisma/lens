@@ -10,7 +10,6 @@ export function Form({ children }: FormProps) {
       <form className="table w-full" style={{ borderSpacing: "0 1rem" }}>
         {children}
       </form>
-      <hr className="w-full m4-4" />
     </>
   );
 }

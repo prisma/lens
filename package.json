@@ -51,7 +51,6 @@
     "@react-stately/table": "3.0.0-alpha.7",
     "@react-stately/tree": "3.1.2",
     "@react-types/shared": "3.4.0",
-    "@types/classnames": "2.2.11",
     "classnames": "2.2.6",
     "feather-icons": "4.28.0"
   },
@@ -64,6 +63,7 @@
     "@storybook/node-logger": "6.2.0-rc.0",
     "@storybook/react": "6.2.0-rc.0",
     "@tailwindcss/jit": "0.1.2",
+    "@types/classnames": "^2.2.11",
     "@types/node": "14.14.28",
     "@types/react": "17.0.2",
     "@types/react-dom": "17.0.1",

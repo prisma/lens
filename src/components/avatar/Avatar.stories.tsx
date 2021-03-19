@@ -4,8 +4,9 @@ import { Avatar } from "./Avatar";
 
 storiesOf("Lens/Avatar", module)
   .add("Default", () => (
-    <Avatar url="/favicon.ico" label="Lens user" onPress={action("onPress")} />
+    <Avatar label="Lens user" onPress={action("onPress")} />
   ))
+  .add("With custom URL", () => <Avatar url="/favicon.ico" label="Lens user" />)
   .add("Sizes", () => (
     <div className="flex items-center space-x-4">
       <Avatar url="/favicon.ico" label="Lens user" size="xs" />

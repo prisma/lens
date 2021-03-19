@@ -1,7 +1,7 @@
 import React from "react";
 import cn from "classnames";
 
-type SubtitleProps = {
+type TitleProps = {
   /** Content of the Title */
   children: string;
   /** Additional classes that will be forwarded to the Title. Avoid classes that change the Title's visuals. */
@@ -10,7 +10,7 @@ type SubtitleProps = {
   titleProps?: React.HTMLAttributes<HTMLElement>;
 };
 
-export function Title({ children, className, titleProps }: SubtitleProps) {
+export function Title({ children, className, titleProps }: TitleProps) {
   return (
     <div
       className={cn(

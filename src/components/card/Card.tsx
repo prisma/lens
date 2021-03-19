@@ -28,7 +28,7 @@ export function Card({
     <div
       className={cn(
         "px-6 py-4 w-full",
-        "rounded-md shadow-md overflow-hidden",
+        "rounded-lg shadow-md overflow-hidden",
         "bg-white dark:bg-gray-800",
         className
       )}
