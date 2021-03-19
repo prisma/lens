@@ -8,7 +8,7 @@ type Props = React.PropsWithChildren<{}>;
 export function LensProvider({ children }: Props) {
   return (
     <SSRProvider>
-      <OverlayProvider className="w-full">{children}</OverlayProvider>
+      <OverlayProvider>{children}</OverlayProvider>
     </SSRProvider>
   );
 }

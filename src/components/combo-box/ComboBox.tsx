@@ -151,7 +151,7 @@ function ComboBoxContainer<OptionKey extends string>({
                 type="text"
                 {...inputProps}
                 name={name}
-                className={cn("flex-grow", {
+                className={cn("flex-grow", "mr-4", {
                   "bg-white dark:bg-gray-900": !isDisabled,
                   "bg-gray-100 dark:bg-gray-800": isDisabled,
                   "text-gray-800 dark:text-gray-100": !isDisabled,
