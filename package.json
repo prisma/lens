@@ -1,6 +1,6 @@
 {
   "name": "@prisma/lens",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Prisma's design system",
   "main": "build/lib.js",
   "module": "build/lib.esm.js",
