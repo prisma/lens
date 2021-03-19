@@ -44,7 +44,7 @@ function Button(
         ref={ref}
         {...mergeProps(buttonProps, hoverProps)}
         className={cn(
-          "flex items-center px-3 py-1.5 m-2",
+          "flex justify-center px-3 py-1.5 m-2",
           "rounded-md",
           "text-sm whitespace-nowrap",
           {
