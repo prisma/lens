@@ -1,8 +1,6 @@
 import React from "react";
 
-type FormProps = {
-  children: React.ReactElement[];
-};
+type FormProps = React.PropsWithChildren<{}>;
 
 export function Form({ children }: FormProps) {
   return (

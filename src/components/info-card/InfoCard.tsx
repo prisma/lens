@@ -5,7 +5,7 @@ import { Icon } from "../icon/Icon";
 import { Title } from "../../typography/title/Title";
 import { Label } from "../label/Label";
 
-type InfoCardContainerProps = {
+type InfoCardContainerProps = React.PropsWithChildren<{
   /** An identifying icon */
   icon?: string;
   /** The title of the Card */
@@ -14,9 +14,7 @@ type InfoCardContainerProps = {
   width?: number;
   /** If provided, fixes the Card's width */
   height?: number;
-  /** Rows of this InfoCard */
-  children: React.ReactElement[];
-};
+}>;
 
 /** An InfoCard displays */
 function InfoCardContainer({

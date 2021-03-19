@@ -44,10 +44,9 @@ type ReactAriaTableNode = {
   textValue: string;
 };
 
-type TableContainerProps = {
+type TableContainerProps = React.PropsWithChildren<{
   /**  */
-  children: React.ReactElement[];
-};
+}>;
 
 function TableContainer({ children }: TableContainerProps) {
   const ref = useRef<HTMLTableElement>(null);
