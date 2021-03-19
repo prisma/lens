@@ -5,10 +5,6 @@
   "main": "dist/lib.js",
   "module": "dist/lib.esm.js",
   "typings": "dist/lib.d.ts",
-  "exports": {
-    ".": "./dist/lib.js",
-    "./web": "./dist/web.js"
-  },
   "files": [
     "dist"
   ],
