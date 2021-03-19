@@ -16,7 +16,7 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           scope: "@prisma"
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Publish to NPM
         run: |
           git config --global user.name "github-actions[bot]"
