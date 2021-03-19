@@ -1,11 +1,12 @@
 import React from "react";
 import cn from "classnames";
 import { Button } from "../button/Button";
+import { Icon } from "../icon/Icon";
 import { Size, sizeToNumeric } from "../../utils/sizeToNumeric";
 
 type AvatarProps = {
   /** URL to the image resource to display */
-  url: string;
+  url?: string;
   /** A small description of this image */
   label: string;
   /** Size of the Avatar */
@@ -27,18 +28,28 @@ export function Avatar({
   onPress,
 }: AvatarProps) {
   const width = sizeToNumeric(size);
-  const classNames = cn("rounded-full");
 
   /* If the Avatar is clickable, treat it as a button, AKA no alt-text, otherwise add alt-text */
-  const avatar = (
-    <img
-      src={url}
-      className={classNames}
-      width={width}
-      height={width}
-      alt={onPress ? undefined : label}
-    />
-  );
+  let avatar;
+  if (url) {
+    avatar = (
+      <img
+        src={url}
+        className="rounded-full"
+        width={width}
+        height={width}
+        alt={onPress ? undefined : label}
+      />
+    );
+  } else {
+    avatar = (
+      <Icon
+        name="user"
+        size={size}
+        className={cn("rounded-full", "bg-gray-100 dark:bg-gray-800", "p-1")}
+      />
+    );
+  }
 
   const nameAndEmail = (
     <div
