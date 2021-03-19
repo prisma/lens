@@ -2,7 +2,7 @@ import React from "react";
 import cn from "classnames";
 import { Card } from "../card/Card";
 import { Icon } from "../icon/Icon";
-import { Title } from "../title/Title";
+import { Title } from "../../typography/title/Title";
 import { Label } from "../label/Label";
 
 type InfoCardContainerProps = {

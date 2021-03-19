@@ -1,7 +1,7 @@
 import React from "react";
 import cn from "classnames";
 import { Icon } from "../icon/Icon";
-import { Title } from "../title/Title";
+import { Title } from "../../typography/title/Title";
 
 type CardProps = React.PropsWithChildren<{
   /** An identifying icon */

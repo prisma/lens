@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { theme } from "../theme";
+import { theme } from "../../theme";
 
 /**
  *  Eyebrows are to be used above heading elements for additional context

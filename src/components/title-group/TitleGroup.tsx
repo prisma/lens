@@ -1,8 +1,8 @@
 import React from "react";
 import cn from "classnames";
 import { Icon } from "../icon/Icon";
-import { Title } from "../title/Title";
-import { Subtitle } from "../subtitle/Subtitle";
+import { Title } from "../../typography/title/Title";
+import { Subtitle } from "../../typography/subtitle/Subtitle";
 
 type TitleGroupProps = {
   /** An identifying icon */
