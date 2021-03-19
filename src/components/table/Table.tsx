@@ -137,7 +137,7 @@ function TableColumnHeader({ column }: TableColumnHeaderProps) {
       className={cn(
         "table-cell",
         "px-6 py-2",
-        "font-barlow text-md text-left text-gray-800 dark:text-gray-100"
+        "font-barlow uppercase text-sm text-left text-gray-800 dark:text-gray-100"
       )}
     >
       {column.rendered}

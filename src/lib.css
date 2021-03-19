@@ -5,28 +5,33 @@
 @font-face {
   font-family: "Inter";
   font-weight: 400;
+  font-style: normal;
   font-display: swap;
-  src: url("/fonts/Inter-Regular.ttf");
+  src: url("b64---./fonts/Inter-Regular.woff2---");
 }
+
 @font-face {
   font-family: "Inter";
-  font-weight: 700;
+  font-weight: 600;
+  font-style: normal;
   font-display: swap;
-  src: url("/fonts/Inter-SemiBold.ttf");
+  src: url("b64---./fonts/Inter-SemiBold.woff2---");
 }
 
 @font-face {
   font-family: "Barlow";
+  font-weight: 600;
+  font-style: normal;
   font-display: swap;
-  font-weight: 700;
-  src: url("/fonts/Barlow-SemiBold.ttf");
+  src: url("b64---./fonts/Barlow-SemiBold.woff2---");
 }
 
 @font-face {
   font-family: "JetbrainsMono";
+  font-weight: 400;
+  font-style: normal;
   font-display: swap;
-  font-weifht: 400;
-  src: url("/fonts/JetBrainsMono-Regular.ttf");
+  src: url("b64---./fonts/JetBrainsMono-Regular.woff2---");
 }
 
 * {

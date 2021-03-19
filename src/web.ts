@@ -1,3 +1,5 @@
+import "./web.css";
+
 // Themes
 export * from "./theme";
 

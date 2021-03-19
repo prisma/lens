@@ -38,7 +38,7 @@ const dynamicData = [
     id: 4,
     avatar: "/favicon.ico",
     name: "Lens User 4",
-    email: "lens@prisma.io",
+    email: "invited@prisma.io",
     isOwner: false,
     isInvitationPending: true,
     role: "Viewer",
@@ -58,8 +58,8 @@ storiesOf("Lens/Table", module)
           <Table.Cell>
             <Avatar
               url="/favicon.ico"
-              label="Lens User"
-              name="Lens User"
+              label="Lens User 1"
+              name="Lens User 1"
               email="lens@prisma.io"
             />
           </Table.Cell>
@@ -74,8 +74,8 @@ storiesOf("Lens/Table", module)
           <Table.Cell>
             <Avatar
               url="/favicon.ico"
-              label="Lens User"
-              name="Lens User"
+              label="Lens User 2"
+              name="Lens User 2"
               email="lens@prisma.io"
             />
           </Table.Cell>
@@ -90,8 +90,8 @@ storiesOf("Lens/Table", module)
           <Table.Cell>
             <Avatar
               url="/favicon.ico"
-              label="Lens User"
-              name="Lens User"
+              label="Lens User 3"
+              name="Lens User 3"
               email="lens@prisma.io"
             />
           </Table.Cell>

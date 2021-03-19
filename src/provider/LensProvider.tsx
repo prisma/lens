@@ -1,7 +1,7 @@
 import React from "react";
 import { OverlayProvider } from "@react-aria/overlays";
 import { SSRProvider } from "@react-aria/ssr";
-import "../global.css";
+import "../lib.css";
 
 type Props = React.PropsWithChildren<{}>;
 
