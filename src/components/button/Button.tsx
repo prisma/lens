@@ -51,9 +51,9 @@ function Button(
             "cursor-not-allowed": isDisabled,
           },
           {
-            "bg-gray-600 text-white": variant === "primary",
+            "bg-gray-700 text-white": variant === "primary",
             "font-bold text-gray-400": variant === "primary" && isDisabled,
-            "bg-gray-700": variant === "primary" && isHovered,
+            "bg-gray-800": variant === "primary" && isHovered,
             "bg-gray-900": variant === "primary" && isPressed,
           },
           {
