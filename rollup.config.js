@@ -4,8 +4,9 @@ import commonjs from "@rollup/plugin-commonjs";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
 import typescript from "rollup-plugin-typescript2";
+import copy from "rollup-plugin-copy";
 
-function config(inputPath) {
+function bundle(inputPath) {
   const input = path.basename(inputPath, ".ts");
   return {
     input: inputPath,
@@ -23,16 +24,17 @@ function config(inputPath) {
     ],
     plugins: [
       peerDepsExternal(),
-      postcss({
-        extract: true,
-      }),
+      postcss(),
       resolve(),
       commonjs(),
       typescript({
         clean: true,
       }),
+      copy({
+        targets: [{ src: "tailwind.config.js", dest: "dist/tailwind.js" }],
+      }),
     ],
   };
 }
 
-export default [config("./src/lib.ts"), config("./src/web.ts")];
+export default [bundle("./src/lib.ts"), bundle("./src/web.ts")];

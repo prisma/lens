@@ -5,6 +5,11 @@
   "main": "dist/lib.js",
   "module": "dist/lib.esm.js",
   "typings": "dist/lib.d.ts",
+  "exports": {
+    ".": "./dist/lib.js",
+    "./tailwind": "./dist/tailwind.js",
+    "./web": "./dist/web.js"
+  },
   "files": [
     "dist"
   ],
@@ -72,9 +77,11 @@
     "autoprefixer": "10.2.5",
     "chromatic": "5.7.0",
     "postcss": "8.2.8",
+    "postcss-inline-base64": "6.2.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "rollup": "2.42.0",
+    "rollup-plugin-copy": "3.4.0",
     "rollup-plugin-peer-deps-external": "2.2.4",
     "rollup-plugin-postcss": "4.0.0",
     "rollup-plugin-typescript2": "0.30.0",
