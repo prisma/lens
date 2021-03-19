@@ -35,7 +35,11 @@ Prisma Lens uses [Storybook](https://storybook.js.org/) as a preview mechanism f
 npm run dev
 ```
 
-### Publishing
+You can also use the VSCode task `dev` instead.
+
+## Code Style
+
+## Publishing
 
 Publishes to NPM happen automatically when you push to the `main` branch, either directly, or via a pull request merge.
 
@@ -45,4 +49,31 @@ To publish manually, you should:
 npm login # Login to NPM
 npm version patch # Bump up the version
 npm publish # Publish package
+```
+
+## Usage in other Prisma projects
+
+Integrating Lens into your project is as simple as wrapping your top level component with `LensProvider`.
+
+```jsx
+import { LensProvider } from '@prisma/lens'
+
+function YourRootComponent() {
+    return (
+        <LensProvider>
+            { /* Rest of your app */ }
+        </LensProvider>
+    )
+}
+```
+
+`LensProvider` takes care of loading styles, fonts, and additional setup needed for SSR.
+
+If your project uses Tailwind, Lens also exports a Tailwind preset that may be imported from `@prisma/lens/tailwind`. You should add this to your `tailwind.config.js`. This ensures that all colors etc. in your project match up with Lens.
+
+```js
+// tailwind.config.js
+module.exports = {
+  presets: [require('@prisma/lens/tailwind')],
+}
 ```
