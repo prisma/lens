@@ -25,7 +25,7 @@ export function TitleGroup({
   className,
 }: TitleGroupProps) {
   return (
-    <section className={cn("flex items-center my-8", className)}>
+    <section className={cn("flex items-center", className)}>
       <Icon name={icon} size="lg" />
       <div className="flex-column ml-6">
         <Title titleProps={titleProps}>{title}</Title>

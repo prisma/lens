@@ -9,6 +9,7 @@ import { Item } from "@react-stately/collections";
 import { CollectionChildren, Node } from "@react-types/shared";
 import {
   DismissButton,
+  OverlayContainer,
   useOverlay,
   useOverlayPosition,
 } from "@react-aria/overlays";
@@ -221,31 +222,39 @@ function ComboBoxOptions<OptionKey extends string>({
     containerPadding: 0,
     onClose: state.close,
   });
+  // Figure out button dimensions so we can size the overlay
+  const containerDimensions = containerRef.current?.getBoundingClientRect();
 
   return (
-    <FocusScope restoreFocus>
-      <div
-        {...mergeProps(overlayProps, positionProps)}
-        ref={overlayRef}
-        className="left-0 right-0"
-      >
-        <DismissButton onDismiss={state.close} />
-        <ul
-          ref={listBoxRef}
-          {...listBoxProps}
-          className={cn("menu", {
-            "animate-slide-bottom": placement === "top",
-            "animate-slide-top": placement === "bottom",
-          })}
-          style={{ maxHeight: "inherit" }}
+    <OverlayContainer>
+      <FocusScope restoreFocus>
+        <div
+          {...mergeProps(overlayProps, positionProps)}
+          ref={overlayRef}
+          style={{
+            ...positionProps.style,
+            left: containerDimensions?.left,
+            width: containerDimensions?.width,
+          }}
         >
-          {[...state.collection].map(option => (
-            <ComboBoxOption key={option.key} option={option} state={state} />
-          ))}
-        </ul>
-        <DismissButton onDismiss={state.close} />
-      </div>
-    </FocusScope>
+          <DismissButton onDismiss={state.close} />
+          <ul
+            ref={listBoxRef}
+            {...listBoxProps}
+            className={cn("menu", {
+              "animate-slide-bottom": placement === "top",
+              "animate-slide-top": placement === "bottom",
+            })}
+            style={{ maxHeight: "inherit" }}
+          >
+            {[...state.collection].map(option => (
+              <ComboBoxOption key={option.key} option={option} state={state} />
+            ))}
+          </ul>
+          <DismissButton onDismiss={state.close} />
+        </div>
+      </FocusScope>
+    </OverlayContainer>
   );
 }
 

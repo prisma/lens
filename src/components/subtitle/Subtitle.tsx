@@ -10,7 +10,7 @@ type SubtitleProps = {
 
 export function Subtitle({ children, className }: SubtitleProps) {
   return (
-    <div className={cn("font-light text-sm text-gray-400", className)}>
+    <div className={cn("font-light text-sm text-gray-600", className)}>
       {children}
     </div>
   );

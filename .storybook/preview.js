@@ -11,7 +11,7 @@ export const decorators = [
       <div className="fixed top-0 left-0 p-2 text-xs text-gray-500">
         {version}
       </div>
-      <div className="flex flex-col" style={{ width: 580 }}>
+      <div className="flex justify-center" style={{ minWidth: 580 }}>
         <Story />
       </div>
     </LensProvider>

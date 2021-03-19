@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useCallback, useEffect } from "react";
 import cn from "classnames";
 import { useSelect, HiddenSelect } from "@react-aria/select";
 import { SelectState, useSelectState } from "@react-stately/select";
@@ -7,6 +7,7 @@ import { CollectionChildren, Node } from "@react-types/shared";
 import { useListBox, useOption } from "@react-aria/listbox";
 import {
   DismissButton,
+  OverlayContainer,
   useOverlay,
   useOverlayPosition,
 } from "@react-aria/overlays";
@@ -183,6 +184,8 @@ function SelectOptions<OptionKey extends string>({
     containerPadding: 0,
     onClose: state.close,
   });
+  // Figure out button dimensions so we can size the overlay
+  const buttonDimensions = buttonRef.current?.getBoundingClientRect();
 
   const listBoxRef = useRef<HTMLUListElement>(null);
   const { listBoxProps } = useListBox(
@@ -196,29 +199,35 @@ function SelectOptions<OptionKey extends string>({
   );
 
   return (
-    <FocusScope autoFocus restoreFocus contain>
-      <div
-        ref={overlayRef}
-        {...mergeProps(overlayProps, positionProps)}
-        className="left-0 right-0"
-      >
-        <DismissButton onDismiss={state.close} />
-        <ul
-          ref={listBoxRef}
-          {...listBoxProps}
-          className={cn("menu", {
-            "animate-slide-bottom": placement === "top",
-            "animate-slide-top": placement === "bottom",
-          })}
-          style={{ maxHeight: "inherit" }}
+    <OverlayContainer>
+      <FocusScope autoFocus restoreFocus contain>
+        <div
+          ref={overlayRef}
+          {...mergeProps(overlayProps, positionProps)}
+          style={{
+            ...positionProps.style,
+            left: buttonDimensions?.left,
+            width: buttonDimensions?.width,
+          }}
         >
-          {[...state.collection].map(option => (
-            <SelectOption key={option.key} option={option} state={state} />
-          ))}
-        </ul>
-        <DismissButton onDismiss={state.close} />
-      </div>
-    </FocusScope>
+          <DismissButton onDismiss={state.close} />
+          <ul
+            ref={listBoxRef}
+            {...listBoxProps}
+            className={cn("menu w-full", {
+              "animate-slide-bottom": placement === "top",
+              "animate-slide-top": placement === "bottom",
+            })}
+            style={{ maxHeight: "inherit" }}
+          >
+            {[...state.collection].map(option => (
+              <SelectOption key={option.key} option={option} state={state} />
+            ))}
+          </ul>
+          <DismissButton onDismiss={state.close} />
+        </div>
+      </FocusScope>
+    </OverlayContainer>
   );
 }
 

@@ -62,18 +62,20 @@ const dynamicDataWithChildren: MenuOption<Action>[] = [
 
 storiesOf("Lens/Menu", module)
   .add("Default (with static data)", () => (
-    <Menu.Container>
-      <Button variant="quiet">Menu Trigger</Button>
+    <div className="flex justify-center">
+      <Menu.Container>
+        <Button variant="quiet">Menu Trigger</Button>
 
-      <Menu.Content
-        title="Project Actions"
-        onSelectionChange={action("onSelectionChange")}
-      >
-        <Menu.Option key="edit">Edit</Menu.Option>
-        <Menu.Option key="invite">Invite</Menu.Option>
-        <Menu.Option key="delete">Delete</Menu.Option>
-      </Menu.Content>
-    </Menu.Container>
+        <Menu.Content
+          title="Project Actions"
+          onSelectionChange={action("onSelectionChange")}
+        >
+          <Menu.Option key="edit">Edit</Menu.Option>
+          <Menu.Option key="invite">Invite</Menu.Option>
+          <Menu.Option key="delete">Delete</Menu.Option>
+        </Menu.Content>
+      </Menu.Container>
+    </div>
   ))
   .add("Default (with dynamic data)", () => (
     <Menu.Container>
