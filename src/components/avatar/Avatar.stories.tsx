@@ -14,4 +14,12 @@ storiesOf("Lens/Avatar", module)
       <Avatar url="/favicon.ico" label="Lens user" size="lg" />
       <Avatar url="/favicon.ico" label="Lens user" size="xl" />
     </div>
+  ))
+  .add("With Name & Email", () => (
+    <Avatar
+      url="/favicon.ico"
+      label="Lens user"
+      name="Lens User"
+      email="lens@prisma.io"
+    />
   ));
