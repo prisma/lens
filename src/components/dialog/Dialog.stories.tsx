@@ -1,9 +1,11 @@
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
+import { chain } from "@react-aria/utils";
 import { Dialog } from "./Dialog";
 import { Button } from "../button/Button";
 import { Avatar } from "../avatar/Avatar";
 import { Select } from "../select/Select";
+import { ButtonGroup } from "../button-group/ButtonGroup";
 
 storiesOf("Lens/Dialog", module)
   .add("Default", () => (
@@ -37,15 +39,11 @@ storiesOf("Lens/Dialog", module)
       </Dialog.Content>
     </Dialog.Container>
   ))
-  .add("With Actions", () => (
+  .add("With Footer", () => (
     <Dialog.Container
       title="Edit Membership"
       subtitle="Edit user's membership in current project"
       icon="user"
-      onPressPrimaryAction={action("onPressPrimaryAction")}
-      onPressSecondaryAction={action("onPressSecondaryAction")}
-      tertiaryActionTitle="Remove from project"
-      onPressTertiaryAction={action("onPressTertiaryAction")}
     >
       <Button>Dialog Trigger</Button>
       <Dialog.Content>
@@ -70,5 +68,18 @@ storiesOf("Lens/Dialog", module)
           </div>
         )}
       </Dialog.Content>
+      <Dialog.Footer>
+        <ButtonGroup>
+          <Button variant="primary" onPress={chain(close, action("onPress"))}>
+            Save
+          </Button>
+          <Button variant="link" onPress={chain(close, action("onPress"))}>
+            Cancel
+          </Button>
+          <Button variant="link" onPress={chain(close, action("onPress"))}>
+            Remove from project
+          </Button>
+        </ButtonGroup>
+      </Dialog.Footer>
     </Dialog.Container>
   ));

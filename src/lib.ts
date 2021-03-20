@@ -22,3 +22,6 @@ export * from "./components/separator/Separator";
 export * from "./components/table/Table";
 export * from "./components/text-field/TextField";
 export * from "./components/title-group/TitleGroup";
+
+// Utilities
+export { chain } from "@react-aria/utils";

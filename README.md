@@ -35,7 +35,7 @@ Prisma Lens uses [Storybook](https://storybook.js.org/) as a preview mechanism f
 npm run dev
 ```
 
-You can also use the VSCode task `dev` instead.
+You can also use the VSCode task named `dev` to do the same thing. (<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> > Tasks: Run Task > `dev`)
 
 ## Code Style
 
@@ -56,14 +56,10 @@ npm publish # Publish package
 Integrating Lens into your project is as simple as wrapping your top level component with `LensProvider`.
 
 ```jsx
-import { LensProvider } from '@prisma/lens'
+import { LensProvider } from "@prisma/lens";
 
 function YourRootComponent() {
-    return (
-        <LensProvider>
-            { /* Rest of your app */ }
-        </LensProvider>
-    )
+  return <LensProvider>{/* Rest of your app */}</LensProvider>;
 }
 ```
 
@@ -74,6 +70,6 @@ If your project uses Tailwind, Lens also exports a Tailwind preset that may be i
 ```js
 // tailwind.config.js
 module.exports = {
-  presets: [require('@prisma/lens/tailwind')],
-}
+  presets: [require("@prisma/lens/tailwind")],
+};
 ```

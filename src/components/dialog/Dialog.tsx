@@ -16,26 +16,22 @@ import {
   useOverlayTriggerState,
 } from "@react-stately/overlays";
 import { TitleGroup } from "../title-group/TitleGroup";
-import { Button } from "../button/Button";
 
 type DialogContext = {
   close: OverlayTriggerState["close"];
   title: string;
   subtitle: string;
   icon: string;
-  primaryActionTitle?: string;
-  secondaryActionTitle?: string;
-  tertiaryActionTitle?: string;
-  onPressPrimaryAction?: () => void;
-  onPressSecondaryAction?: () => void;
-  onPressTertiaryAction?: () => void;
+  footer?: React.ReactElement;
 };
 // @ts-expect-error: Because we cannot supply a valid value at initialization
 const DialogContext = createContext<DialogContext>(null);
 
 type DialogContainerProps = {
   /** The dialog's trigger and its body, in order */
-  children: [React.ReactElement, React.ReactElement];
+  children:
+    | [React.ReactElement, React.ReactElement]
+    | [React.ReactElement, React.ReactElement, React.ReactElement];
   /** Title of the dialog */
   title: string;
   /** A short description about what this dialog accomplishes. */
@@ -44,18 +40,6 @@ type DialogContainerProps = {
   icon: string;
   /** Controls if this dialog is open by default (when mounted) */
   defaultOpen?: boolean;
-  /** Content of the primary action button that will be rendered */
-  primaryActionTitle?: string;
-  /** Content of the secondary action button that will be rendered */
-  secondaryActionTitle?: string;
-  /** Content of the tertiary action button that will be rendered */
-  tertiaryActionTitle?: string;
-  /** Callback invoked when the primary action button is pressed */
-  onPressPrimaryAction?: () => void;
-  /** Callback invoked when the secondary action button is pressed */
-  onPressSecondaryAction?: () => void;
-  /** Callback invoked when the tertiary action button is pressed */
-  onPressTertiaryAction?: () => void;
 };
 
 function DialogContainer({
@@ -64,21 +48,17 @@ function DialogContainer({
   subtitle,
   icon,
   defaultOpen,
-  primaryActionTitle,
-  secondaryActionTitle,
-  tertiaryActionTitle,
-  onPressPrimaryAction,
-  onPressSecondaryAction,
-  onPressTertiaryAction,
 }: DialogContainerProps) {
   if (!Array.isArray(children)) {
     throw new Error("A Dialog.Container must receive an array of children");
   }
-  if (children.length !== 2) {
-    throw new Error("A Dialog.Container must have exactly two children");
+  if (children.length < 2 || children.length > 3) {
+    throw new Error(
+      "A Dialog.Container must have exactly two or three children"
+    );
   }
 
-  const [trigger, content] = Children.toArray(children);
+  const [trigger, content, footer] = children;
 
   const state = useOverlayTriggerState({
     defaultOpen,
@@ -91,12 +71,7 @@ function DialogContainer({
         title,
         subtitle,
         icon,
-        primaryActionTitle,
-        secondaryActionTitle,
-        tertiaryActionTitle,
-        onPressPrimaryAction,
-        onPressSecondaryAction,
-        onPressTertiaryAction,
+        footer,
       }}
     >
       <PressResponder isPressed={state.isOpen} onPress={state.toggle}>
@@ -118,18 +93,7 @@ function DialogContent({
   children,
   shouldCloseOnBlur = true,
 }: DialogContentProps) {
-  const {
-    close,
-    title,
-    subtitle,
-    icon,
-    primaryActionTitle = "Save",
-    secondaryActionTitle = "Cancel",
-    tertiaryActionTitle = "Change me",
-    onPressPrimaryAction,
-    onPressSecondaryAction,
-    onPressTertiaryAction,
-  } = useContext(DialogContext);
+  const { close, title, subtitle, icon, footer } = useContext(DialogContext);
 
   const overlayRef = useRef<HTMLDivElement>(null);
   const { overlayProps } = useOverlay(
@@ -174,54 +138,26 @@ function DialogContent({
               )}
               style={{ width: 580 }}
             >
-              <section>
-                <TitleGroup
-                  title={title}
-                  subtitle={subtitle}
-                  icon={icon}
-                  titleProps={titleProps}
-                  className={cn(
-                    "px-6 py-4",
-                    "bg-white dark:bg-gray-900",
-                    "border-b border-gray-300 dark:border-gray-600"
-                  )}
-                />
+              <TitleGroup
+                title={title}
+                subtitle={subtitle}
+                icon={icon}
+                titleProps={titleProps}
+                className={cn(
+                  "px-6 py-4",
+                  "bg-white dark:bg-gray-900",
+                  "border-b border-gray-300 dark:border-gray-600"
+                )}
+              />
+              <section
+                className={cn(
+                  "px-6 py-4",
+                  "border-b border-gray-300 dark:border-gray-600"
+                )}
+              >
+                {children(close)}
               </section>
-              <section className="px-6 py-4">{children(close)}</section>
-              {(onPressPrimaryAction ||
-                onPressSecondaryAction ||
-                onPressTertiaryAction) && (
-                <section
-                  className={cn(
-                    "flex justify-between",
-                    "px-6 py-2",
-                    "border-t border-gray-300 dark:border-gray-600"
-                  )}
-                >
-                  {(onPressPrimaryAction || onPressSecondaryAction) && (
-                    <div className="flex">
-                      {onPressPrimaryAction && (
-                        <Button
-                          variant="primary"
-                          onPress={onPressPrimaryAction}
-                        >
-                          {primaryActionTitle}
-                        </Button>
-                      )}
-                      {onPressSecondaryAction && (
-                        <Button variant="link" onPress={onPressSecondaryAction}>
-                          {secondaryActionTitle}
-                        </Button>
-                      )}
-                    </div>
-                  )}
-                  {onPressTertiaryAction && (
-                    <Button variant="link" onPress={onPressTertiaryAction}>
-                      {tertiaryActionTitle}
-                    </Button>
-                  )}
-                </section>
-              )}
+              {footer}
             </div>
             <DismissButton onDismiss={close} />
           </>
@@ -231,7 +167,16 @@ function DialogContent({
   );
 }
 
+type DialogFooterProps = {
+  children: React.ReactElement;
+};
+
+function DialogFooter({ children }: DialogFooterProps) {
+  return <div className="px-3 py-2">{children}</div>;
+}
+
 export const Dialog = {
   Container: DialogContainer,
   Content: DialogContent,
+  Footer: DialogFooter,
 };
