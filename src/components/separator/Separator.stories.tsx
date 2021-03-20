@@ -1,7 +1,7 @@
-import { storiesOf } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
-import { Separator } from "./Separator";
-import { Button } from "../button/Button";
+import { storiesOf } from "@storybook/react"
+import { action } from "@storybook/addon-actions"
+import { Separator } from "./Separator"
+import { Button } from "../button/Button"
 
 storiesOf("Lens/Separator", module)
   .add("Default", () => (
@@ -25,4 +25,4 @@ storiesOf("Lens/Separator", module)
         Right
       </Button>
     </>
-  ));
+  ))

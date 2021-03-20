@@ -1,8 +1,8 @@
-import { storiesOf } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
-import { Select, SelectOption } from "./Select";
+import { storiesOf } from "@storybook/react"
+import { action } from "@storybook/addon-actions"
+import { Select, SelectOption } from "./Select"
 
-type ProviderId = "planetscale" | "heroku" | "aws";
+type ProviderId = "planetscale" | "heroku" | "aws"
 
 const dynamicData: SelectOption<ProviderId>[] = [
   {
@@ -17,7 +17,7 @@ const dynamicData: SelectOption<ProviderId>[] = [
     key: "aws",
     title: "Amazon Web Services",
   },
-];
+]
 
 storiesOf("Lens/Select", module)
   .add("Default (with static data)", () => (
@@ -36,7 +36,9 @@ storiesOf("Lens/Select", module)
       options={dynamicData}
       onSelectionChange={action("onSelectionChange")}
     >
-      {option => <Select.Option key={option.key}>{option.title}</Select.Option>}
+      {(option) => (
+        <Select.Option key={option.key}>{option.title}</Select.Option>
+      )}
     </Select.Container>
   ))
   .add("With placeholder", () => (
@@ -67,4 +69,4 @@ storiesOf("Lens/Select", module)
       <Select.Option key="heroku">Heroku</Select.Option>
       <Select.Option key="aws">AWS</Select.Option>
     </Select.Container>
-  ));
+  ))

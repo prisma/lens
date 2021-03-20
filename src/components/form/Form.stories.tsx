@@ -1,8 +1,8 @@
-import { storiesOf } from "@storybook/react";
-import { Form } from "./Form";
-import { TextField } from "../text-field/TextField";
-import { Select } from "../select/Select";
-import { ComboBox, ComboBoxOption } from "../combo-box/ComboBox";
+import { storiesOf } from "@storybook/react"
+import { Form } from "./Form"
+import { TextField } from "../text-field/TextField"
+import { Select } from "../select/Select"
+import { ComboBox, ComboBoxOption } from "../combo-box/ComboBox"
 
 type RepositoryId =
   | "prisma"
@@ -10,7 +10,7 @@ type RepositoryId =
   | "cloud"
   | "engines"
   | "examples"
-  | "docs";
+  | "docs"
 
 const repositories: ComboBoxOption<RepositoryId>[] = [
   {
@@ -37,7 +37,7 @@ const repositories: ComboBoxOption<RepositoryId>[] = [
     key: "docs",
     title: "prisma/docs",
   },
-];
+]
 
 storiesOf("Lens/Form", module).add("Default", () => (
   <Form>
@@ -49,7 +49,7 @@ storiesOf("Lens/Form", module).add("Default", () => (
       <Select.Option>Create a new Prisma project</Select.Option>
     </Select.Container>
     <ComboBox.Container label="Repository" options={repositories}>
-      {item => <ComboBox.Option key={item.key}>{item.title}</ComboBox.Option>}
+      {(item) => <ComboBox.Option key={item.key}>{item.title}</ComboBox.Option>}
     </ComboBox.Container>
   </Form>
-));
+))

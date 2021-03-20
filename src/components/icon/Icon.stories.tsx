@@ -1,5 +1,5 @@
-import { storiesOf } from "@storybook/react";
-import { Icon } from "./Icon";
+import { storiesOf } from "@storybook/react"
+import { Icon } from "./Icon"
 
 storiesOf("Lens/Icon", module)
   .add("Default", () => (
@@ -15,4 +15,4 @@ storiesOf("Lens/Icon", module)
       <Icon name="database" size="lg" />
       <Icon name="database" size="xl" />
     </div>
-  ));
+  ))

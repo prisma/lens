@@ -1,22 +1,22 @@
-import React, { forwardRef, useRef } from "react";
-import cn from "classnames";
-import { useButton } from "@react-aria/button";
-import { useHover } from "@react-aria/interactions";
-import { mergeProps } from "@react-aria/utils";
-import { FocusRing } from "../focus-ring/FocusRing";
+import React, { forwardRef, useRef } from "react"
+import cn from "classnames"
+import { useButton } from "@react-aria/button"
+import { useHover } from "@react-aria/interactions"
+import { mergeProps } from "@react-aria/utils"
+import { FocusRing } from "../focus-ring/FocusRing"
 
 type ButtonProps = React.PropsWithChildren<{
   /** Controls if this button should steal focus when mounted */
-  autoFocus?: boolean;
+  autoFocus?: boolean
   /** A ID that will be attached to the rendered button. Useful when targeting the button from tests */
-  id?: string;
+  id?: string
   /** Controls if this button is disabled */
-  isDisabled?: boolean;
+  isDisabled?: boolean
   /** Callback invoked when this button is pressed */
-  onPress?: () => void;
+  onPress?: () => void
   /** Controls what kind of button this is */
-  variant?: "primary" | "secondary" | "quiet" | "link";
-}>;
+  variant?: "primary" | "secondary" | "quiet" | "link"
+}>
 
 function Button(
   {
@@ -29,13 +29,13 @@ function Button(
   }: ButtonProps,
   forwardedRef: React.Ref<HTMLButtonElement>
 ) {
-  const _ref = useRef<HTMLButtonElement>(null);
-  const ref = (forwardedRef || _ref) as React.RefObject<HTMLButtonElement>;
+  const _ref = useRef<HTMLButtonElement>(null)
+  const ref = (forwardedRef || _ref) as React.RefObject<HTMLButtonElement>
   const { buttonProps, isPressed } = useButton(
     { id, isDisabled, autoFocus, onPress },
     ref
-  );
-  const { hoverProps, isHovered } = useHover({ isDisabled });
+  )
+  const { hoverProps, isHovered } = useHover({ isDisabled })
 
   return (
     <FocusRing autoFocus={autoFocus}>
@@ -80,10 +80,10 @@ function Button(
         {children}
       </button>
     </FocusRing>
-  );
+  )
 }
 
 const _Button = forwardRef(Button) as (
   props: ButtonProps & { ref?: React.Ref<HTMLButtonElement> }
-) => React.ReactElement;
-export { _Button as Button };
+) => React.ReactElement
+export { _Button as Button }

@@ -1,8 +1,8 @@
-import { storiesOf } from "@storybook/react";
-import { Card } from "./Card";
-import { Form } from "../form/Form";
-import { TextField } from "../text-field/TextField";
-import { Select } from "../select/Select";
+import { storiesOf } from "@storybook/react"
+import { Card } from "./Card"
+import { Form } from "../form/Form"
+import { TextField } from "../text-field/TextField"
+import { Select } from "../select/Select"
 
 storiesOf("Lens/Card", module)
   .add("Default", () => (
@@ -29,7 +29,7 @@ storiesOf("Lens/Card", module)
     <Card icon="server" title="Instance configuration" width={500} height={400}>
       {renderForm()}
     </Card>
-  ));
+  ))
 
 function renderForm() {
   return (
@@ -60,5 +60,5 @@ function renderForm() {
         <Select.Option key="1T">1 TB</Select.Option>
       </Select.Container>
     </Form>
-  );
+  )
 }

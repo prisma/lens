@@ -1,7 +1,7 @@
-import React, { Component, RefObject, createRef } from "react";
-import styled from "styled-components";
+import React, { Component, RefObject, createRef } from "react"
+import styled from "styled-components"
 
-import { theme } from "../theme";
+import { theme } from "../theme"
 
 const NavLinksWrapper = styled.div`
   color: ${theme.colors.gray400};
@@ -32,7 +32,7 @@ const NavLinksWrapper = styled.div`
       display: block;
     }
   }
-`;
+`
 const NavLinks = () => (
   <NavLinksWrapper>
     <a href="https://www.prisma.io/docs/getting-started/quickstart-typescript">
@@ -46,7 +46,7 @@ const NavLinks = () => (
       GitHub
     </a>
   </NavLinksWrapper>
-);
+)
 
 const MobileNavWrapper = styled.nav`
   position: relative;
@@ -80,48 +80,48 @@ const MobileNavWrapper = styled.nav`
   @media (max-width: ${theme.breakpoints.phone}) {
     display: block;
   }
-`;
+`
 class MobileNav extends Component<{}, { open: boolean }> {
-  private readonly nav: RefObject<HTMLElement>;
+  private readonly nav: RefObject<HTMLElement>
 
   state = {
     open: false,
-  };
+  }
 
   constructor(props: {}) {
-    super(props);
-    this.nav = createRef();
+    super(props)
+    this.nav = createRef()
   }
 
   toggle = () => {
-    this.setState({ open: !this.state.open });
-  };
+    this.setState({ open: !this.state.open })
+  }
 
   maybeClose = (e: MouseEvent) => {
-    const target = e.target;
+    const target = e.target
     if (!this.state.open) {
-      return;
+      return
     }
     if (!(target instanceof HTMLElement)) {
-      return;
+      return
     }
     if (this.nav.current && this.nav.current.contains(target)) {
-      return;
+      return
     }
     this.setState({
       open: false,
-    });
-  };
+    })
+  }
 
   componentDidMount() {
     if (typeof window !== "undefined") {
-      window.addEventListener("click", this.maybeClose);
+      window.addEventListener("click", this.maybeClose)
     }
   }
 
   componentWillUnmount() {
     if (typeof window !== "undefined") {
-      window.removeEventListener("click", this.maybeClose);
+      window.removeEventListener("click", this.maybeClose)
     }
   }
 
@@ -135,7 +135,7 @@ class MobileNav extends Component<{}, { open: boolean }> {
           <NavLinks />
         </div>
       </MobileNavWrapper>
-    );
+    )
   }
 }
 
@@ -180,7 +180,7 @@ const NavWrapper = styled.nav`
       display: none;
     }
   }
-`;
+`
 const Nav = () => (
   <NavWrapper>
     <a href="https://www.prisma.io/">
@@ -213,16 +213,16 @@ const Nav = () => (
       </a>
     </div>
   </NavWrapper>
-);
+)
 
 const HeaderWrapper = styled.div`
   padding: 0 ${theme.space[16]};
   display: flex;
-`;
+`
 const WebsiteHeader = () => (
   <HeaderWrapper>
     <Nav />
     <MobileNav />
   </HeaderWrapper>
-);
-export { WebsiteHeader };
+)
+export { WebsiteHeader }

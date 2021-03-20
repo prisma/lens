@@ -1,46 +1,46 @@
-import React, { Children, createContext, useContext, useRef } from "react";
-import cn from "classnames";
-import { useDialog } from "@react-aria/dialog";
-import { FocusScope } from "@react-aria/focus";
-import { PressResponder } from "@react-aria/interactions";
+import React, { createContext, useContext, useRef } from "react"
+import cn from "classnames"
+import { useDialog } from "@react-aria/dialog"
+import { FocusScope } from "@react-aria/focus"
+import { PressResponder } from "@react-aria/interactions"
 import {
   DismissButton,
   OverlayContainer,
   useModal,
   useOverlay,
   usePreventScroll,
-} from "@react-aria/overlays";
-import { mergeProps } from "@react-aria/utils";
+} from "@react-aria/overlays"
+import { mergeProps } from "@react-aria/utils"
 import {
   OverlayTriggerState,
   useOverlayTriggerState,
-} from "@react-stately/overlays";
-import { TitleGroup } from "../title-group/TitleGroup";
+} from "@react-stately/overlays"
+import { TitleGroup } from "../title-group/TitleGroup"
 
 type DialogContext = {
-  close: OverlayTriggerState["close"];
-  title: string;
-  subtitle: string;
-  icon: string;
-  footer?: React.ReactElement;
-};
+  close: OverlayTriggerState["close"]
+  title: string
+  subtitle: string
+  icon: string
+  footer?: React.ReactElement
+}
 // @ts-expect-error: Because we cannot supply a valid value at initialization
-const DialogContext = createContext<DialogContext>(null);
+const DialogContext = createContext<DialogContext>(null)
 
 type DialogContainerProps = {
   /** The dialog's trigger and its body, in order */
   children:
     | [React.ReactElement, React.ReactElement]
-    | [React.ReactElement, React.ReactElement, React.ReactElement];
+    | [React.ReactElement, React.ReactElement, React.ReactElement]
   /** Title of the dialog */
-  title: string;
+  title: string
   /** A short description about what this dialog accomplishes. */
-  subtitle: string;
+  subtitle: string
   /** A decorative icon */
-  icon: string;
+  icon: string
   /** Controls if this dialog is open by default (when mounted) */
-  defaultOpen?: boolean;
-};
+  defaultOpen?: boolean
+}
 
 function DialogContainer({
   children,
@@ -50,19 +50,19 @@ function DialogContainer({
   defaultOpen,
 }: DialogContainerProps) {
   if (!Array.isArray(children)) {
-    throw new Error("A Dialog.Container must receive an array of children");
+    throw new Error("A Dialog.Container must receive an array of children")
   }
   if (children.length < 2 || children.length > 3) {
     throw new Error(
       "A Dialog.Container must have exactly two or three children"
-    );
+    )
   }
 
-  const [trigger, content, footer] = children;
+  const [trigger, content, footer] = children
 
   const state = useOverlayTriggerState({
     defaultOpen,
-  });
+  })
 
   return (
     <DialogContext.Provider
@@ -79,23 +79,23 @@ function DialogContainer({
       </PressResponder>
       {state.isOpen && content}
     </DialogContext.Provider>
-  );
+  )
 }
 
 /** The Dialog's Content when opened */
 type DialogContentProps = {
-  children: (close: () => void) => React.ReactElement;
+  children: (close: () => void) => React.ReactElement
   /** Controls if this dialog should close when it goes out of focus */
-  shouldCloseOnBlur?: boolean;
-};
+  shouldCloseOnBlur?: boolean
+}
 
 function DialogContent({
   children,
   shouldCloseOnBlur = true,
 }: DialogContentProps) {
-  const { close, title, subtitle, icon, footer } = useContext(DialogContext);
+  const { close, title, subtitle, icon, footer } = useContext(DialogContext)
 
-  const overlayRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null)
   const { overlayProps } = useOverlay(
     {
       isDismissable: true,
@@ -103,17 +103,17 @@ function DialogContent({
       onClose: close,
     },
     overlayRef
-  );
+  )
 
-  usePreventScroll();
-  const { modalProps } = useModal();
+  usePreventScroll()
+  const { modalProps } = useModal()
 
   const { dialogProps, titleProps } = useDialog(
     {
       role: "dialog",
     },
     overlayRef
-  );
+  )
 
   return (
     <OverlayContainer>
@@ -164,19 +164,19 @@ function DialogContent({
         </FocusScope>
       </div>
     </OverlayContainer>
-  );
+  )
 }
 
 type DialogFooterProps = {
-  children: React.ReactElement;
-};
+  children: React.ReactElement
+}
 
 function DialogFooter({ children }: DialogFooterProps) {
-  return <div className="px-3 py-2">{children}</div>;
+  return <div className="px-3 py-2">{children}</div>
 }
 
 export const Dialog = {
   Container: DialogContainer,
   Content: DialogContent,
   Footer: DialogFooter,
-};
+}

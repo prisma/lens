@@ -1,12 +1,12 @@
-import React from "react";
-import { themes } from "@storybook/theming";
-import { LensProvider } from "../src/provider/LensProvider";
+import React from "react"
+import { themes } from "@storybook/theming"
+import { LensProvider } from "../src/provider/LensProvider"
 
-const pkg = require("../package.json");
-const version = pkg.version;
+const pkg = require("../package.json")
+const version = pkg.version
 
 export const decorators = [
-  Story => (
+  (Story) => (
     <LensProvider>
       <div className="fixed top-0 left-0 p-2 text-xs text-gray-500">
         {version}
@@ -16,7 +16,7 @@ export const decorators = [
       </div>
     </LensProvider>
   ),
-];
+]
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -27,4 +27,4 @@ export const parameters = {
     light: { ...themes.light, appContentBg: "#F7FAFC" /* gray-100 */ },
     stylePreview: true,
   },
-};
+}

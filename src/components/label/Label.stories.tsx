@@ -1,4 +1,4 @@
-import { storiesOf } from "@storybook/react";
-import { Label } from "./Label";
+import { storiesOf } from "@storybook/react"
+import { Label } from "./Label"
 
-storiesOf("Lens/Label", module).add("Default", () => <Label>Label</Label>);
+storiesOf("Lens/Label", module).add("Default", () => <Label>Label</Label>)

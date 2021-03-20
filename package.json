@@ -29,6 +29,7 @@
   "homepage": "https://github.com/prisma/lens#readme",
   "scripts": {
     "dev": "start-storybook -p 6006 -s public --ci",
+    "format": "prettier -w . --ignore-path .gitignore",
     "build": "rm -rf dist && NODE_ENV=production rollup -c",
     "build-storybook": "build-storybook -s public",
     "prepublishOnly": "npm run build"
@@ -78,6 +79,7 @@
     "chromatic": "5.7.0",
     "postcss": "8.2.8",
     "postcss-inline-base64": "6.2.0",
+    "prettier": "2.2.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "rollup": "2.42.0",

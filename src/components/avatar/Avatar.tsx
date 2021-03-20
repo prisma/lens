@@ -1,23 +1,23 @@
-import React from "react";
-import cn from "classnames";
-import { Button } from "../button/Button";
-import { Icon } from "../icon/Icon";
-import { Size, sizeToNumeric } from "../../utils/sizeToNumeric";
+import React from "react"
+import cn from "classnames"
+import { Button } from "../button/Button"
+import { Icon } from "../icon/Icon"
+import { Size, sizeToNumeric } from "../../utils/sizeToNumeric"
 
 type AvatarProps = {
   /** URL to the image resource to display */
-  url?: string;
+  url?: string
   /** A small description of this image */
-  label: string;
+  label: string
   /** Size of the Avatar */
-  size?: Size;
+  size?: Size
   /** Name of the user this Avatar belongs to */
-  name?: string;
+  name?: string
   /** Email of the user this Avatar belongs to */
-  email?: string;
+  email?: string
   /** Callback involed when this avatar is pressed */
-  onPress?: () => void;
-};
+  onPress?: () => void
+}
 
 export function Avatar({
   url,
@@ -27,10 +27,10 @@ export function Avatar({
   email,
   onPress,
 }: AvatarProps) {
-  const width = sizeToNumeric(size);
+  const width = sizeToNumeric(size)
 
   /* If the Avatar is clickable, treat it as a button, AKA no alt-text, otherwise add alt-text */
-  let avatar;
+  let avatar
   if (url) {
     avatar = (
       <img
@@ -40,7 +40,7 @@ export function Avatar({
         height={width}
         alt={onPress ? undefined : label}
       />
-    );
+    )
   } else {
     avatar = (
       <Icon
@@ -48,7 +48,7 @@ export function Avatar({
         size={size}
         className={cn("rounded-full", "bg-gray-100 dark:bg-gray-800", "p-1")}
       />
-    );
+    )
   }
 
   const nameAndEmail = (
@@ -65,15 +65,15 @@ export function Avatar({
         <span className="text-gray-600 dark:text-gray-300">{email}</span>
       </div>
     </div>
-  );
+  )
 
-  let rendered = avatar;
+  let rendered = avatar
   if (name || email) {
-    rendered = nameAndEmail;
+    rendered = nameAndEmail
   }
   if (onPress) {
-    rendered = <Button variant="quiet">{rendered}</Button>;
+    rendered = <Button variant="quiet">{rendered}</Button>
   }
 
-  return rendered;
+  return rendered
 }

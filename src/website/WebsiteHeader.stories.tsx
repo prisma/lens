@@ -1,14 +1,14 @@
-import React from "react";
+import React from "react"
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { Story, Meta } from "@storybook/react";
+import { Story, Meta } from "@storybook/react"
 
-import { WebsiteHeader } from "./WebsiteHeader";
+import { WebsiteHeader } from "./WebsiteHeader"
 
 export default {
   title: "Website/Header",
   component: WebsiteHeader,
-} as Meta;
+} as Meta
 
-const Template: Story = args => <WebsiteHeader {...args} />;
+const Template: Story = (args) => <WebsiteHeader {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})

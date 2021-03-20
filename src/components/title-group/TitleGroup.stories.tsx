@@ -1,5 +1,5 @@
-import { storiesOf } from "@storybook/react";
-import { TitleGroup } from "./TitleGroup";
+import { storiesOf } from "@storybook/react"
+import { TitleGroup } from "./TitleGroup"
 
 storiesOf("Lens/TitleGroup", module).add("Default", () => (
   <TitleGroup
@@ -7,4 +7,4 @@ storiesOf("Lens/TitleGroup", module).add("Default", () => (
     title="New Project"
     subtitle="Create a new project or connect to an existing one on Github"
   />
-));
+))

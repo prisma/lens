@@ -1,15 +1,15 @@
-import React from "react";
-import styled from "styled-components";
+import React from "react"
+import styled from "styled-components"
 
-import { colorPrimitives, theme } from "../../src/theme";
+import { colorPrimitives, theme } from "../../src/theme"
 
 const StyledColor = styled.div<{ bgColor: string; textColor: string }>`
   display: flex;
   padding: 32px;
   font-family: ${theme.fonts.text};
-  background: ${p => p.bgColor};
-  color: ${p => p.textColor};
-`;
+  background: ${(p) => p.bgColor};
+  color: ${(p) => p.textColor};
+`
 
 const Colortiles = () => {
   return Object.entries(colorPrimitives).map(([colorKey, color]) => (
@@ -23,17 +23,17 @@ const Colortiles = () => {
       </div>
       {color}
     </StyledColor>
-  ));
-};
+  ))
+}
 
-const colorForBg = colorName => {
+const colorForBg = (colorName) => {
   if (
     Number(colorName.slice(colorName.length - 3)) > 600 ||
     colorName == "black"
   ) {
-    return "white";
+    return "white"
   }
-  return "black";
-};
+  return "black"
+}
 
-export default Colortiles;
+export default Colortiles

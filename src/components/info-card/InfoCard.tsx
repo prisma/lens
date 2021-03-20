@@ -1,20 +1,20 @@
-import React from "react";
-import cn from "classnames";
-import { Card } from "../card/Card";
-import { Icon } from "../icon/Icon";
-import { Title } from "../../typography/title/Title";
-import { Label } from "../label/Label";
+import React from "react"
+import cn from "classnames"
+import { Card } from "../card/Card"
+import { Icon } from "../icon/Icon"
+import { Title } from "../../typography/title/Title"
+import { Label } from "../label/Label"
 
 type InfoCardContainerProps = React.PropsWithChildren<{
   /** An identifying icon */
-  icon?: string;
+  icon?: string
   /** The title of the Card */
-  title?: string;
+  title?: string
   /** If provided, fixes the Card's width */
-  width?: number;
+  width?: number
   /** If provided, fixes the Card's width */
-  height?: number;
-}>;
+  height?: number
+}>
 
 /** An InfoCard displays */
 function InfoCardContainer({
@@ -33,15 +33,15 @@ function InfoCardContainer({
 
       {children}
     </Card>
-  );
+  )
 }
 
 type InfoCardRowProps = {
   /** A name for this row */
-  label: string;
+  label: string
   /** This row's value */
-  children: string;
-};
+  children: string
+}
 
 function InfoCardRow({ label, children }: InfoCardRowProps) {
   return (
@@ -63,10 +63,10 @@ function InfoCardRow({ label, children }: InfoCardRowProps) {
         {children}
       </td>
     </tr>
-  );
+  )
 }
 
 export const InfoCard = {
   Container: InfoCardContainer,
   Row: InfoCardRow,
-};
+}

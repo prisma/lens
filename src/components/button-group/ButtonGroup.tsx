@@ -1,14 +1,14 @@
-import React, { Children } from "react";
+import React, { Children } from "react"
 
 type ButtonGroupProps = {
   children:
     | React.ReactElement
     | [React.ReactElement, React.ReactElement]
-    | [React.ReactElement, React.ReactElement, React.ReactElement];
-};
+    | [React.ReactElement, React.ReactElement, React.ReactElement]
+}
 
 export function ButtonGroup({ children }: ButtonGroupProps) {
-  const buttons = Children.toArray(children);
+  const buttons = Children.toArray(children)
 
   if (buttons.length === 1 || buttons.length === 2) {
     return (
@@ -16,7 +16,7 @@ export function ButtonGroup({ children }: ButtonGroupProps) {
         {buttons.length === 1 && children}
         {buttons.length === 2 && children}
       </section>
-    );
+    )
   } else {
     return (
       <section className="flex flex-grow justify-between">
@@ -26,6 +26,6 @@ export function ButtonGroup({ children }: ButtonGroupProps) {
         </div>
         {buttons[2]}
       </section>
-    );
+    )
   }
 }

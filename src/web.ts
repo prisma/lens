@@ -1,14 +1,14 @@
-import "./web.css";
+import "./web.css"
 
 // Globals
-export * from "./provider/LensWebProvider";
+export * from "./provider/LensWebProvider"
 
 // Themes
-export * from "./theme";
+export * from "./theme"
 
 // Typography
-export * from "./typography/eyebrow/Eyebrow";
+export * from "./typography/eyebrow/Eyebrow"
 
 // Website components
-export * from "./website/WebsiteHeader";
-export * from "./website/WebsiteFooter";
+export * from "./website/WebsiteHeader"
+export * from "./website/WebsiteFooter"

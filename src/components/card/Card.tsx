@@ -1,20 +1,20 @@
-import React from "react";
-import cn from "classnames";
-import { Icon } from "../icon/Icon";
-import { Title } from "../../typography/title/Title";
+import React from "react"
+import cn from "classnames"
+import { Icon } from "../icon/Icon"
+import { Title } from "../../typography/title/Title"
 
 type CardProps = React.PropsWithChildren<{
   /** An identifying icon */
-  icon?: string;
+  icon?: string
   /** The title of the Card */
-  title?: string;
+  title?: string
   /** If provided, fixes the Card's width */
-  width?: number;
+  width?: number
   /** If provided, fixes the Card's width */
-  height?: number;
+  height?: number
   /** Additional classes that will be attached to the Card. This is provided for layouting purposes. Avoid using classes that modify the card visually. */
-  className?: string;
-}>;
+  className?: string
+}>
 
 export function Card({
   children,
@@ -42,5 +42,5 @@ export function Card({
       )}
       <section>{children}</section>
     </div>
-  );
+  )
 }

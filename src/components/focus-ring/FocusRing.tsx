@@ -1,13 +1,13 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement } from "react"
 import {
   FocusRing as AriaFocusRing,
   FocusRingProps as AriaFocusRingProps,
-} from "@react-aria/focus";
+} from "@react-aria/focus"
 
 type FocusRingProps = AriaFocusRingProps & {
   /** Element to draw the FocusRing around */
-  children: ReactElement<any>;
-};
+  children: ReactElement<any>
+}
 
 export function FocusRing({ children, ...props }: FocusRingProps) {
   return (
@@ -17,5 +17,5 @@ export function FocusRing({ children, ...props }: FocusRingProps) {
     >
       {children}
     </AriaFocusRing>
-  );
+  )
 }

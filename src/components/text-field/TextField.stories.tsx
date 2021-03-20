@@ -1,6 +1,6 @@
-import { storiesOf } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
-import { TextField } from "./TextField";
+import { storiesOf } from "@storybook/react"
+import { action } from "@storybook/addon-actions"
+import { TextField } from "./TextField"
 
 storiesOf("Lens/TextField", module)
   .add("Default", () => (
@@ -22,4 +22,4 @@ storiesOf("Lens/TextField", module)
       defaultValue="falcon-9"
       onChange={action("onChange")}
     />
-  ));
+  ))

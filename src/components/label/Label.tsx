@@ -1,12 +1,12 @@
-import React from "react";
-import cn from "classnames";
+import React from "react"
+import cn from "classnames"
 
 type LabelProps = {
   /** The content of this label */
-  children: string;
+  children: string
   /** Additional props to spread over the label component */
-  labelProps?: React.LabelHTMLAttributes<HTMLLabelElement>;
-};
+  labelProps?: React.LabelHTMLAttributes<HTMLLabelElement>
+}
 
 export function Label({ children, labelProps }: LabelProps) {
   return (
@@ -19,5 +19,5 @@ export function Label({ children, labelProps }: LabelProps) {
     >
       {children}
     </label>
-  );
+  )
 }

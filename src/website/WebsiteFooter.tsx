@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
+import React from "react"
+import styled from "styled-components"
 
-import { theme } from "../theme";
+import { theme } from "../theme"
 
 const FooterSection = styled.div`
   margin: ${theme.space[96]} auto ${theme.space[256]} auto;
@@ -138,7 +138,7 @@ const FooterSection = styled.div`
       margin-top: ${theme.space[48]};
     }
   }
-`;
+`
 
 const WebsiteFooter = ({ newsletterComponent }: any) => (
   <FooterSection>
@@ -371,6 +371,6 @@ const WebsiteFooter = ({ newsletterComponent }: any) => (
       </div>
     </div>
   </FooterSection>
-);
+)
 
-export { WebsiteFooter };
+export { WebsiteFooter }

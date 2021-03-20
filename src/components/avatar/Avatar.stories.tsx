@@ -1,6 +1,6 @@
-import { storiesOf } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
-import { Avatar } from "./Avatar";
+import { storiesOf } from "@storybook/react"
+import { action } from "@storybook/addon-actions"
+import { Avatar } from "./Avatar"
 
 storiesOf("Lens/Avatar", module)
   .add("Default", () => (
@@ -23,4 +23,4 @@ storiesOf("Lens/Avatar", module)
       name="Lens User"
       email="lens@prisma.io"
     />
-  ));
+  ))

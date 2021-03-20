@@ -1,13 +1,13 @@
-import path from "path";
-import resolve from "@rollup/plugin-node-resolve";
-import commonjs from "@rollup/plugin-commonjs";
-import peerDepsExternal from "rollup-plugin-peer-deps-external";
-import postcss from "rollup-plugin-postcss";
-import typescript from "rollup-plugin-typescript2";
-import copy from "rollup-plugin-copy";
+import path from "path"
+import resolve from "@rollup/plugin-node-resolve"
+import commonjs from "@rollup/plugin-commonjs"
+import peerDepsExternal from "rollup-plugin-peer-deps-external"
+import postcss from "rollup-plugin-postcss"
+import typescript from "rollup-plugin-typescript2"
+import copy from "rollup-plugin-copy"
 
 function bundle(inputPath) {
-  const input = path.basename(inputPath, ".ts");
+  const input = path.basename(inputPath, ".ts")
   return {
     input: inputPath,
     output: [
@@ -34,7 +34,7 @@ function bundle(inputPath) {
         ],
       }),
     ],
-  };
+  }
 }
 
-export default [bundle("./src/lib.ts"), bundle("./src/web.ts")];
+export default [bundle("./src/lib.ts"), bundle("./src/web.ts")]

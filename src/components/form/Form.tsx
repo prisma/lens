@@ -1,6 +1,6 @@
-import React from "react";
+import React from "react"
 
-type FormProps = React.PropsWithChildren<{}>;
+type FormProps = React.PropsWithChildren<{}>
 
 export function Form({ children }: FormProps) {
   return (
@@ -9,5 +9,5 @@ export function Form({ children }: FormProps) {
         {children}
       </form>
     </>
-  );
+  )
 }

@@ -1,14 +1,14 @@
-import { storiesOf } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
-import { Table } from "./Table";
-import { Avatar } from "../avatar/Avatar";
-import { Button } from "../button/Button";
+import { storiesOf } from "@storybook/react"
+import { action } from "@storybook/addon-actions"
+import { Table } from "./Table"
+import { Avatar } from "../avatar/Avatar"
+import { Button } from "../button/Button"
 
 const dynamicColumns = [
   { key: "user", title: "User" },
   { key: "role", title: "Role" },
   { key: "manage", title: "Manage" },
-];
+]
 const dynamicData = [
   {
     id: 1,
@@ -43,7 +43,7 @@ const dynamicData = [
     isInvitationPending: true,
     role: "Viewer",
   },
-];
+]
 
 storiesOf("Lens/Table", module)
   .add("Default (with static data)", () => (
@@ -128,10 +128,10 @@ storiesOf("Lens/Table", module)
   .add("Default (with dynamic data)", () => (
     <Table.Container>
       <Table.Header columns={dynamicColumns}>
-        {column => <Table.Column>{column.key}</Table.Column>}
+        {(column) => <Table.Column>{column.key}</Table.Column>}
       </Table.Header>
       <Table.Content items={dynamicData}>
-        {user => (
+        {(user) => (
           <Table.Row key={user.id}>
             <Table.Cell>
               <Avatar
@@ -158,4 +158,4 @@ storiesOf("Lens/Table", module)
         </Button>
       </Table.Footer>
     </Table.Container>
-  ));
+  ))

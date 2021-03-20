@@ -1,11 +1,11 @@
-import { storiesOf } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
-import { chain } from "@react-aria/utils";
-import { Dialog } from "./Dialog";
-import { Button } from "../button/Button";
-import { Avatar } from "../avatar/Avatar";
-import { Select } from "../select/Select";
-import { ButtonGroup } from "../button-group/ButtonGroup";
+import { storiesOf } from "@storybook/react"
+import { action } from "@storybook/addon-actions"
+import { chain } from "@react-aria/utils"
+import { Dialog } from "./Dialog"
+import { Button } from "../button/Button"
+import { Avatar } from "../avatar/Avatar"
+import { Select } from "../select/Select"
+import { ButtonGroup } from "../button-group/ButtonGroup"
 
 storiesOf("Lens/Dialog", module)
   .add("Default", () => (
@@ -16,7 +16,7 @@ storiesOf("Lens/Dialog", module)
     >
       <Button>Dialog Trigger</Button>
       <Dialog.Content>
-        {close => (
+        {(close) => (
           <div className="flex justify-between">
             <Avatar
               url="/favicon.ico"
@@ -47,7 +47,7 @@ storiesOf("Lens/Dialog", module)
     >
       <Button>Dialog Trigger</Button>
       <Dialog.Content>
-        {close => (
+        {(close) => (
           <div className="flex justify-between">
             <Avatar
               url="/favicon.ico"
@@ -82,4 +82,4 @@ storiesOf("Lens/Dialog", module)
         </ButtonGroup>
       </Dialog.Footer>
     </Dialog.Container>
-  ));
+  ))

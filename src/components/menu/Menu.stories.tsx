@@ -1,7 +1,7 @@
-import { storiesOf } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
-import { Menu, MenuOption } from "./Menu";
-import { Button } from "../button/Button";
+import { storiesOf } from "@storybook/react"
+import { action } from "@storybook/addon-actions"
+import { Menu, MenuOption } from "./Menu"
+import { Button } from "../button/Button"
 
 type Action =
   | "edit"
@@ -10,7 +10,7 @@ type Action =
   | "invite-viewer"
   | "invite-collaborator"
   | "invite-developer"
-  | "invite-admin";
+  | "invite-admin"
 
 const dynamicData: MenuOption<Action>[] = [
   {
@@ -25,7 +25,7 @@ const dynamicData: MenuOption<Action>[] = [
     key: "delete",
     title: "Delete",
   },
-];
+]
 
 const dynamicDataWithChildren: MenuOption<Action>[] = [
   {
@@ -58,7 +58,7 @@ const dynamicDataWithChildren: MenuOption<Action>[] = [
     key: "delete",
     title: "Delete",
   },
-];
+]
 
 storiesOf("Lens/Menu", module)
   .add("Default (with static data)", () => (
@@ -86,7 +86,7 @@ storiesOf("Lens/Menu", module)
         options={dynamicData}
         onSelectionChange={action("onSelectionChange")}
       >
-        {item => <Menu.Option key={item.key}>{item.title}</Menu.Option>}
+        {(item) => <Menu.Option key={item.key}>{item.title}</Menu.Option>}
       </Menu.Content>
     </Menu.Container>
   ))
@@ -118,7 +118,7 @@ storiesOf("Lens/Menu", module)
         options={dynamicDataWithChildren}
         onSelectionChange={action("onSelectionChange")}
       >
-        {item => <Menu.Option key={item.key}>{item.title}</Menu.Option>}
+        {(item) => <Menu.Option key={item.key}>{item.title}</Menu.Option>}
       </Menu.Content>
     </Menu.Container>
-  ));
+  ))

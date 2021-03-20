@@ -56,10 +56,10 @@ npm publish # Publish package
 Integrating Lens into your project is as simple as wrapping your top level component with `LensProvider`.
 
 ```jsx
-import { LensProvider } from "@prisma/lens";
+import { LensProvider } from "@prisma/lens"
 
 function YourRootComponent() {
-  return <LensProvider>{/* Rest of your app */}</LensProvider>;
+  return <LensProvider>{/* Rest of your app */}</LensProvider>
 }
 ```
 
@@ -71,5 +71,5 @@ If your project uses Tailwind, Lens also exports a Tailwind preset that may be i
 // tailwind.config.js
 module.exports = {
   presets: [require("@prisma/lens/tailwind")],
-};
+}
 ```

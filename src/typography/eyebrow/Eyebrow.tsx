@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
-import { theme } from "../../theme";
+import { theme } from "../../theme"
 
 /**
  *  Eyebrows are to be used above heading elements for additional context
@@ -13,6 +13,6 @@ const Eyebrow = styled.p`
   text-transform: uppercase;
   margin-bottom: ${theme.space[16]};
   color: ${theme.colors.gray500};
-`;
+`
 
-export { Eyebrow };
+export { Eyebrow }

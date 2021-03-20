@@ -1,5 +1,5 @@
-import { storiesOf } from "@storybook/react";
-import { InfoCard } from "./InfoCard";
+import { storiesOf } from "@storybook/react"
+import { InfoCard } from "./InfoCard"
 
 storiesOf("Lens/InfoCard", module).add("Default", () => (
   <section className="w-96">
@@ -14,4 +14,4 @@ storiesOf("Lens/InfoCard", module).add("Default", () => (
       <InfoCard.Row label="Analytics">0</InfoCard.Row>
     </InfoCard.Container>
   </section>
-));
+))

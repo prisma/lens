@@ -1,5 +1,5 @@
-import { storiesOf } from "@storybook/react";
-import { FocusRing } from "./FocusRing";
+import { storiesOf } from "@storybook/react"
+import { FocusRing } from "./FocusRing"
 
 storiesOf("Lens/FocusRing", module).add("Default", () => (
   <FocusRing within>
@@ -7,4 +7,4 @@ storiesOf("Lens/FocusRing", module).add("Default", () => (
       Press Tab to focus me
     </div>
   </FocusRing>
-));
+))

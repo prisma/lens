@@ -1,52 +1,52 @@
-import React, { Children, useRef, createContext, useContext } from "react";
-import cn from "classnames";
-import { CollectionChildren, Node } from "@react-types/shared";
-import { mergeProps } from "@react-aria/utils";
-import { PressResponder } from "@react-aria/interactions";
-import { FocusScope } from "@react-aria/focus";
+import React, { Children, useRef, createContext, useContext } from "react"
+import cn from "classnames"
+import { CollectionChildren, Node } from "@react-types/shared"
+import { mergeProps } from "@react-aria/utils"
+import { PressResponder } from "@react-aria/interactions"
+import { FocusScope } from "@react-aria/focus"
 import {
   DismissButton,
   OverlayContainer,
   useOverlayPosition,
   useOverlay,
-} from "@react-aria/overlays";
+} from "@react-aria/overlays"
 import {
   useMenu,
   useMenuItem,
   useMenuSection,
   useMenuTrigger,
-} from "@react-aria/menu";
-import { useButton } from "@react-aria/button";
-import { Section, Item } from "@react-stately/collections";
-import { TreeState, useTreeState } from "@react-stately/tree";
-import { MenuTriggerState, useMenuTriggerState } from "@react-stately/menu";
+} from "@react-aria/menu"
+import { useButton } from "@react-aria/button"
+import { Section, Item } from "@react-stately/collections"
+import { TreeState, useTreeState } from "@react-stately/tree"
+import { MenuTriggerState, useMenuTriggerState } from "@react-stately/menu"
 
 type MenuContext = {
-  triggerRef: React.RefObject<HTMLElement>;
-  menuProps: React.HTMLAttributes<HTMLUListElement>;
-  close: MenuTriggerState["close"];
-};
+  triggerRef: React.RefObject<HTMLElement>
+  menuProps: React.HTMLAttributes<HTMLUListElement>
+  close: MenuTriggerState["close"]
+}
 // @ts-expect-error: We cannot provide a valid initial value, but TSC does not understand that it is okay
-const MenuContext = createContext<MenuContext>(null);
+const MenuContext = createContext<MenuContext>(null)
 
 /** Value for a single Option inside this Menu */
 export type MenuOption<Key extends string> = {
   /** A string that uniquely identifies this option */
-  key: Key;
+  key: Key
   /** The main text to display within this option */
-  title: string;
+  title: string
   /** Sub-options for this option */
-  children?: MenuOption<Key>[];
-};
+  children?: MenuOption<Key>[]
+}
 
 type MenuContainerProps = {
   /** The menu's trigger and its body, in order */
-  children: [React.ReactElement, React.ReactElement];
+  children: [React.ReactElement, React.ReactElement]
   /** Controls if this Menu will be open by default */
-  defaultOpen?: boolean;
+  defaultOpen?: boolean
   /** Controls if this Menu is disabled */
-  isDisabled?: boolean;
-};
+  isDisabled?: boolean
+}
 
 /**
  * A Menu is an overlay that allows you select a single option, then disappears
@@ -57,22 +57,22 @@ function MenuContainer({
   isDisabled,
 }: MenuContainerProps) {
   if (!Array.isArray(children) || children.length !== 2) {
-    throw new Error("Menu.Container must have exactly two children");
+    throw new Error("Menu.Container must have exactly two children")
   }
 
-  const [trigger, content] = Children.toArray(children);
+  const [trigger, content] = Children.toArray(children)
 
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null)
   const state = useMenuTriggerState({
     defaultOpen,
     closeOnSelect: true,
-  });
-  const { buttonProps, isPressed } = useButton({ isDisabled }, triggerRef);
+  })
+  const { buttonProps, isPressed } = useButton({ isDisabled }, triggerRef)
   const { menuProps, menuTriggerProps } = useMenuTrigger(
     { ...buttonProps, type: "menu" },
     state,
     triggerRef
-  );
+  )
 
   return (
     <MenuContext.Provider value={{ triggerRef, menuProps, close: state.close }}>
@@ -89,21 +89,21 @@ function MenuContainer({
         {state.isOpen && content}
       </section>
     </MenuContext.Provider>
-  );
+  )
 }
 
 type MenuContentProps<OptionKey extends string> = {
   /** Children to render */
-  children: CollectionChildren<MenuOption<OptionKey>>;
+  children: CollectionChildren<MenuOption<OptionKey>>
   /** A string describing what this Menu represents */
-  title: string;
+  title: string
   /** A (dynamic) list of options and/or sections to render within this Menu.
    * This may be provided upfront instead of providing static children.
    */
-  options?: MenuOption<OptionKey>[];
+  options?: MenuOption<OptionKey>[]
   /** Callback invoked when the Menu's selection changes */
-  onSelectionChange?: (key: OptionKey) => void;
-};
+  onSelectionChange?: (key: OptionKey) => void
+}
 
 /**
  * Container for all Menu Sections and Options
@@ -114,15 +114,15 @@ function MenuContent<OptionKey extends string>({
   options,
   onSelectionChange,
 }: MenuContentProps<OptionKey>) {
-  const context = useContext(MenuContext);
+  const context = useContext(MenuContext)
 
-  const ref = useRef<HTMLUListElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLUListElement>(null)
+  const overlayRef = useRef<HTMLDivElement>(null)
   const state = useTreeState({
     children,
     items: options,
     selectionMode: "none",
-  });
+  })
   const { menuProps } = useMenu(
     {
       children,
@@ -131,20 +131,20 @@ function MenuContent<OptionKey extends string>({
     },
     state,
     ref
-  );
+  )
   const { overlayProps } = useOverlay(
     { isDismissable: true, shouldCloseOnBlur: true, onClose: context.close },
     overlayRef
-  );
+  )
   const { overlayProps: positionProps, placement } = useOverlayPosition({
     overlayRef,
     targetRef: context.triggerRef,
     offset: 6,
     containerPadding: 0,
     onClose: context.close,
-  });
+  })
   // Figure out trigger dimensions so we can size the overlay
-  const triggerDimensions = context.triggerRef.current?.getBoundingClientRect();
+  const triggerDimensions = context.triggerRef.current?.getBoundingClientRect()
 
   return (
     <OverlayContainer>
@@ -173,7 +173,7 @@ function MenuContent<OptionKey extends string>({
             )}
             style={{ maxHeight: "inherit" }}
           >
-            {[...state.collection].map(option => {
+            {[...state.collection].map((option) => {
               if (option.type === "section") {
                 return (
                   <MenuSection
@@ -183,7 +183,7 @@ function MenuContent<OptionKey extends string>({
                     section={option}
                     onAction={onSelectionChange}
                   />
-                );
+                )
               } else if (option.type === "item") {
                 return (
                   <MenuOption
@@ -192,9 +192,9 @@ function MenuContent<OptionKey extends string>({
                     state={state}
                     onAction={onSelectionChange}
                   />
-                );
+                )
               } else {
-                return null;
+                return null
               }
             })}
           </ul>
@@ -202,19 +202,19 @@ function MenuContent<OptionKey extends string>({
         </div>
       </FocusScope>
     </OverlayContainer>
-  );
+  )
 }
 
 type MenuSectionProps<OptionKey extends string> = {
   /** Title for this Section */
-  title: string;
+  title: string
   /** A group of similar options, only visual */
-  section: Node<MenuOption<OptionKey>>;
+  section: Node<MenuOption<OptionKey>>
   /** The global Menu state */
-  state: TreeState<any>;
+  state: TreeState<any>
   /** Callback invoked when an option is selected */
-  onAction?: (key: OptionKey) => void;
-};
+  onAction?: (key: OptionKey) => void
+}
 
 /**
  * A divided section of the Menu that may contain other options within
@@ -227,7 +227,7 @@ function MenuSection<OptionKey extends string>({
 }: MenuSectionProps<OptionKey>) {
   const { groupProps, headingProps, itemProps: optionProps } = useMenuSection({
     heading: title,
-  });
+  })
 
   return (
     <section {...groupProps} className={cn("p-2")}>
@@ -246,7 +246,7 @@ function MenuSection<OptionKey extends string>({
       </div>
       <li {...optionProps}>
         <ul>
-          {[...section.childNodes].map(i => (
+          {[...section.childNodes].map((i) => (
             <MenuOption
               key={i.key}
               option={i}
@@ -257,17 +257,17 @@ function MenuSection<OptionKey extends string>({
         </ul>
       </li>
     </section>
-  );
+  )
 }
 
 type MenuOptionProps<Key extends string> = {
   /** The option to render */
-  option: Node<MenuOption<Key>>;
+  option: Node<MenuOption<Key>>
   /** The global Menu state */
-  state: TreeState<any>;
+  state: TreeState<any>
   /** Callback invoked when this option is selected */
-  onAction?: (key: Key) => void;
-};
+  onAction?: (key: Key) => void
+}
 
 /** A single Menu Option */
 function MenuOption<Key extends string>({
@@ -275,10 +275,10 @@ function MenuOption<Key extends string>({
   state,
   onAction,
 }: MenuOptionProps<Key>) {
-  const context = useContext(MenuContext);
-  const ref = useRef<HTMLLIElement>(null);
+  const context = useContext(MenuContext)
+  const ref = useRef<HTMLLIElement>(null)
 
-  const isFocused = state.selectionManager.focusedKey === option.key;
+  const isFocused = state.selectionManager.focusedKey === option.key
   const { menuItemProps: menuOptionProps } = useMenuItem(
     {
       key: option.key,
@@ -288,7 +288,7 @@ function MenuOption<Key extends string>({
     },
     state,
     ref
-  );
+  )
 
   return (
     <li
@@ -305,7 +305,7 @@ function MenuOption<Key extends string>({
     >
       {option.rendered || option.value.title}
     </li>
-  );
+  )
 }
 
 export const Menu = {
@@ -313,4 +313,4 @@ export const Menu = {
   Section,
   Option: Item,
   Content: MenuContent,
-};
+}

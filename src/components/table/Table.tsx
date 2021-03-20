@@ -1,12 +1,12 @@
-import React, { createContext, useRef, useContext } from "react";
-import cn from "classnames";
+import React, { createContext, useRef, useContext } from "react"
+import cn from "classnames"
 import {
   useTable,
   useTableRow,
   useTableColumnHeader,
   useTableCell,
   useTableRowGroup,
-} from "@react-aria/table";
+} from "@react-aria/table"
 import {
   useTableState,
   TableState,
@@ -15,58 +15,58 @@ import {
   Row as ReactAriaTableRow,
   Column as ReactAriaTableColumn,
   Cell as ReactAriaTableCell,
-} from "@react-stately/table";
-import { Card } from "../card/Card";
+} from "@react-stately/table"
+import { Card } from "../card/Card"
 
 // @ts-expect-error: We cannot provide a valid initial value, but TSC does not understand that it is okay
-const TableContext = createContext<TableState<TableValue>>(null);
+const TableContext = createContext<TableState<TableValue>>(null)
 
 // This is not typed so that the consumer has the freedom to render whatever they like
-type TableValue = any;
+type TableValue = any
 
 /** Manually typed representation of a row / column / cell in react-aria. Reference: https://react-spectrum.adobe.com/react-stately/Collection.html */
 type ReactAriaTableNode = {
   /** User provided key */
-  key: React.Key;
+  key: React.Key
   /** Type of node. Can be `column` (for columns), `item` (for rows) or `cell` (for cells) */
-  type: string;
+  type: string
   /** Rendered React element */
-  rendered: React.ReactNode;
+  rendered: React.ReactNode
   /** User provided value from `Table.Header`'s `column` prop */
-  value: TableValue;
+  value: TableValue
   /** Depth of this column */
-  level: number;
+  level: number
   /** Indicates if this columns has more sub-columns */
-  hasChildNodes: boolean;
+  hasChildNodes: boolean
   /** Sub-columns */
-  childNodes: Iterable<ReactAriaTableNode>;
+  childNodes: Iterable<ReactAriaTableNode>
   /** Not really sure */
-  textValue: string;
-};
+  textValue: string
+}
 
 type TableContainerProps = {
-  children: React.ReactElement[];
-};
+  children: React.ReactElement[]
+}
 
 function TableContainer({ children }: TableContainerProps) {
-  const ref = useRef<HTMLTableElement>(null);
+  const ref = useRef<HTMLTableElement>(null)
 
   if (children.length < 2) {
-    throw new Error("A Table.Container must contain at least two children");
+    throw new Error("A Table.Container must contain at least two children")
   }
 
-  const [lastChild] = children.slice(children.length - 1);
-  let tableChildren = children;
+  const [lastChild] = children.slice(children.length - 1)
+  let tableChildren = children
   if (lastChild.type === TableFooter) {
     // If the last child is a TableFooter, remove it before passing children on to `useTableState` since react-stately does not understand it.
-    tableChildren = children.slice(0, children.length - 1);
+    tableChildren = children.slice(0, children.length - 1)
   }
 
   const state = useTableState<TableValue>({
     selectionMode: "none",
     children: tableChildren,
-  });
-  const { gridProps } = useTable({ ref }, state);
+  })
+  const { gridProps } = useTable({ ref }, state)
 
   return (
     <TableContext.Provider value={state}>
@@ -83,55 +83,55 @@ function TableContainer({ children }: TableContainerProps) {
         </table>
       </Card>
     </TableContext.Provider>
-  );
+  )
 }
 
 function TableHeader({}) {
-  const state = useContext(TableContext);
-  const ref = useRef<HTMLTableSectionElement>(null);
-  const { rowGroupProps } = useTableRowGroup();
+  const state = useContext(TableContext)
+  const ref = useRef<HTMLTableSectionElement>(null)
+  const { rowGroupProps } = useTableRowGroup()
 
   if (state.collection.headerRows.length == 0) {
     // If no header rows are defined, render nothing
-    return null;
+    return null
   }
 
   return (
     <thead ref={ref} {...rowGroupProps}>
-      {state.collection.headerRows.map(r => (
+      {state.collection.headerRows.map((r) => (
         <TableHeaderRow key={r.key} row={r} />
       ))}
     </thead>
-  );
+  )
 }
 
 type TableHeaderProps = {
-  row: ReactAriaTableNode;
-};
+  row: ReactAriaTableNode
+}
 function TableHeaderRow({ row }: TableHeaderProps) {
-  const state = useContext(TableContext);
-  const ref = useRef<HTMLTableRowElement>(null);
-  const { rowProps } = useTableRow({ node: row, ref }, state);
+  const state = useContext(TableContext)
+  const ref = useRef<HTMLTableRowElement>(null)
+  const { rowProps } = useTableRow({ node: row, ref }, state)
 
   return (
     <tr ref={ref} {...rowProps} className="table-row">
-      {[...row.childNodes].map(c => (
+      {[...row.childNodes].map((c) => (
         <TableColumnHeader key={c.key} column={c} />
       ))}
     </tr>
-  );
+  )
 }
 
 type TableColumnHeaderProps = {
-  column: ReactAriaTableNode;
-};
+  column: ReactAriaTableNode
+}
 function TableColumnHeader({ column }: TableColumnHeaderProps) {
-  const state = useContext(TableContext);
-  const ref = useRef<HTMLTableHeaderCellElement>(null);
+  const state = useContext(TableContext)
+  const ref = useRef<HTMLTableHeaderCellElement>(null)
   const { columnHeaderProps } = useTableColumnHeader(
     { node: column, ref },
     state
-  );
+  )
 
   return (
     <th
@@ -145,27 +145,27 @@ function TableColumnHeader({ column }: TableColumnHeaderProps) {
     >
       {column.rendered}
     </th>
-  );
+  )
 }
 
 function TableContent({}) {
-  const state = useContext(TableContext);
+  const state = useContext(TableContext)
   return (
     <tbody>
-      {[...state.collection.body.childNodes].map(row => (
+      {[...state.collection.body.childNodes].map((row) => (
         <TableRow key={row.key} row={row} />
       ))}
     </tbody>
-  );
+  )
 }
 
 type TableRowProps = {
-  row: ReactAriaTableNode;
-};
+  row: ReactAriaTableNode
+}
 function TableRow({ row }: TableRowProps) {
-  const ref = useRef<HTMLTableRowElement>(null);
-  const state = useContext(TableContext);
-  const { rowProps } = useTableRow({ node: row, ref }, state);
+  const ref = useRef<HTMLTableRowElement>(null)
+  const state = useContext(TableContext)
+  const { rowProps } = useTableRow({ node: row, ref }, state)
 
   return (
     <tr
@@ -180,16 +180,16 @@ function TableRow({ row }: TableRowProps) {
         <TableCell key={cell.key} cell={cell} />
       ))}
     </tr>
-  );
+  )
 }
 
 type TableCellProps = {
-  cell: ReactAriaTableNode;
-};
+  cell: ReactAriaTableNode
+}
 function TableCell({ cell }: TableCellProps) {
-  const ref = useRef<HTMLTableDataCellElement>(null);
-  const state = useContext(TableContext);
-  const { gridCellProps } = useTableCell({ node: cell, ref }, state);
+  const ref = useRef<HTMLTableDataCellElement>(null)
+  const state = useContext(TableContext)
+  const { gridCellProps } = useTableCell({ node: cell, ref }, state)
 
   return (
     <td
@@ -202,21 +202,21 @@ function TableCell({ cell }: TableCellProps) {
     >
       {cell.rendered}
     </td>
-  );
+  )
 }
 
 type TableFooterProps = {
-  children: React.ReactElement;
-};
+  children: React.ReactElement
+}
 function TableFooter({ children }: TableFooterProps) {
-  console.log(children);
+  console.log(children)
   return (
     <tfoot className="border-t border-gray-300 dark:border-gray-600">
       <tr>
         <td className="px-4 py-3">{children}</td>
       </tr>
     </tfoot>
-  );
+  )
 }
 
 export const Table = {
@@ -227,4 +227,4 @@ export const Table = {
   Column: ReactAriaTableColumn,
   Cell: ReactAriaTableCell,
   Footer: TableFooter,
-};
+}

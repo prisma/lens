@@ -1,7 +1,7 @@
-import { storiesOf } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
-import { ButtonGroup } from "./ButtonGroup";
-import { Button } from "../button/Button";
+import { storiesOf } from "@storybook/react"
+import { action } from "@storybook/addon-actions"
+import { ButtonGroup } from "./ButtonGroup"
+import { Button } from "../button/Button"
 
 storiesOf("Lens/ButtonGroup", module)
   .add("With primary button", () => (
@@ -33,4 +33,4 @@ storiesOf("Lens/ButtonGroup", module)
         Remove from project
       </Button>
     </ButtonGroup>
-  ));
+  ))
