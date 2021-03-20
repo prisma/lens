@@ -39,7 +39,7 @@ export type MenuOption<Key extends string> = {
   children?: MenuOption<Key>[]
 }
 
-type MenuContainerProps = {
+export type MenuContainerProps = {
   /** The menu's trigger and its body, in order */
   children: [React.ReactElement, React.ReactElement]
   /** Controls if this Menu will be open by default */
@@ -92,7 +92,7 @@ function MenuContainer({
   )
 }
 
-type MenuBodyProps<OptionKey extends string> = {
+export type MenuBodyProps<OptionKey extends string> = {
   /** Children to render */
   children: CollectionChildren<MenuOption<OptionKey>>
   /** A string describing what this Menu represents */

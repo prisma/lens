@@ -2,7 +2,7 @@ import React from "react"
 import cn from "classnames"
 import { Size, sizeToNumeric } from "../../utils/sizeToNumeric"
 
-type IconProps = {
+export type IconProps = {
   /** Name of the icon to render. Reference: https://feathericons.com */
   name: string
   /** Size of the icon */

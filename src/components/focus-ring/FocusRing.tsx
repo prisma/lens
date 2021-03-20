@@ -4,7 +4,7 @@ import {
   FocusRingProps as AriaFocusRingProps,
 } from "@react-aria/focus"
 
-type FocusRingProps = AriaFocusRingProps & {
+export type FocusRingProps = AriaFocusRingProps & {
   /** Element to draw the FocusRing around */
   children: ReactElement<any>
 }

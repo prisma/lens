@@ -27,7 +27,7 @@ type DialogContext = {
 // @ts-expect-error: Because we cannot supply a valid value at initialization
 const DialogContext = createContext<DialogContext>(null)
 
-type DialogContainerProps = {
+export type DialogContainerProps = {
   /** The dialog's trigger and its body, in order */
   children: [React.ReactElement, (close: () => void) => React.ReactElement]
   /** Title of the dialog */
@@ -84,7 +84,7 @@ function DialogContainer({
 }
 
 /** The Dialog's Body when opened */
-type DialogBodyProps = {
+export type DialogBodyProps = {
   /** The Dialog's body and footer, in order */
   children: React.ReactElement | [React.ReactElement, React.ReactElement]
 }
@@ -169,7 +169,7 @@ function DialogBody({ children }: DialogBodyProps) {
   )
 }
 
-type DialogFooterProps = {
+export type DialogFooterProps = {
   /** Content of the footer, ideally a Button or a ButtonGroup. */
   children: React.ReactElement
 }

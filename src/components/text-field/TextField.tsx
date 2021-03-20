@@ -13,7 +13,7 @@ import { mergeProps } from "@react-aria/utils"
 import { Label } from "../label/Label"
 import { FocusRing } from "../focus-ring/FocusRing"
 
-type TextFieldProps = PropsWithChildren<{
+export type TextFieldProps = PropsWithChildren<{
   /** Controls if this TextField should steal focus when mounted */
   autoFocus?: boolean
   /** Initial value to populate the TextField with */

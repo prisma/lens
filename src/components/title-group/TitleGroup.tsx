@@ -4,7 +4,7 @@ import { Icon } from "../icon/Icon"
 import { Title } from "../../typography/title/Title"
 import { Subtitle } from "../../typography/subtitle/Subtitle"
 
-type TitleGroupProps = {
+export type TitleGroupProps = {
   /** An identifying icon */
   icon: string
   /** The title of the TitleGroup */

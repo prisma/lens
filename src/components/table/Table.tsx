@@ -86,7 +86,9 @@ function TableContainer({ children }: TableContainerProps) {
   )
 }
 
-function TableHeader({}) {
+type TableHeaderProps = {}
+
+function TableHeader({}: TableHeaderProps) {
   const state = useContext(TableContext)
   const ref = useRef<HTMLTableSectionElement>(null)
   const { rowGroupProps } = useTableRowGroup()
@@ -105,10 +107,10 @@ function TableHeader({}) {
   )
 }
 
-type TableHeaderProps = {
+type TableHeaderRowProps = {
   row: ReactAriaTableNode
 }
-function TableHeaderRow({ row }: TableHeaderProps) {
+function TableHeaderRow({ row }: TableHeaderRowProps) {
   const state = useContext(TableContext)
   const ref = useRef<HTMLTableRowElement>(null)
   const { rowProps } = useTableRow({ node: row, ref }, state)
@@ -148,7 +150,7 @@ function TableColumnHeader({ column }: TableColumnHeaderProps) {
   )
 }
 
-function TableBody({}) {
+export function TableBody({}) {
   const state = useContext(TableContext)
   return (
     <tbody>
@@ -209,7 +211,6 @@ type TableFooterProps = {
   children: React.ReactElement
 }
 function TableFooter({ children }: TableFooterProps) {
-  console.log(children)
   return (
     <tfoot className="border-t border-gray-300 dark:border-gray-600">
       <tr>

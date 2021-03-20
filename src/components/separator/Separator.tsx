@@ -1,7 +1,7 @@
 import React from "react"
 import { useSeparator } from "@react-aria/separator"
 
-type SeparatorProps = {
+export type SeparatorProps = {
   orientation?: "vertical" | "horizontal"
 }
 

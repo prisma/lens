@@ -5,7 +5,7 @@ import { useHover } from "@react-aria/interactions"
 import { mergeProps } from "@react-aria/utils"
 import { FocusRing } from "../focus-ring/FocusRing"
 
-type ButtonProps = React.PropsWithChildren<{
+export type ButtonProps = React.PropsWithChildren<{
   /** Controls if this button should steal focus when mounted */
   autoFocus?: boolean
   /** A ID that will be attached to the rendered button. Useful when targeting the button from tests */

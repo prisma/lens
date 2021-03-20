@@ -27,7 +27,7 @@ export type ComboBoxOption<Key extends string> = {
   title: string
 }
 
-type ComboBoxContainerProps<OptionKey extends string> = {
+export type ComboBoxContainerProps<OptionKey extends string> = {
   /** Controls if this ComboBox should steal focus when first rendered */
   autoFocus?: boolean
   /** A list of Options to render inside this ComboBox */

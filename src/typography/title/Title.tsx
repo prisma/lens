@@ -1,7 +1,7 @@
 import React from "react"
 import cn from "classnames"
 
-type TitleProps = {
+export type TitleProps = {
   /** Content of the Title */
   children: string
   /** Additional classes that will be forwarded to the Title. Avoid classes that change the Title's visuals. */

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback, useEffect } from "react"
+import React, { useRef } from "react"
 import cn from "classnames"
 import { useSelect, HiddenSelect } from "@react-aria/select"
 import { SelectState, useSelectState } from "@react-stately/select"
@@ -26,7 +26,7 @@ export type SelectOption<Key extends string> = {
   title: string
 }
 
-type SelectContainerProps<OptionKey extends string> = {
+export type SelectContainerProps<OptionKey extends string> = {
   /** Controls if this Select should steal focus when first rendered */
   autoFocus?: boolean
   /** A list of Options to render inside this Select */

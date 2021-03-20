@@ -3,7 +3,7 @@ import cn from "classnames"
 import { Icon } from "../icon/Icon"
 import { Title } from "../../typography/title/Title"
 
-type CardProps = React.PropsWithChildren<{
+export type CardProps = React.PropsWithChildren<{
   /** An identifying icon */
   icon?: string
   /** The title of the Card */

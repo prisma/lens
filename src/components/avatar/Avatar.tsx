@@ -4,7 +4,7 @@ import { Button } from "../button/Button"
 import { Icon } from "../icon/Icon"
 import { Size, sizeToNumeric } from "../../utils/sizeToNumeric"
 
-type AvatarProps = {
+export type AvatarProps = {
   /** URL to the image resource to display */
   url?: string
   /** A small description of this image */

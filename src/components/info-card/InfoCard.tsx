@@ -5,7 +5,7 @@ import { Icon } from "../icon/Icon"
 import { Title } from "../../typography/title/Title"
 import { Label } from "../label/Label"
 
-type InfoCardContainerProps = React.PropsWithChildren<{
+export type InfoCardContainerProps = React.PropsWithChildren<{
   /** An identifying icon */
   icon?: string
   /** The title of the Card */

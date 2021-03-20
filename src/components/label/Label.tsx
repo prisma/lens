@@ -1,7 +1,7 @@
 import React from "react"
 import cn from "classnames"
 
-type LabelProps = {
+export type LabelProps = {
   /** The content of this label */
   children: string
   /** Additional props to spread over the label component */

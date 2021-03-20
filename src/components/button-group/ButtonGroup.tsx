@@ -1,6 +1,6 @@
 import React, { Children } from "react"
 
-type ButtonGroupProps = {
+export type ButtonGroupProps = {
   children:
     | React.ReactElement
     | [React.ReactElement, React.ReactElement]
