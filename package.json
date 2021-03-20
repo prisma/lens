@@ -8,7 +8,7 @@
   "exports": {
     ".": "./dist/lib.js",
     "./tailwind": "./dist/tailwind.js",
-    "./web": "./dist/web.js"
+    "./dist/web": "./dist/web.js"
   },
   "files": [
     "dist"
@@ -88,7 +88,7 @@
     "storybook-dark-mode": "1.0.8-canary.108.3214.0",
     "styled-components": "5.2.1",
     "tailwindcss": "2.0.4",
-    "tslib": "^2.1.0",
+    "tslib": "2.1.0",
     "typescript": "4.2.3"
   },
   "peerDependencies": {

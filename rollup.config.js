@@ -27,11 +27,11 @@ function bundle(inputPath) {
       postcss(),
       resolve(),
       commonjs(),
-      typescript({
-        clean: true,
-      }),
+      typescript(),
       copy({
-        targets: [{ src: "tailwind.config.js", dest: "dist/tailwind.js" }],
+        targets: [
+          { src: "tailwind.config.js", dest: "dist", rename: "tailwind.js" },
+        ],
       }),
     ],
   };
