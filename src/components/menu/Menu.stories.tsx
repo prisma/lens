@@ -66,14 +66,14 @@ storiesOf("Lens/Menu", module)
       <Menu.Container>
         <Button variant="quiet">Menu Trigger</Button>
 
-        <Menu.Content
+        <Menu.Body
           title="Project Actions"
           onSelectionChange={action("onSelectionChange")}
         >
           <Menu.Option key="edit">Edit</Menu.Option>
           <Menu.Option key="invite">Invite</Menu.Option>
           <Menu.Option key="delete">Delete</Menu.Option>
-        </Menu.Content>
+        </Menu.Body>
       </Menu.Container>
     </div>
   ))
@@ -81,20 +81,20 @@ storiesOf("Lens/Menu", module)
     <Menu.Container>
       <Button variant="quiet">Menu Trigger</Button>
 
-      <Menu.Content
+      <Menu.Body
         title="Project Actions"
         options={dynamicData}
         onSelectionChange={action("onSelectionChange")}
       >
         {(item) => <Menu.Option key={item.key}>{item.title}</Menu.Option>}
-      </Menu.Content>
+      </Menu.Body>
     </Menu.Container>
   ))
   .add("Default with Sections (with static data)", () => (
     <Menu.Container>
       <Button variant="quiet">Menu Trigger</Button>
 
-      <Menu.Content
+      <Menu.Body
         title="Project Actions"
         onSelectionChange={action("onSelectionChange")}
       >
@@ -106,19 +106,19 @@ storiesOf("Lens/Menu", module)
           <Menu.Option key="prisma">Prisma</Menu.Option>
           <Menu.Option key="netlify">Netlify</Menu.Option>
         </Menu.Section>
-      </Menu.Content>
+      </Menu.Body>
     </Menu.Container>
   ))
   .add("Default with Sections (with dynamic data)", () => (
     <Menu.Container>
       <Button variant="quiet">Menu Trigger</Button>
 
-      <Menu.Content
+      <Menu.Body
         title="Project Actions"
         options={dynamicDataWithChildren}
         onSelectionChange={action("onSelectionChange")}
       >
         {(item) => <Menu.Option key={item.key}>{item.title}</Menu.Option>}
-      </Menu.Content>
+      </Menu.Body>
     </Menu.Container>
   ))

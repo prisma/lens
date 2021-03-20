@@ -78,7 +78,7 @@ function TableContainer({ children }: TableContainerProps) {
           {...gridProps}
         >
           <TableHeader />
-          <TableContent />
+          <TableBody />
           {lastChild}
         </table>
       </Card>
@@ -148,7 +148,7 @@ function TableColumnHeader({ column }: TableColumnHeaderProps) {
   )
 }
 
-function TableContent({}) {
+function TableBody({}) {
   const state = useContext(TableContext)
   return (
     <tbody>
@@ -222,7 +222,7 @@ function TableFooter({ children }: TableFooterProps) {
 export const Table = {
   Container: TableContainer,
   Header: ReactAriaTableHeader,
-  Content: ReactAriaTableBody,
+  Body: ReactAriaTableBody,
   Row: ReactAriaTableRow,
   Column: ReactAriaTableColumn,
   Cell: ReactAriaTableCell,

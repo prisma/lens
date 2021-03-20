@@ -53,7 +53,7 @@ storiesOf("Lens/Table", module)
         <Table.Column key="role">Role</Table.Column>
         <Table.Column key="manage">Manage</Table.Column>
       </Table.Header>
-      <Table.Content>
+      <Table.Body>
         <Table.Row>
           <Table.Cell>
             <Avatar
@@ -117,7 +117,7 @@ storiesOf("Lens/Table", module)
             </Button>
           </Table.Cell>
         </Table.Row>
-      </Table.Content>
+      </Table.Body>
       <Table.Footer>
         <Button variant="secondary" onPress={action("onPress")}>
           Invite a new member
@@ -130,7 +130,7 @@ storiesOf("Lens/Table", module)
       <Table.Header columns={dynamicColumns}>
         {(column) => <Table.Column>{column.key}</Table.Column>}
       </Table.Header>
-      <Table.Content items={dynamicData}>
+      <Table.Body items={dynamicData}>
         {(user) => (
           <Table.Row key={user.id}>
             <Table.Cell>
@@ -151,7 +151,7 @@ storiesOf("Lens/Table", module)
             </Table.Cell>
           </Table.Row>
         )}
-      </Table.Content>
+      </Table.Body>
       <Table.Footer>
         <Button variant="secondary" onPress={action("onPress")}>
           Invite a new member

@@ -92,7 +92,7 @@ function MenuContainer({
   )
 }
 
-type MenuContentProps<OptionKey extends string> = {
+type MenuBodyProps<OptionKey extends string> = {
   /** Children to render */
   children: CollectionChildren<MenuOption<OptionKey>>
   /** A string describing what this Menu represents */
@@ -108,12 +108,12 @@ type MenuContentProps<OptionKey extends string> = {
 /**
  * Container for all Menu Sections and Options
  */
-function MenuContent<OptionKey extends string>({
+function MenuBody<OptionKey extends string>({
   children,
   title,
   options,
   onSelectionChange,
-}: MenuContentProps<OptionKey>) {
+}: MenuBodyProps<OptionKey>) {
   const context = useContext(MenuContext)
 
   const ref = useRef<HTMLUListElement>(null)
@@ -312,5 +312,5 @@ export const Menu = {
   Container: MenuContainer,
   Section,
   Option: Item,
-  Content: MenuContent,
+  Body: MenuBody,
 }
