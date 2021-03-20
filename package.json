@@ -35,6 +35,9 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
+    "feather-icons": "4.28.0"
+  },
+  "devDependencies": {
     "@react-aria/button": "3.3.1",
     "@react-aria/combobox": "3.0.0-alpha.1",
     "@react-aria/dialog": "3.1.2",
@@ -58,10 +61,6 @@
     "@react-stately/table": "3.0.0-alpha.7",
     "@react-stately/tree": "3.1.2",
     "@react-types/shared": "3.4.0",
-    "classnames": "2.2.6",
-    "feather-icons": "4.28.0"
-  },
-  "devDependencies": {
     "@rollup/plugin-commonjs": "17.1.0",
     "@rollup/plugin-node-resolve": "11.2.0",
     "@storybook/addon-actions": "6.2.0-rc.0",
@@ -77,6 +76,7 @@
     "@types/styled-components": "5.1.9",
     "autoprefixer": "10.2.5",
     "chromatic": "5.7.0",
+    "classnames": "2.2.6",
     "postcss": "8.2.8",
     "postcss-inline-base64": "6.2.0",
     "prettier": "2.2.1",
