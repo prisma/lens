@@ -1,4 +1,11 @@
-/** Inter Regular is already imported by lib.css */
+/** Inter Regular */
+@font-face {
+  font-family: "Inter";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("b64---./fonts/Inter-Regular.woff2---");
+}
 
 /** Inter Italic */
 @font-face {
@@ -27,7 +34,14 @@
   src: url("b64---./fonts/Inter-MediumItalic.woff2---");
 }
 
-/** Inter SemiBold is already imported by lib.css */
+/** Inter SemiBold */
+@font-face {
+  font-family: "Inter";
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("b64---./fonts/Inter-SemiBold.woff2---");
+}
 
 /** Inter SemiBold Italic */
 @font-face {

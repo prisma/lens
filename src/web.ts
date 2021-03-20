@@ -1,5 +1,3 @@
-import "./web.css"
-
 // Globals
 export * from "./provider/LensWebProvider"
 
