@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useRef } from "react"
+import React, { Children, createContext, useContext, useRef } from "react"
 import cn from "classnames"
 import { useDialog } from "@react-aria/dialog"
 import { FocusScope } from "@react-aria/focus"
@@ -22,16 +22,14 @@ type DialogContext = {
   title: string
   subtitle: string
   icon: string
-  footer?: React.ReactElement
+  shouldCloseOnBlur: boolean
 }
 // @ts-expect-error: Because we cannot supply a valid value at initialization
 const DialogContext = createContext<DialogContext>(null)
 
 type DialogContainerProps = {
   /** The dialog's trigger and its body, in order */
-  children:
-    | [React.ReactElement, React.ReactElement]
-    | [React.ReactElement, React.ReactElement, React.ReactElement]
+  children: [React.ReactElement, (close: () => void) => React.ReactElement]
   /** Title of the dialog */
   title: string
   /** A short description about what this dialog accomplishes. */
@@ -40,6 +38,8 @@ type DialogContainerProps = {
   icon: string
   /** Controls if this dialog is open by default (when mounted) */
   defaultOpen?: boolean
+  /** Controls if this dialog should close when it goes out of focus */
+  shouldCloseOnBlur?: boolean
 }
 
 function DialogContainer({
@@ -48,6 +48,7 @@ function DialogContainer({
   subtitle,
   icon,
   defaultOpen,
+  shouldCloseOnBlur = true,
 }: DialogContainerProps) {
   if (!Array.isArray(children)) {
     throw new Error("A Dialog.Container must receive an array of children")
@@ -58,7 +59,7 @@ function DialogContainer({
     )
   }
 
-  const [trigger, content, footer] = children
+  const [trigger, content] = children
 
   const state = useOverlayTriggerState({
     defaultOpen,
@@ -71,29 +72,28 @@ function DialogContainer({
         title,
         subtitle,
         icon,
-        footer,
+        shouldCloseOnBlur,
       }}
     >
       <PressResponder isPressed={state.isOpen} onPress={state.toggle}>
         {trigger}
       </PressResponder>
-      {state.isOpen && content}
+      {state.isOpen && content(close)}
     </DialogContext.Provider>
   )
 }
 
-/** The Dialog's Content when opened */
-type DialogContentProps = {
-  children: (close: () => void) => React.ReactElement
-  /** Controls if this dialog should close when it goes out of focus */
-  shouldCloseOnBlur?: boolean
+/** The Dialog's Body when opened */
+type DialogBodyProps = {
+  /** The Dialog's body and footer, in order */
+  children: React.ReactElement | [React.ReactElement, React.ReactElement]
 }
 
-function DialogContent({
-  children,
-  shouldCloseOnBlur = true,
-}: DialogContentProps) {
-  const { close, title, subtitle, icon, footer } = useContext(DialogContext)
+function DialogBody({ children }: DialogBodyProps) {
+  const [body, footer] = Children.toArray(children)
+  const { close, title, subtitle, icon, shouldCloseOnBlur } = useContext(
+    DialogContext
+  )
 
   const overlayRef = useRef<HTMLDivElement>(null)
   const { overlayProps } = useOverlay(
@@ -149,14 +149,16 @@ function DialogContent({
                   "border-b border-gray-300 dark:border-gray-600"
                 )}
               />
+
               <section
                 className={cn(
                   "px-6 py-4",
                   "border-b border-gray-300 dark:border-gray-600"
                 )}
               >
-                {children(close)}
+                {body}
               </section>
+
               {footer}
             </div>
             <DismissButton onDismiss={close} />
@@ -168,6 +170,7 @@ function DialogContent({
 }
 
 type DialogFooterProps = {
+  /** Content of the footer, ideally a Button or a ButtonGroup. */
   children: React.ReactElement
 }
 
@@ -177,6 +180,6 @@ function DialogFooter({ children }: DialogFooterProps) {
 
 export const Dialog = {
   Container: DialogContainer,
-  Content: DialogContent,
+  Body: DialogBody,
   Footer: DialogFooter,
 }
