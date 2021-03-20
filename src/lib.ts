@@ -8,6 +8,7 @@ export * from "./typography/subtitle/Subtitle";
 // Components
 export * from "./components/avatar/Avatar";
 export * from "./components/button/Button";
+export * from "./components/button-group/ButtonGroup";
 export * from "./components/card/Card";
 export * from "./components/combo-box/ComboBox";
 export * from "./components/dialog/Dialog";
