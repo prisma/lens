@@ -52,7 +52,7 @@ const MobileNavWrapper = styled.nav`
   position: relative;
   display: none;
 
-  .nav-menu {
+  .menu {
     outline: none;
     text-transform: uppercase;
     font-weight: bold;
@@ -128,7 +128,7 @@ class MobileNav extends Component<{}, { open: boolean }> {
   render() {
     return (
       <MobileNavWrapper ref={this.nav}>
-        <button className="nav-menu" onClick={this.toggle}>
+        <button className="menu" onClick={this.toggle}>
           menu
         </button>
         <div className="list" data-open={this.state.open}>
@@ -167,12 +167,12 @@ const NavWrapper = styled.nav`
     fill: ${theme.colors.white};
   }
 
-  .nav-menu {
+  .menu {
     display: flex;
   }
 
   @media (max-width: ${theme.breakpoints.phone}) {
-    .nav-menu {
+    .menu {
       display: none;
     }
 
@@ -200,7 +200,7 @@ const Nav = () => (
         />
       </svg>
     </a>
-    <div className="nav-menu">
+    <div className="menu">
       <NavLinks />
       <a href="https://github.com/prisma/prisma" className="github">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -1,7 +1,6 @@
 import React from "react"
-// also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 import { Story, Meta } from "@storybook/react"
-
+import { LensProvider } from "../provider/LensWebProvider"
 import { WebsiteHeader } from "./WebsiteHeader"
 
 export default {
@@ -9,6 +8,11 @@ export default {
   component: WebsiteHeader,
 } as Meta
 
-const Template: Story = (args) => <WebsiteHeader {...args} />
+const Template: Story = (args) => (
+  // Explicitly wrap in LensProvider to make sure the correct styles are loaded. This is temporary.
+  <LensProvider>
+    <WebsiteHeader {...args} />
+  </LensProvider>
+)
 
 export const Default = Template.bind({})

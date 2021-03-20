@@ -1,7 +1,6 @@
 import React from "react"
-// also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 import { Story, Meta } from "@storybook/react"
-
+import { LensProvider } from "../provider/LensWebProvider"
 import { WebsiteFooter } from "./WebsiteFooter"
 
 const dummyNL: React.FC = () => <></>
@@ -12,7 +11,10 @@ export default {
 } as Meta
 
 const Template: Story<{ newsletterComponent: any }> = (args) => (
-  <WebsiteFooter {...args} />
+  // Explicitly wrap in LensProvider to make sure the correct styles are loaded. This is temporary.
+  <LensProvider>
+    <WebsiteFooter {...args} />
+  </LensProvider>
 )
 
 export const Default = Template.bind({})
