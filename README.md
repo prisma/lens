@@ -9,16 +9,6 @@ Prisma Lens is a Design System, Guidelines and Component Library for the family 
 - **Visually low level** - The system should be recognizable at the level of typography and spacing, to make sure we have flexible theming options
 - **Code as source of truth -** it's more likely that there's going to be some sort of syncing happening from github / react elements to figma than the other way around. What's shipped or in this repository is the system, and also the deliverable. It is on the designers to make tools to support that easier.
 
-## Local Development
-
-Prisma Lens uses [Storybook](https://storybook.js.org/) as a preview mechanism for local development.
-
-```
-npm run storybook
-```
-
-Makre sure to run `npm run build` before pushing too to make sure client repositories pick it up on update.
-
 ## Artifacts
 
 ### Base Theme
@@ -37,6 +27,49 @@ Should loosely follow [the theme spec](https://system-ui.com/theme) with followi
 
 - [Feather](https://feathericons.com) icons for now
 
-### React Components
+## Local Development
 
-- built with `styled-components` and `styled-normalize`.
+Prisma Lens uses [Storybook](https://storybook.js.org/) as a preview mechanism for local development.
+
+```
+npm run dev
+```
+
+You can also use the VSCode task named `dev` to do the same thing. (<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> > Tasks: Run Task > `dev`)
+
+## Code Style
+
+## Publishing
+
+Publishes to NPM happen automatically when you push to the `main` branch, either directly, or via a pull request merge.
+
+To publish manually, you should:
+
+```
+npm login # Login to NPM
+npm version patch # Bump up the version
+npm publish # Publish package
+```
+
+## Usage in other Prisma projects
+
+Integrating Lens into your project is as simple as wrapping your top level component with `LensProvider`.
+
+```jsx
+import { LensProvider } from "@prisma/lens"
+
+function YourRootComponent() {
+  return <LensProvider>{/* Rest of your app */}</LensProvider>
+}
+```
+
+`LensProvider` takes care of loading styles, fonts, and additional setup needed for SSR.
+
+If your project uses Tailwind, Lens also exports a Tailwind preset that may be imported from `@prisma/lens/tailwind`. You should add this to your `tailwind.config.js`. This ensures that all colors etc. in your project match up with Lens.
+
+```js
+// tailwind.config.js
+module.exports = {
+  presets: [require("@prisma/lens/tailwind")],
+}
+```

@@ -1,27 +1,30 @@
-import React from 'react'
-import BaseStyle from '../src/components/BaseStyle'
-import {createGlobalStyle} from 'styled-components'
-import theme from '../src/theme'
-// Global decorator to apply the styles to all stories
+import React from "react"
+import { themes } from "@storybook/theming"
+import { LensProvider } from "../src/provider/LensProvider"
 
-//HACK - remove when we have proper normalize in BaseStyle
-const TempooraryGlobalStyle = createGlobalStyle`
- html{
-  font-family: ${theme.fonts.text}
- }
-`
+const pkg = require("../package.json")
+const version = pkg.version
 
 export const decorators = [
-  Story => (
-    <>
-      <TempooraryGlobalStyle/>
-      <BaseStyle />
-      <Story />
-    </>
+  (Story) => (
+    <LensProvider>
+      <div className="fixed top-0 left-0 p-2 text-xs text-gray-500">
+        {version}
+      </div>
+      <div className="flex justify-center" style={{ minWidth: 580 }}>
+        <Story />
+      </div>
+    </LensProvider>
   ),
-];
+]
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
-  layout: 'centered',
+  layout: "centered",
+  darkMode: {
+    darkClass: "dark",
+    dark: { ...themes.dark, appContentBg: "#12161E" },
+    light: { ...themes.light, appContentBg: "#F7FAFC" /* gray-100 */ },
+    stylePreview: true,
+  },
 }

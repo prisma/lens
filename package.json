@@ -1,21 +1,18 @@
 {
-  "name": "prisma-lens",
-  "version": "1.0.0",
+  "name": "@prisma/lens",
+  "version": "0.0.26",
   "description": "Prisma's design system",
-  "main": "dist/index.bundle.js",
-  "files": [
-    "./dist/index.bundle.js",
-    "./dist/index.bundle.js.map"
-  ],
-  "scripts": {
-    "type-check": "tsc --noEmit",
-    "type-check:watch": "npm run type-check -- --watch",
-    "build": "webpack --config webpack.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "chromatic": "npx chromatic --project-token ee25cc95f45f"
+  "main": "dist/lib.js",
+  "module": "dist/lib.esm.js",
+  "typings": "dist/lib.d.ts",
+  "exports": {
+    ".": "./dist/lib.js",
+    "./tailwind": "./dist/tailwind.js",
+    "./dist/web": "./dist/web.js"
   },
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/prisma/lens.git"
@@ -30,39 +27,75 @@
     "url": "https://github.com/prisma/lens/issues"
   },
   "homepage": "https://github.com/prisma/lens#readme",
-  "dependencies": {
-    "@babel/cli": "^7.11.6",
-    "@babel/core": "^7.11.6",
-    "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/preset-env": "^7.11.5",
-    "@babel/preset-react": "^7.10.4",
-    "@babel/preset-typescript": "^7.10.4",
-    "@babel/runtime": "^7.11.2",
-    "@types/react": "^16.9.49",
-    "@types/react-dom": "^16.9.8",
-    "babel-loader": "^8.1.0",
-    "babel-plugin-styled-components": "^1.11.1",
-    "clean-webpack-plugin": "^3.0.0",
-    "source-map-loader": "^1.1.0",
-    "ts-loader": "^8.0.3",
-    "typescript": "^4.0.2",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12",
-    "webpack-merge": "^5.1.4"
+  "scripts": {
+    "dev": "start-storybook -p 6006 -s public --ci",
+    "format": "prettier -w . --ignore-path .gitignore",
+    "build": "rm -rf dist && NODE_ENV=production rollup -c",
+    "build-storybook": "build-storybook -s public",
+    "prepublishOnly": "npm run build"
   },
-  "peerDependecies": {
-    "react": "16.12.0",
-    "react-dom": "16.12.0",
-    "styled-components": ">=4"
+  "dependencies": {
+    "feather-icons": "4.28.0"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^6.0.21",
-    "@storybook/addon-essentials": "^6.0.21",
-    "@storybook/addon-links": "^6.0.21",
-    "@storybook/react": "^6.0.21",
-    "@types/styled-components": "^5.1.3",
-    "chromatic": "^5.6.2",
-    "react-is": "^16.13.1",
-    "styled-components": "^5.2.0"
+    "@react-aria/button": "3.3.1",
+    "@react-aria/combobox": "3.0.0-alpha.1",
+    "@react-aria/dialog": "3.1.2",
+    "@react-aria/focus": "3.2.3",
+    "@react-aria/i18n": "3.3.0",
+    "@react-aria/interactions": "3.3.3",
+    "@react-aria/listbox": "3.2.4",
+    "@react-aria/menu": "3.1.4",
+    "@react-aria/overlays": "3.6.1",
+    "@react-aria/select": "3.3.0",
+    "@react-aria/separator": "3.1.1",
+    "@react-aria/ssr": "3.0.1",
+    "@react-aria/table": "3.0.0-alpha.8",
+    "@react-aria/textfield": "3.2.2",
+    "@react-aria/utils": "3.6.0",
+    "@react-stately/collections": "3.3.0",
+    "@react-stately/combobox": "3.0.0-alpha.1",
+    "@react-stately/menu": "3.2.1",
+    "@react-stately/overlays": "3.1.1",
+    "@react-stately/select": "3.1.1",
+    "@react-stately/table": "3.0.0-alpha.7",
+    "@react-stately/tree": "3.1.2",
+    "@react-types/shared": "3.4.0",
+    "@rollup/plugin-commonjs": "17.1.0",
+    "@rollup/plugin-node-resolve": "11.2.0",
+    "@storybook/addon-actions": "6.2.0-rc.0",
+    "@storybook/addon-essentials": "6.2.0-rc.0",
+    "@storybook/addon-links": "6.2.0-rc.0",
+    "@storybook/node-logger": "6.2.0-rc.0",
+    "@storybook/react": "6.2.0-rc.0",
+    "@tailwindcss/jit": "0.1.3",
+    "@types/classnames": "2.2.11",
+    "@types/node": "14.14.35",
+    "@types/react": "17.0.3",
+    "@types/react-dom": "17.0.2",
+    "@types/styled-components": "5.1.9",
+    "autoprefixer": "10.2.5",
+    "chromatic": "5.7.0",
+    "classnames": "2.2.6",
+    "postcss": "8.2.8",
+    "postcss-inline-base64": "6.2.0",
+    "prettier": "2.2.1",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "rollup": "2.42.0",
+    "rollup-plugin-copy": "3.4.0",
+    "rollup-plugin-peer-deps-external": "2.2.4",
+    "rollup-plugin-postcss": "4.0.0",
+    "rollup-plugin-typescript2": "0.30.0",
+    "storybook-dark-mode": "1.0.8-canary.108.3214.0",
+    "styled-components": "5.2.1",
+    "tailwindcss": "2.0.4",
+    "tslib": "2.1.0",
+    "typescript": "4.2.3"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
+    "styled-components": ">=5.2.1"
   }
 }

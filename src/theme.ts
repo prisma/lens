@@ -3,7 +3,7 @@ Theme file loosely based on System UI Theme Specification
 https://system-ui.com/theme/
 */
 
-export const colorPrimitives = {
+const colorPrimitives = {
   black: "#000000",
   white: "#FFFFFF",
   whiteFade50: "rgba(255,255,255,0.5)",
@@ -97,7 +97,7 @@ export const colorPrimitives = {
   pink700: "#B83280",
   pink800: "#97266D",
   pink900: "#702459",
-};
+}
 
 const colors = {
   ...colorPrimitives,
@@ -107,13 +107,13 @@ const colors = {
   invertedText: colorPrimitives.white,
   invertedTextSecondary: colorPrimitives.gray300,
   invertedTextTertiary: colorPrimitives.gray600,
-};
+}
 
 const fonts = {
   text: `"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"`,
   display: `"Barlow", system-ui,  Arial, sans-serif`,
   mono: `"Jetbrains Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace`,
-};
+}
 
 const baseFontSizes = {
   12: ".75rem",
@@ -131,7 +131,7 @@ const baseFontSizes = {
   56: "3.5rem",
   64: "4rem",
   72: "4.5rem",
-};
+}
 
 const fontSizes = {
   ...baseFontSizes,
@@ -141,7 +141,7 @@ const fontSizes = {
   display: baseFontSizes[48],
   displaySmall: baseFontSizes[24],
   displayLarge: baseFontSizes[72],
-};
+}
 
 const baseSpace = {
   0: "0rem",
@@ -165,7 +165,7 @@ const baseSpace = {
   192: "12rem",
   224: "14rem",
   256: "16rem",
-};
+}
 
 const space = {
   ...baseSpace,
@@ -174,25 +174,25 @@ const space = {
   small: baseSpace[8],
   medium: baseSpace[12],
   large: baseSpace[20],
-};
+}
 
 const radii = {
   small: "5px",
   medium: "8px",
-};
+}
 
 const shadows = {
   small: "0px 4px 8px rgba(60,45,111,0.1), 0px 1px 3px rgba(60,45,111,0.15)",
-};
+}
 
 const breakpoints = {
   phone: "640px",
   tablet: "767px",
-};
+}
 
 const transitions = {
   standard: "0.1s ease-in",
-};
+}
 
 // Components
 
@@ -208,7 +208,7 @@ const buttons = {
       active: colorPrimitives.green700,
     },
   },
-};
+}
 
 const theme = {
   colors,
@@ -220,6 +220,6 @@ const theme = {
   breakpoints,
   transitions,
   buttons,
-};
+}
 
-export default theme;
+export { theme, colorPrimitives }

@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Inter";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("b64---./fonts/Inter-Regular.woff2---");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("b64---./fonts/Inter-SemiBold.woff2---");
+}
+
+@font-face {
+  font-family: "Barlow";
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("b64---./fonts/Barlow-SemiBold.woff2---");
+}
+
+@font-face {
+  font-family: "JetbrainsMono";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("b64---./fonts/JetBrainsMono-Regular.woff2---");
+}
+
+* {
+  font-family: "Inter";
+}
+
+*:focus,
+*:active {
+  outline: none !important; /* Outline will always be added using Tailwind */
+}
+
+.input:not(.disabled) {
+  @apply bg-white dark:bg-gray-900;
+  @apply text-gray-800 dark:text-gray-100;
+}
+.input.disabled {
+  @apply bg-gray-100 dark:bg-gray-800;
+  @apply text-gray-400 dark:text-gray-400;
+  @apply cursor-not-allowed;
+}
+
+.menu {
+  @apply p-2 min-w-min overflow-auto;
+  @apply rounded-md shadow-md border border-gray-300 dark:border-gray-700;
+  @apply bg-white dark:bg-gray-900 text-sm text-gray-800 dark:text-gray-100;
+}

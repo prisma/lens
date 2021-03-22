@@ -1,5 +1,15 @@
-.history/
-node_modules/
-storybook-static/
+# dependencies
+node_modules
+
+# production
+dist
+storybook-static
+
+# misc
 .DS_Store
+.env
+
 yarn.lock
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
