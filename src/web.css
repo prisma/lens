@@ -78,3 +78,12 @@
   font-display: swap;
   src: url("b64---./fonts/Barlow-Bold.woff2---");
 }
+
+/** JetBrains Mono */
+@font-face {
+  font-family: "JetBrainsMono";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("b64---./fonts/JetBrainsMono-Regular.woff2---");
+}
