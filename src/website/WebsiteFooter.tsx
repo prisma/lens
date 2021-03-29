@@ -154,7 +154,7 @@ const WebsiteFooter = ({ newsletterComponent }: any) => (
         <h3 className="header">Products</h3>
         <a
           className="link"
-          href="https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client"
+          href="/docs/reference/tools-and-interfaces/prisma-client"
         >
           Prisma Client
         </a>
@@ -173,18 +173,18 @@ const WebsiteFooter = ({ newsletterComponent }: any) => (
       </div>
       <div className="group">
         <h3 className="header">Resources</h3>
-        <a className="link" href="https://www.prisma.io/docs/">
+        <a className="link" href="/docs/">
           Docs
         </a>
         <a
           className="link"
-          href="https://www.prisma.io/docs/getting-started/quickstart-typescript"
+          href="/docs/getting-started/quickstart-typescript"
         >
           Get Started
         </a>
         <a
           className="link"
-          href="https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/generating-prisma-client"
+          href="/docs/reference/tools-and-interfaces/prisma-client/generating-prisma-client"
         >
           API Reference
         </a>
@@ -194,16 +194,16 @@ const WebsiteFooter = ({ newsletterComponent }: any) => (
         <a className="link" href="https://www.howtographql.com/">
           How to GraphQL
         </a>
-        <a className="link" href="https://www.prisma.io/dataguide/">
+        <a className="link" href="/dataguide/">
           Data Guide
         </a>
       </div>
       <div className="group">
         <h3 className="header">Prisma With</h3>
-        <a className="link" href="https://www.prisma.io/nextjs">
+        <a className="link" href="/nextjs">
           Prisma with Next.js
         </a>
-        <a className="link" href="https://www.prisma.io/graphql">
+        <a className="link" href="/graphql">
           Prisma with GraphQL
         </a>
         <a className="link" href="/apollo">
@@ -223,7 +223,7 @@ const WebsiteFooter = ({ newsletterComponent }: any) => (
     <div className="column three">
       <div className="group">
         <h3 className="header">Community</h3>
-        <a className="link" href="https://www.prisma.io/community">
+        <a className="link" href="/community">
           Meet the Community
         </a>
         <a className="link" href="https://slack.prisma.io/">
@@ -252,10 +252,10 @@ const WebsiteFooter = ({ newsletterComponent }: any) => (
       </div>
       <div className="group">
         <h3 className="header">Company</h3>
-        <a className="link" href="https://www.prisma.io/about">
+        <a className="link" href="/about">
           About
         </a>
-        <a className="link jobs" href="https://www.prisma.io/jobs">
+        <a className="link jobs" href="/jobs">
           Jobs <span className="tag">We're hiring!</span>
         </a>
         <a
@@ -270,7 +270,7 @@ const WebsiteFooter = ({ newsletterComponent }: any) => (
         <a className="link" href="https://pris.ly/privacy">
           Terms & Privacy
         </a>
-        <a className="link" href="https://www.prisma.io/sitemap">
+        <a className="link" href="/sitemap">
           HTML Sitemap
         </a>
       </div>
