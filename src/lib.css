@@ -6,7 +6,7 @@
   font-family: "Inter";
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: fallback;
   src: url("b64---./fonts/Inter-Regular.woff2---");
 }
 
@@ -14,7 +14,7 @@
   font-family: "Inter";
   font-weight: 600;
   font-style: normal;
-  font-display: swap;
+  font-display: fallback;
   src: url("b64---./fonts/Inter-SemiBold.woff2---");
 }
 
@@ -22,7 +22,7 @@
   font-family: "Barlow";
   font-weight: 600;
   font-style: normal;
-  font-display: swap;
+  font-display: fallback;
   src: url("b64---./fonts/Barlow-SemiBold.woff2---");
 }
 
@@ -30,7 +30,7 @@
   font-family: "JetBrainsMono";
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: fallback;
   src: url("b64---./fonts/JetBrainsMono-Regular.woff2---");
 }
 
