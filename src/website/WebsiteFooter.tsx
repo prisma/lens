@@ -154,7 +154,7 @@ const WebsiteFooter = ({ newsletterComponent }: any) => (
         <h3 className="header">Products</h3>
         <a
           className="link"
-          href="/docs/concepts/components/prisma-client"
+          href="/client"
         >
           Prisma Client
         </a>
