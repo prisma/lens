@@ -184,7 +184,7 @@ const WebsiteFooter = ({ newsletterComponent }: any) => (
         </a>
         <a
           className="link"
-          href="/docs/reference/tools-and-interfaces/prisma-client/generating-prisma-client"
+          href="/docs/reference/api-reference/prisma-client-reference"
         >
           API Reference
         </a>
