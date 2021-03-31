@@ -221,7 +221,7 @@ const HeaderWrapper = styled.div`
 `
 
 type NavigationLinkProps = React.PropsWithoutRef<{
-  /** An identifying icon */
+  /** Should the internal links be absolute or relative */
   absoluteLinks?: boolean
 }>
 
