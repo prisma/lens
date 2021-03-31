@@ -33,15 +33,15 @@ const NavLinksWrapper = styled.div`
     }
   }
 `
-const NavLinks = () => (
+const NavLinks = ({ absoluteLinks = false }: NavigationLinkProps) => (
   <NavLinksWrapper>
-    <a href="/docs/getting-started/quickstart-typescript">
+    <a href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/docs/getting-started/quickstart-typescript`}>
       Quickstart
     </a>
-    <a href="/docs/">Docs</a>
-    <a href="/docs/about/faq">FAQ</a>
-    <a href="/community">Community</a>
-    <a href="/blog/">Blog</a>
+    <a href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/docs/`}>Docs</a>
+    <a href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/docs/about/faq`}>FAQ</a>
+    <a href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/community`}>Community</a>
+    <a href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/blog/`}>Blog</a>
     <a href="https://github.com/prisma" className="github">
       GitHub
     </a>
@@ -181,7 +181,7 @@ const NavWrapper = styled.nav`
     }
   }
 `
-const Nav = () => (
+const Nav = ({ absoluteLinks }: NavigationLinkProps) => (
   <NavWrapper>
     <a href="/">
       <svg
@@ -201,7 +201,7 @@ const Nav = () => (
       </svg>
     </a>
     <div className="menu">
-      <NavLinks />
+      <NavLinks absoluteLinks={absoluteLinks} />
       <a href="https://github.com/prisma/prisma" className="github">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -219,9 +219,15 @@ const HeaderWrapper = styled.div`
   padding: 0 ${theme.space[16]};
   display: flex;
 `
-const WebsiteHeader = () => (
+
+type NavigationLinkProps = React.PropsWithoutRef<{
+  /** An identifying icon */
+  absoluteLinks?: boolean
+}>
+
+const WebsiteHeader = ({ absoluteLinks = false }: NavigationLinkProps) => (
   <HeaderWrapper>
-    <Nav />
+    <Nav absoluteLinks={absoluteLinks} />
     <MobileNav />
   </HeaderWrapper>
 )
