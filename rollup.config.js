@@ -10,6 +10,7 @@ function bundle(inputPath) {
   const input = path.basename(inputPath, ".ts")
   return {
     input: inputPath,
+    external: ["react", "react-dom"],
     output: [
       {
         file: `./dist/${input}.js`,
