@@ -6,7 +6,7 @@ import { useOverlayPosition } from "@react-aria/overlays"
 import { useTooltip } from "@react-aria/tooltip"
 import { useTooltipTriggerState } from "@react-stately/tooltip"
 
-const ARROW_SIZE = 10 // in px
+const ARROW_SIZE = 5 // in px
 const SPACING = 8
 
 type Position = "top" | "bottom" | "left" | "right"
@@ -14,7 +14,7 @@ type Position = "top" | "bottom" | "left" | "right"
 export type TooltipProps = React.PropsWithChildren<{
   /** React Ref of an HTML Element to position this Tooltip against */
   target: React.RefObject<HTMLElement>
-  /** Position of the tooltip relative to the target. The Tooltip might still be flipped If there isn't enough space.*/
+  /** Position of the tooltip relative to the target. The Tooltip might still be flipped if there isn't enough space. */
   position?: Position
 }>
 
@@ -36,7 +36,7 @@ export function Tooltip({ children, target, position }: TooltipProps) {
     overlayRef: ref,
     shouldFlip: true,
     placement: position,
-    offset: SPACING + ARROW_SIZE / 2,
+    offset: SPACING + ARROW_SIZE,
   })
 
   // Calculate arrow position styles on your own, taking react-aria's position into account
@@ -60,23 +60,23 @@ export function Tooltip({ children, target, position }: TooltipProps) {
         ...(placement === "top"
           ? {
               top: overlayDimensions.height,
-              left: (overlayDimensions.width - ARROW_SIZE) / 2,
+              left: overlayDimensions.width / 2 - ARROW_SIZE,
             }
           : undefined),
         ...(placement === "bottom"
           ? {
-              left: (overlayDimensions.width - ARROW_SIZE) / 2,
+              left: overlayDimensions.width / 2 - ARROW_SIZE,
             }
           : undefined),
         ...(placement === "left"
           ? {
               left: overlayDimensions.width,
-              top: (overlayDimensions.height - ARROW_SIZE) / 2,
+              top: overlayDimensions.height / 2 - ARROW_SIZE,
             }
           : undefined),
         ...(placement === "right"
           ? {
-              top: (overlayDimensions.height - ARROW_SIZE) / 2,
+              top: overlayDimensions.height / 2 - ARROW_SIZE,
             }
           : undefined),
       },
@@ -91,12 +91,12 @@ export function Tooltip({ children, target, position }: TooltipProps) {
         ...overlayProps.style,
         ...(placement === "bottom"
           ? {
-              top: (overlayProps.style!.top as number) - ARROW_SIZE,
+              top: (overlayProps.style!.top as number) - ARROW_SIZE * 2,
             }
           : undefined), // Spacing isn't quite right with this placement, so we adjust it ourselves
         ...(placement === "right"
           ? {
-              left: (overlayProps.style!.left as number) - ARROW_SIZE,
+              left: (overlayProps.style!.left as number) - ARROW_SIZE * 2,
             }
           : undefined), // Spacing isn't quite right with this placement, so we adjust it ourselves
       }}
@@ -110,8 +110,8 @@ export function Tooltip({ children, target, position }: TooltipProps) {
           "text-white dark:text-white text-sm whitespace-nowrap"
         )}
         style={{
-          marginTop: placement === "bottom" ? ARROW_SIZE : undefined,
-          marginLeft: placement === "right" ? ARROW_SIZE : undefined,
+          marginTop: placement === "bottom" ? ARROW_SIZE * 2 : undefined,
+          marginLeft: placement === "right" ? ARROW_SIZE * 2 : undefined,
         }}
       >
         {children}
