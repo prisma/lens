@@ -10,7 +10,7 @@ storiesOf("Lens/Tooltip", module)
     const ref = useRef<HTMLDivElement>(null)
     return (
       <>
-        <div ref={ref} className="text-sm">
+        <div ref={ref} className="text-sm dark:text-white">
           Target
         </div>
         <Tooltip target={ref}>I'm a Tooltip</Tooltip>
