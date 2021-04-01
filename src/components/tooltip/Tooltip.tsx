@@ -35,11 +35,16 @@ export function Tooltip({ children, target, position }: TooltipProps) {
     overlayRef: ref,
     shouldFlip: !position, // Only flip if the position isn't explicitly supplied
     placement: position,
+    offset: 6,
+    crossOffset: 0,
   })
 
+  // Calculate arrow position styles on your own, taking react-aria's position into account
+  // We cannot expect react-aria to position the arrow 100% correctly since it does not know what our tooltip looks like
   const [arrowProps, setArrowProps] = useState<
     React.HTMLAttributes<HTMLDivElement>
   >(ariaArrowProps)
+
   useLayoutEffect(() => {
     // Figure out overlay dimensions so we can position the arrow accordingly
     const overlayDimensions = ref.current?.getBoundingClientRect()
@@ -53,31 +58,31 @@ export function Tooltip({ children, target, position }: TooltipProps) {
       ...arrowProps,
       style: {
         ...arrowProps.style,
-        ...(position === "top"
+        ...(placement === "top"
           ? {
               top: overlayDimensions.height,
               left: (overlayDimensions.width - ARROW_SIZE) / 2,
             }
           : {}),
-        ...(position === "bottom"
+        ...(placement === "bottom"
           ? {
               left: (overlayDimensions.width - ARROW_SIZE) / 2,
             }
           : {}),
-        ...(position === "left"
+        ...(placement === "left"
           ? {
               left: overlayDimensions.width,
               top: (overlayDimensions.height - ARROW_SIZE) / 2,
             }
           : {}),
-        ...(position === "right"
+        ...(placement === "right"
           ? {
               top: (overlayDimensions.height - ARROW_SIZE) / 2,
             }
           : {}),
       },
     })
-  }, [position])
+  }, [placement])
 
   return createPortal(
     <div
@@ -97,8 +102,6 @@ export function Tooltip({ children, target, position }: TooltipProps) {
         )}
         style={{
           marginTop: placement === "bottom" ? ARROW_SIZE : undefined,
-          marginBottom: placement === "top" ? ARROW_SIZE : undefined,
-          marginRight: placement === "left" ? ARROW_SIZE : undefined,
           marginLeft: placement === "right" ? ARROW_SIZE : undefined,
         }}
       >
@@ -115,7 +118,6 @@ type ArrowProps = {
 }
 
 function Arrow({ arrowProps, position }: ArrowProps) {
-  console.log(arrowProps.style)
   return (
     <div
       {...arrowProps}
