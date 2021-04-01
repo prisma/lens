@@ -1,4 +1,4 @@
-import React from "react"
+import React, { forwardRef } from "react"
 import cn from "classnames"
 import { Size, sizeToNumeric } from "../../utils/sizeToNumeric"
 
@@ -11,13 +11,17 @@ export type IconProps = {
   className?: string
 }
 
-export function Icon({ name, size = "md", className }: IconProps) {
+function Icon(
+  { name, size = "md", className }: IconProps,
+  forwardedRef: React.ForwardedRef<SVGSVGElement>
+) {
   const width = sizeToNumeric(size)
 
   // Exceptions to FeatherIcons
   if (name === "chevron-down") {
     return (
       <svg
+        ref={forwardedRef}
         width={width}
         height={width}
         viewBox="0 0 9 6"
@@ -31,6 +35,7 @@ export function Icon({ name, size = "md", className }: IconProps) {
 
   return (
     <svg
+      ref={forwardedRef}
       width={width}
       height={width}
       className={cn("text-gray-400 dark:text-gray-300", className)}
@@ -44,3 +49,8 @@ export function Icon({ name, size = "md", className }: IconProps) {
     </svg>
   )
 }
+
+const _Icon = forwardRef(Icon) as (
+  props: IconProps & { ref?: React.ForwardedRef<SVGSVGElement> }
+) => React.ReactElement
+export { _Icon as Icon }
