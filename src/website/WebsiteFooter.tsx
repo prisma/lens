@@ -140,7 +140,14 @@ const FooterSection = styled.div`
   }
 `
 
-const WebsiteFooter = ({ newsletterComponent }: any) => (
+type WebsiteFooterProps = React.PropsWithoutRef<{
+  /** Should the internal links be absolute or relative */
+  absoluteLinks?: boolean
+
+  newsletterComponent: any
+}>
+
+const WebsiteFooter = ({ newsletterComponent, absoluteLinks = false }: WebsiteFooterProps) => (
   <FooterSection>
     <div className="column one">
       <img
@@ -154,14 +161,14 @@ const WebsiteFooter = ({ newsletterComponent }: any) => (
         <h3 className="header">Products</h3>
         <a
           className="link"
-          href="/client"
+          href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/client`}
         >
           Prisma Client
         </a>
-        <a className="link" href="/migrate">
+        <a className="link" href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/migrate`}>
           Prisma Migrate
         </a>
-        <a className="link" href="/studio">
+        <a className="link" href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/studio`}>
           Prisma Studio
         </a>
         <a className="link" href="https://app.prisma.io/login">
@@ -173,18 +180,18 @@ const WebsiteFooter = ({ newsletterComponent }: any) => (
       </div>
       <div className="group">
         <h3 className="header">Resources</h3>
-        <a className="link" href="/docs/">
+        <a className="link" href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/docs/`}>
           Docs
         </a>
         <a
           className="link"
-          href="/docs/getting-started/quickstart-typescript"
+          href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/docs/getting-started/quickstart-typescript`}
         >
           Get Started
         </a>
         <a
           className="link"
-          href="/docs/reference/api-reference/prisma-client-reference"
+          href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/docs/reference/api-reference/prisma-client-reference`}
         >
           API Reference
         </a>
@@ -194,28 +201,28 @@ const WebsiteFooter = ({ newsletterComponent }: any) => (
         <a className="link" href="https://www.howtographql.com/">
           How to GraphQL
         </a>
-        <a className="link" href="/dataguide/">
+        <a className="link" href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/dataguide/`}>
           Data Guide
         </a>
       </div>
       <div className="group">
         <h3 className="header">Prisma With</h3>
-        <a className="link" href="/nextjs">
+        <a className="link" href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/nextjs`}>
           Prisma with Next.js
         </a>
-        <a className="link" href="/graphql">
+        <a className="link" href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/graphql`}>
           Prisma with GraphQL
         </a>
-        <a className="link" href="/apollo">
+        <a className="link" href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/apollo`}>
           Prisma with Apollo
         </a>
-        <a className="link" href="/nestjs">
+        <a className="link" href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/nestjs`}>
           Prisma with NestJS
         </a>
-        <a className="link" href="/express">
+        <a className="link" href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/express`}>
           Prisma with Express
         </a>
-        <a className="link" href="/hapi">
+        <a className="link" href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/hapi`}>
           Prisma with hapi
         </a>
       </div>
@@ -223,7 +230,7 @@ const WebsiteFooter = ({ newsletterComponent }: any) => (
     <div className="column three">
       <div className="group">
         <h3 className="header">Community</h3>
-        <a className="link" href="/community">
+        <a className="link" href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/community`}>
           Meet the Community
         </a>
         <a className="link" href="https://slack.prisma.io/">
@@ -252,10 +259,10 @@ const WebsiteFooter = ({ newsletterComponent }: any) => (
       </div>
       <div className="group">
         <h3 className="header">Company</h3>
-        <a className="link" href="/about">
+        <a className="link" href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/about`}>
           About
         </a>
-        <a className="link jobs" href="/jobs">
+        <a className="link jobs" href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/jobs`}>
           Jobs <span className="tag">We're hiring!</span>
         </a>
         <a
@@ -264,13 +271,13 @@ const WebsiteFooter = ({ newsletterComponent }: any) => (
         >
           Causes
         </a>
-        <a className="link" href="/blog/">
+        <a className="link" href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/blog/`}>
           Blog
         </a>
         <a className="link" href="https://pris.ly/privacy">
           Terms & Privacy
         </a>
-        <a className="link" href="/sitemap">
+        <a className="link" href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/sitemap`}>
           HTML Sitemap
         </a>
       </div>
