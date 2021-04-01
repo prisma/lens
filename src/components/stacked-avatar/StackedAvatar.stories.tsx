@@ -47,6 +47,17 @@ const avatars: AvatarProps[] = [
   },
 ]
 
-storiesOf("Lens/StackedAvatar", module).add("Default", () => (
-  <StackedAvatar avatars={avatars} />
-))
+storiesOf("Lens/StackedAvatar", module)
+  .add("Default", () => (
+    <StackedAvatar avatars={avatars.slice(0, 5)} onPress={action("onPress")} />
+  ))
+  .add("Sizes", () => (
+    <div className="flex flex-col items-center space-y-4">
+      <StackedAvatar size="xs" avatars={avatars.slice(0, 5)} />
+      <StackedAvatar size="sm" avatars={avatars.slice(0, 5)} />
+      <StackedAvatar size="md" avatars={avatars.slice(0, 5)} />
+      <StackedAvatar size="lg" avatars={avatars.slice(0, 5)} />
+      <StackedAvatar size="xl" avatars={avatars.slice(0, 5)} />
+    </div>
+  ))
+  .add("With truncation", () => <StackedAvatar avatars={avatars} />)
