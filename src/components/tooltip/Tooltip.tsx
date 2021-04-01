@@ -100,6 +100,12 @@ export function Tooltip({ children, target, position }: TooltipProps) {
             }
           : undefined), // Spacing isn't quite right with this placement, so we adjust it ourselves
       }}
+      className={cn({
+        "animate-slide-top": placement === "bottom",
+        "animate-slide-bottom": placement === "top",
+        "animate-slide-left": placement === "right",
+        "animate-slide-right": placement === "left",
+      })}
     >
       <Arrow arrowProps={arrowProps} position={placement as Position} />
       <div
