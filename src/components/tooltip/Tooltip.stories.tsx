@@ -25,7 +25,7 @@ storiesOf("Lens/Tooltip", module)
           Target
         </div>
         <Tooltip target={ref} position="top">
-          I always show up above my target
+          I will try to render above my target
         </Tooltip>
       </>
     )
@@ -38,7 +38,7 @@ storiesOf("Lens/Tooltip", module)
           Target
         </div>
         <Tooltip target={ref} position="bottom">
-          I always show up below my target
+          I will try to render below my target
         </Tooltip>
       </>
     )
@@ -51,7 +51,7 @@ storiesOf("Lens/Tooltip", module)
           Target
         </div>
         <Tooltip target={ref} position="left">
-          I always show up to the left of my target
+          I will try to render to the left of my target
         </Tooltip>
       </>
     )
@@ -64,7 +64,7 @@ storiesOf("Lens/Tooltip", module)
           Target
         </div>
         <Tooltip target={ref} position="right">
-          I always show up to the right of my target
+          I will try to render to the right of my target
         </Tooltip>
       </>
     )

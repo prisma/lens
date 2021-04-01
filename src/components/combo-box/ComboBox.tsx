@@ -218,7 +218,7 @@ function ComboBoxOptions<OptionKey extends string>({
   const { overlayProps: positionProps, placement } = useOverlayPosition({
     overlayRef,
     targetRef: containerRef,
-    offset: 6,
+    offset: 8,
     containerPadding: 0,
     onClose: state.close,
   })
