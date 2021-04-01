@@ -19,7 +19,7 @@ storiesOf("Lens/Dialog", module)
         <Dialog.Body>
           <div className="flex justify-between">
             <Avatar
-              url="/favicon.ico"
+              url="/avatar3.png"
               label="Lens User"
               name="Lens User"
               email="lens@prisma.io"
@@ -50,7 +50,7 @@ storiesOf("Lens/Dialog", module)
         <Dialog.Body>
           <div className="flex justify-between">
             <Avatar
-              url="/favicon.ico"
+              url="/avatar7.png"
               label="Lens User"
               name="Lens User"
               email="lens@prisma.io"
