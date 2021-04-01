@@ -36,8 +36,8 @@ export function Card({
     >
       {(icon || title) && (
         <section className="flex items-center">
-          {icon && <Icon name={icon} size="md"></Icon>}
-          {title && <Title className="ml-6">{title}</Title>}
+          {icon && <Icon name={icon} size="md" className="mr-6"></Icon>}
+          {title && <Title>{title}</Title>}
         </section>
       )}
       <section>{children}</section>
