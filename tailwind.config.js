@@ -4,6 +4,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        lightPageBg: "#F7FAFC",
+        darkPageBg: "#18181B",
         black: "#000000",
         "black-fade-50": "rgba(0,0,0,0.5)",
         white: "#FFFFFF",
