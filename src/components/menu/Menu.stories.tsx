@@ -27,36 +27,32 @@ const dynamicData: MenuOption<Action>[] = [
   },
 ]
 
-const dynamicDataWithChildren: MenuOption<Action>[] = [
+const dynamicDataMetaSectionData: MenuOption<Action>[] = [
   {
     key: "edit",
     title: "Edit",
   },
   {
-    key: "invite",
-    title: "Invite",
-    children: [
-      {
-        key: "invite-viewer",
-        title: "Invite as Viewer",
-      },
-      {
-        key: "invite-collaborator",
-        title: "Invite as Collaborator",
-      },
-      {
-        key: "invite-developer",
-        title: "Invite as Developer",
-      },
-      {
-        key: "invite-admin",
-        title: "Invite as Admin",
-      },
-    ],
-  },
-  {
     key: "delete",
     title: "Delete",
+  },
+]
+const dynamicDataInviteSectionData: MenuOption<Action>[] = [
+  {
+    key: "invite-viewer",
+    title: "Invite as Viewer",
+  },
+  {
+    key: "invite-collaborator",
+    title: "Invite as Collaborator",
+  },
+  {
+    key: "invite-developer",
+    title: "Invite as Developer",
+  },
+  {
+    key: "invite-admin",
+    title: "Invite as Admin",
   },
 ]
 
@@ -115,10 +111,14 @@ storiesOf("Lens/Menu", module)
 
       <Menu.Body
         title="Project Actions"
-        options={dynamicDataWithChildren}
         onSelectionChange={action("onSelectionChange")}
       >
-        {(item) => <Menu.Option key={item.key}>{item.title}</Menu.Option>}
+        <Menu.Section items={dynamicDataMetaSectionData} title="Meta">
+          {(option) => <Menu.Option>{option.title}</Menu.Option>}
+        </Menu.Section>
+        <Menu.Section items={dynamicDataInviteSectionData} title="Invite">
+          {(option) => <Menu.Option>{option.title}</Menu.Option>}
+        </Menu.Section>
       </Menu.Body>
     </Menu.Container>
   ))
