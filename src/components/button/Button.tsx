@@ -27,7 +27,7 @@ function Button(
     children,
     onPress,
   }: ButtonProps,
-  forwardedRef: React.Ref<HTMLButtonElement>
+  forwardedRef: React.ForwardedRef<HTMLButtonElement>
 ) {
   const _ref = useRef<HTMLButtonElement>(null)
   const ref = (forwardedRef || _ref) as React.RefObject<HTMLButtonElement>
@@ -85,6 +85,6 @@ function Button(
 }
 
 const _Button = forwardRef(Button) as (
-  props: ButtonProps & { ref?: React.Ref<HTMLButtonElement> }
+  props: ButtonProps & { ref?: React.ForwardedRef<HTMLButtonElement> }
 ) => React.ReactElement
 export { _Button as Button }

@@ -12,7 +12,7 @@ const dynamicColumns = [
 const dynamicData = [
   {
     id: 1,
-    avatar: "/favicon.ico",
+    avatar: "/avatar4.png",
     name: "Lens User 1",
     email: "lens@prisma.io",
     isOwner: true,
@@ -20,7 +20,7 @@ const dynamicData = [
   },
   {
     id: 2,
-    avatar: "/favicon.ico",
+    avatar: "/avatar3.png",
     name: "Lens User 2",
     email: "lens@prisma.io",
     isOwner: false,
@@ -28,7 +28,7 @@ const dynamicData = [
   },
   {
     id: 3,
-    avatar: "/favicon.ico",
+    avatar: "/avatar10.png",
     name: "Lens User 3",
     email: "lens@prisma.io",
     isOwner: false,
@@ -36,7 +36,7 @@ const dynamicData = [
   },
   {
     id: 4,
-    avatar: "/favicon.ico",
+    avatar: "/avatar9.png",
     name: "Lens User 4",
     email: "invited@prisma.io",
     isOwner: false,
@@ -57,7 +57,7 @@ storiesOf("Lens/Table", module)
         <Table.Row>
           <Table.Cell>
             <Avatar
-              url="/favicon.ico"
+              url="/avatar5.png"
               label="Lens User 1"
               name="Lens User 1"
               email="lens@prisma.io"
@@ -73,7 +73,7 @@ storiesOf("Lens/Table", module)
         <Table.Row>
           <Table.Cell>
             <Avatar
-              url="/favicon.ico"
+              url="/avatar2.png"
               label="Lens User 2"
               name="Lens User 2"
               email="lens@prisma.io"
@@ -89,7 +89,7 @@ storiesOf("Lens/Table", module)
         <Table.Row>
           <Table.Cell>
             <Avatar
-              url="/favicon.ico"
+              url="/avatar8.png"
               label="Lens User 3"
               name="Lens User 3"
               email="lens@prisma.io"
