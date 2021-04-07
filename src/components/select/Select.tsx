@@ -2,9 +2,9 @@ import React, { useRef } from "react"
 import cn from "classnames"
 import { useSelect, HiddenSelect } from "@react-aria/select"
 import { SelectState, useSelectState } from "@react-stately/select"
-import { Item } from "@react-stately/collections"
+import { Item, Section } from "@react-stately/collections"
 import { CollectionChildren, Node } from "@react-types/shared"
-import { useListBox, useOption } from "@react-aria/listbox"
+import { useListBox, useListBoxSection, useOption } from "@react-aria/listbox"
 import {
   DismissButton,
   OverlayContainer,
@@ -138,7 +138,7 @@ function SelectContainer<OptionKey extends string>({
           </button>
         </FocusRing>
         {state.isOpen && (
-          <SelectOptions state={state} menuProps={menuProps} buttonRef={ref} />
+          <SelectBody state={state} menuProps={menuProps} buttonRef={ref} />
         )}
       </section>
       {/* A HiddenSelect is used to render a hidden native <select>, which enables browser form autofill support */}
@@ -153,21 +153,21 @@ function SelectContainer<OptionKey extends string>({
   )
 }
 
-type SelectOptionsProps<OptionKey extends string> = {
+type SelectBodyProps<OptionKey extends string> = {
   /** Props to spread over the overlay */
   menuProps: React.HTMLAttributes<HTMLUListElement>
-  /** The global ComboBox state */
+  /** The global Select state */
   state: SelectState<SelectOption<OptionKey>>
   /** Ref of the Select button */
   buttonRef: React.RefObject<HTMLButtonElement>
 }
 
 /** An overlay that renders individual Select Options */
-function SelectOptions<OptionKey extends string>({
+function SelectBody<OptionKey extends string>({
   menuProps,
   state,
   buttonRef,
-}: SelectOptionsProps<OptionKey>) {
+}: SelectBodyProps<OptionKey>) {
   const overlayRef = useRef<HTMLDivElement>(null)
   const { overlayProps } = useOverlay(
     {
@@ -220,9 +220,28 @@ function SelectOptions<OptionKey extends string>({
             })}
             style={{ maxHeight: "inherit" }}
           >
-            {[...state.collection].map((option) => (
-              <SelectOption key={option.key} option={option} state={state} />
-            ))}
+            {[...state.collection].map((option) => {
+              if (option.type === "section") {
+                return (
+                  <SelectSection
+                    key={option.key}
+                    title={option.rendered as string}
+                    state={state}
+                    section={option}
+                  />
+                )
+              } else if (option.type === "item") {
+                return (
+                  <SelectOption
+                    key={option.key}
+                    option={option}
+                    state={state}
+                  />
+                )
+              } else {
+                return null
+              }
+            })}
           </ul>
           <DismissButton onDismiss={state.close} />
         </div>
@@ -231,10 +250,58 @@ function SelectOptions<OptionKey extends string>({
   )
 }
 
+type SelectSectionProps<OptionKey extends string> = {
+  /** Title for this Section */
+  title: string
+  /** A group of similar options, only visual */
+  section: Node<SelectOption<OptionKey>>
+  /** The global Select state */
+  state: SelectState<SelectOption<OptionKey>>
+}
+
+function SelectSection<OptionKey extends string>({
+  title,
+  section,
+  state,
+}: SelectSectionProps<OptionKey>) {
+  const {
+    groupProps,
+    headingProps,
+    itemProps: optionProps,
+  } = useListBoxSection({
+    heading: title,
+  })
+
+  return (
+    <section {...groupProps} className={cn("p-2")}>
+      {state.collection.getFirstKey() !== section.key && (
+        <li className="divide-solid"></li>
+      )}
+      <div
+        {...headingProps}
+        className={cn(
+          "mb-2",
+          "text-xs uppercase text-gray-500 dark:text-gray-400",
+          "select-none"
+        )}
+      >
+        {title}
+      </div>
+      <li {...optionProps}>
+        <ul>
+          {[...section.childNodes].map((i) => (
+            <SelectOption key={i.key} option={i} state={state} />
+          ))}
+        </ul>
+      </li>
+    </section>
+  )
+}
+
 type SelectOptionProps<Key extends string> = {
   /** The option to render */
   option: Node<SelectOption<Key>>
-  /** The global ComboBox state */
+  /** The global Select state */
   state: SelectState<SelectOption<Key>>
 }
 
@@ -278,5 +345,6 @@ function SelectOption<Key extends string>({
 
 export const Select = {
   Container: SelectContainer,
+  Section,
   Option: Item,
 }
