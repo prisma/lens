@@ -212,7 +212,7 @@ type MenuSectionProps<OptionKey extends string> = {
   section: Node<MenuOption<OptionKey>>
   /** The global Menu state */
   state: TreeState<any>
-  /** Callback invoked when an option is selected */
+  /** Callback invoked when an option inside this Section is selected */
   onAction?: (key: OptionKey) => void
 }
 

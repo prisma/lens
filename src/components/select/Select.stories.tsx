@@ -2,9 +2,39 @@ import { storiesOf } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
 import { Select, SelectOption } from "./Select"
 
-type ProviderId = "planetscale" | "heroku" | "aws"
+type ProviderId =
+  | "planetscale"
+  | "heroku"
+  | "aws"
+  | "elephantsql"
+  | "heroku-free"
 
 const dynamicData: SelectOption<ProviderId>[] = [
+  {
+    key: "planetscale",
+    title: "PlanetScale",
+  },
+  {
+    key: "heroku",
+    title: "Heroku",
+  },
+  {
+    key: "aws",
+    title: "Amazon Web Services",
+  },
+]
+
+const dynamicDataFreeProviders: SelectOption<ProviderId>[] = [
+  {
+    key: "elephantsql",
+    title: "ElephantSQL",
+  },
+  {
+    key: "heroku-free",
+    title: "Heroku Free",
+  },
+]
+const dynamicDataPaidProviders: SelectOption<ProviderId>[] = [
   {
     key: "planetscale",
     title: "PlanetScale",
@@ -27,7 +57,7 @@ storiesOf("Lens/Select", module)
     >
       <Select.Option key="planetscale">PlanetScale</Select.Option>
       <Select.Option key="heroku">Heroku</Select.Option>
-      <Select.Option key="aws">AWS</Select.Option>
+      <Select.Option key="aws">Amazon Web Services</Select.Option>
     </Select.Container>
   ))
   .add("Default (with dynamic data)", () => (
@@ -41,6 +71,40 @@ storiesOf("Lens/Select", module)
       )}
     </Select.Container>
   ))
+  .add("Default with sections (with static data)", () => (
+    <Select.Container
+      label="Database Provider"
+      onSelectionChange={action("onSelectionChange")}
+    >
+      <Select.Section title="Free">
+        <Select.Option key="elephantsql">ElephantSQL</Select.Option>
+        <Select.Option key="heroku">Heroku Free</Select.Option>
+      </Select.Section>
+      <Select.Section title="Paid">
+        <Select.Option key="planetscale">PlanetScale</Select.Option>
+        <Select.Option key="heroku">Heroku</Select.Option>
+        <Select.Option key="aws">Amazon Web Services</Select.Option>
+      </Select.Section>
+    </Select.Container>
+  ))
+  .add("Default with sections (with dynamic data)", () => (
+    <Select.Container
+      label="Database Provider"
+      options={dynamicData}
+      onSelectionChange={action("onSelectionChange")}
+    >
+      <Select.Section items={dynamicDataFreeProviders} title="Free">
+        {(option) => (
+          <Select.Option key={option.key}>{option.title}</Select.Option>
+        )}
+      </Select.Section>
+      <Select.Section items={dynamicDataPaidProviders} title="Paid">
+        {(option) => (
+          <Select.Option key={option.key}>{option.title}</Select.Option>
+        )}
+      </Select.Section>
+    </Select.Container>
+  ))
   .add("With placeholder", () => (
     <Select.Container
       label="Database Provider"
@@ -49,7 +113,7 @@ storiesOf("Lens/Select", module)
     >
       <Select.Option key="planetscale">PlanetScale</Select.Option>
       <Select.Option key="heroku">Heroku</Select.Option>
-      <Select.Option key="aws">AWS</Select.Option>
+      <Select.Option key="aws">Amazon Web Services</Select.Option>
     </Select.Container>
   ))
   .add("With a pre-selected option", () => (
@@ -60,13 +124,13 @@ storiesOf("Lens/Select", module)
     >
       <Select.Option key="planetscale">PlanetScale</Select.Option>
       <Select.Option key="heroku">Heroku</Select.Option>
-      <Select.Option key="aws">AWS</Select.Option>
+      <Select.Option key="aws">Amazon Web Services</Select.Option>
     </Select.Container>
   ))
   .add("Disabled", () => (
     <Select.Container label="Database Provider" isDisabled>
       <Select.Option key="planetscale">PlanetScale</Select.Option>
       <Select.Option key="heroku">Heroku</Select.Option>
-      <Select.Option key="aws">AWS</Select.Option>
+      <Select.Option key="aws">Amazon Web Services</Select.Option>
     </Select.Container>
   ))
