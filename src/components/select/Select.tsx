@@ -259,11 +259,11 @@ type SelectSectionProps<OptionKey extends string> = {
   state: SelectState<SelectOption<OptionKey>>
 }
 
-function SelectSection<Key extends string>({
+function SelectSection<OptionKey extends string>({
   title,
   section,
   state,
-}: SelectSectionProps<Key>) {
+}: SelectSectionProps<OptionKey>) {
   const {
     groupProps,
     headingProps,

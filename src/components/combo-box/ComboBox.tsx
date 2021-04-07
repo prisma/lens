@@ -3,9 +3,9 @@ import cn from "classnames"
 import { useComboBox } from "@react-aria/combobox"
 import { ComboBoxState, useComboBoxState } from "@react-stately/combobox"
 import { useFilter } from "@react-aria/i18n"
-import { useListBox, useOption } from "@react-aria/listbox"
+import { useListBox, useListBoxSection, useOption } from "@react-aria/listbox"
 import { useButton } from "@react-aria/button"
-import { Item } from "@react-stately/collections"
+import { Item, Section } from "@react-stately/collections"
 import { CollectionChildren, Node } from "@react-types/shared"
 import {
   DismissButton,
@@ -167,7 +167,7 @@ function ComboBoxContainer<OptionKey extends string>({
           </div>
         </FocusRing>
         {state.isOpen && (
-          <ComboBoxOptions
+          <ComboBoxBody
             {...listBoxProps}
             containerRef={containerRef}
             listBoxRef={listBoxRef}
@@ -180,7 +180,7 @@ function ComboBoxContainer<OptionKey extends string>({
   )
 }
 
-type ComboBoxOptionsProps<OptionKey extends string> = {
+type ComboBoxBodyProps<OptionKey extends string> = {
   /** A ref object that will be attached to the Options container */
   listBoxRef: React.RefObject<HTMLUListElement>
   /** A ref object that will be attached to the overlay element */
@@ -192,12 +192,12 @@ type ComboBoxOptionsProps<OptionKey extends string> = {
 }
 
 /** An overlay that renders individual ComboBox Options */
-function ComboBoxOptions<OptionKey extends string>({
+function ComboBoxBody<OptionKey extends string>({
   listBoxRef,
   overlayRef,
   state,
   containerRef,
-}: ComboBoxOptionsProps<OptionKey>) {
+}: ComboBoxBodyProps<OptionKey>) {
   const { listBoxProps } = useListBox(
     {
       autoFocus: state.focusStrategy,
@@ -247,14 +247,81 @@ function ComboBoxOptions<OptionKey extends string>({
             })}
             style={{ maxHeight: "inherit" }}
           >
-            {[...state.collection].map((option) => (
-              <ComboBoxOption key={option.key} option={option} state={state} />
-            ))}
+            {[...state.collection].map((option) => {
+              if (option.type === "section") {
+                return (
+                  <ComboBoxSection
+                    key={option.key}
+                    title={option.rendered as string}
+                    state={state}
+                    section={option}
+                  />
+                )
+              } else if (option.type === "item") {
+                return (
+                  <ComboBoxOption
+                    key={option.key}
+                    option={option}
+                    state={state}
+                  />
+                )
+              } else {
+                return null
+              }
+            })}
           </ul>
           <DismissButton onDismiss={state.close} />
         </div>
       </FocusScope>
     </OverlayContainer>
+  )
+}
+
+type ComboBoxSectionProps<OptionKey extends string> = {
+  /** Title for this Section */
+  title: string
+  /** A group of similar options, only visual */
+  section: Node<ComboBoxOption<OptionKey>>
+  /** The global ComboBox state */
+  state: ComboBoxState<ComboBoxOption<OptionKey>>
+}
+
+function ComboBoxSection<OptionKey extends string>({
+  title,
+  section,
+  state,
+}: ComboBoxSectionProps<OptionKey>) {
+  const {
+    groupProps,
+    headingProps,
+    itemProps: optionProps,
+  } = useListBoxSection({
+    heading: title,
+  })
+
+  return (
+    <section {...groupProps} className={cn("p-2")}>
+      {state.collection.getFirstKey() !== section.key && (
+        <li className="divide-solid"></li>
+      )}
+      <div
+        {...headingProps}
+        className={cn(
+          "mb-2",
+          "text-xs uppercase text-gray-500 dark:text-gray-400",
+          "select-none"
+        )}
+      >
+        {title}
+      </div>
+      <li {...optionProps}>
+        <ul>
+          {[...section.childNodes].map((i) => (
+            <ComboBoxOption key={i.key} option={i} state={state} />
+          ))}
+        </ul>
+      </li>
+    </section>
   )
 }
 
@@ -306,5 +373,6 @@ function ComboBoxOption<Key extends string>({
 
 export const ComboBox = {
   Container: ComboBoxContainer,
+  Section,
   Option: Item,
 }
