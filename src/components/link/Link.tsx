@@ -22,7 +22,7 @@ export function Link({ children, href, isDisabled, openInNewTab }: LinkProps) {
   const { hoverProps, isHovered } = useHover({ isDisabled })
 
   return (
-    <FocusRing>
+    <FocusRing within>
       <a
         ref={ref}
         {...mergeProps(linkProps, hoverProps)}
