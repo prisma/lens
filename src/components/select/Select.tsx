@@ -39,12 +39,12 @@ function getBodyAndFooter<OptionKey extends string>(
   // This means there are 4 cases for us to consider
 
   let body: CollectionChildren<SelectOption<OptionKey>>
-  let footer: React.ReactElement | null
+  let footer: React.ReactElement | undefined
 
   if (!Array.isArray(children)) {
     // Dynamic data + no footer
     body = children
-    footer = null
+    footer = undefined
   } else {
     // Assume footer will be the last element (if it exists)
     const lastChild = last(children) as React.ReactElement
@@ -62,7 +62,7 @@ function getBodyAndFooter<OptionKey extends string>(
     } else {
       // Static data + no footer
       body = children as any
-      footer = null
+      footer = undefined
     }
   }
 
@@ -186,10 +186,12 @@ function SelectContainer<OptionKey extends string>({
           </button>
         </FocusRing>
         {state.isOpen && (
-          <SelectOverlay state={state} menuProps={menuProps} buttonRef={ref}>
-            <SelectBody state={state} />
-            <SelectFooter>{footer}</SelectFooter>
-          </SelectOverlay>
+          <SelectOverlay
+            state={state}
+            menuProps={menuProps}
+            buttonRef={ref}
+            footer={footer}
+          />
         )}
       </section>
       {/* A HiddenSelect is used to render a hidden native <select>, which enables browser form autofill support */}
@@ -205,22 +207,22 @@ function SelectContainer<OptionKey extends string>({
 }
 
 type SelectOverlayProps<OptionKey extends string> = {
-  /** Body and Footer to render inside this Overlay */
-  children: [React.ReactElement, React.ReactElement]
   /** Props to spread over the overlay */
   menuProps: React.HTMLAttributes<HTMLUListElement>
   /** The global Select state */
   state: SelectState<SelectOption<OptionKey>>
   /** Ref of the Select button */
   buttonRef: React.RefObject<HTMLButtonElement>
+  /** An optional footer to render within the Overlay, after the Body */
+  footer?: React.ReactElement
 }
 
 /** An overlay that renders individual Select Options */
 function SelectOverlay<OptionKey extends string>({
-  children,
   menuProps,
   state,
   buttonRef,
+  footer,
 }: SelectOverlayProps<OptionKey>) {
   const overlayRef = useRef<HTMLDivElement>(null)
   const { overlayProps } = useOverlay(
@@ -274,7 +276,8 @@ function SelectOverlay<OptionKey extends string>({
             })}
             style={{ maxHeight: "inherit" }}
           >
-            {children}
+            <SelectBody state={state} />
+            <SelectFooter>{footer}</SelectFooter>
           </ul>
           <DismissButton onDismiss={state.close} />
         </div>

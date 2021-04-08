@@ -72,7 +72,7 @@ storiesOf("Lens/Select", module)
       )}
     </Select.Container>
   ))
-  .add("Default with sections (with static data)", () => (
+  .add("With sections (with static data)", () => (
     <Select.Container
       label="Database Provider"
       onSelectionChange={action("onSelectionChange")}
@@ -88,7 +88,7 @@ storiesOf("Lens/Select", module)
       </Select.Section>
     </Select.Container>
   ))
-  .add("Default with sections (with dynamic data)", () => (
+  .add("With sections (with dynamic data)", () => (
     <Select.Container
       label="Database Provider"
       options={dynamicData}
