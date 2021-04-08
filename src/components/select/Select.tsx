@@ -1,5 +1,7 @@
-import React, { useRef } from "react"
+import React, { Children, useRef } from "react"
 import cn from "classnames"
+import last from "lodash-es/last"
+import isFunction from "lodash-es/isFunction"
 import { useSelect, HiddenSelect } from "@react-aria/select"
 import { SelectState, useSelectState } from "@react-stately/select"
 import { Item, Section } from "@react-stately/collections"
@@ -17,6 +19,7 @@ import { mergeProps } from "@react-aria/utils"
 import { Label } from "../label/Label"
 import { Icon } from "../icon/Icon"
 import { FocusRing } from "../focus-ring/FocusRing"
+import { PressResponder } from "@react-aria/interactions"
 
 /** Value for a single Option inside this Select */
 export type SelectOption<Key extends string> = {
@@ -26,11 +29,53 @@ export type SelectOption<Key extends string> = {
   title: string
 }
 
+function getBodyAndFooter<OptionKey extends string>(
+  children:
+    | CollectionChildren<SelectOption<OptionKey>>
+    | [CollectionChildren<SelectOption<OptionKey>>, React.ReactElement]
+) {
+  // `children` may or may not contain a footer
+  // `children` may also either be static or dynamic data
+  // This means there are 4 cases for us to consider
+
+  let body: CollectionChildren<SelectOption<OptionKey>>
+  let footer: React.ReactElement | null
+
+  if (!Array.isArray(children)) {
+    // Dynamic data + no footer
+    body = children
+    footer = null
+  } else {
+    // Assume footer will be the last element (if it exists)
+    const lastChild = last(children) as React.ReactElement
+    if (lastChild?.type === SelectFooter) {
+      const allButLastChildren = children.slice(0, children.length - 1)
+      footer = lastChild
+
+      if (isFunction(allButLastChildren[0])) {
+        // Dynamic data + footer
+        body = allButLastChildren[0]
+      } else {
+        // Static data + footer
+        body = allButLastChildren as CollectionChildren<SelectOption<OptionKey>>
+      }
+    } else {
+      // Static data + no footer
+      body = children as any
+      footer = null
+    }
+  }
+
+  return { body, footer }
+}
+
 export type SelectContainerProps<OptionKey extends string> = {
   /** Controls if this Select should steal focus when first rendered */
   autoFocus?: boolean
   /** A list of Options to render inside this Select */
-  children: CollectionChildren<SelectOption<OptionKey>>
+  children:
+    | CollectionChildren<SelectOption<OptionKey>>
+    | [CollectionChildren<SelectOption<OptionKey>>, React.ReactElement]
   /** Controls if this Select will be open by default */
   defaultOpen?: boolean
   /** Key of the Option that is selected when this Select is first rendered */
@@ -73,9 +118,12 @@ function SelectContainer<OptionKey extends string>({
   onSelectionChange,
 }: SelectContainerProps<OptionKey>) {
   const ref = useRef(null)
+
+  const { body, footer } = getBodyAndFooter(children)
+
   const state = useSelectState({
     autoFocus,
-    children,
+    children: body,
     defaultOpen,
     defaultSelectedKey,
     isDisabled,
@@ -87,7 +135,7 @@ function SelectContainer<OptionKey extends string>({
   const { labelProps, menuProps, triggerProps, valueProps } = useSelect(
     {
       autoFocus,
-      children,
+      children: body,
       defaultOpen,
       defaultSelectedKey,
       id,
@@ -138,7 +186,10 @@ function SelectContainer<OptionKey extends string>({
           </button>
         </FocusRing>
         {state.isOpen && (
-          <SelectBody state={state} menuProps={menuProps} buttonRef={ref} />
+          <SelectOverlay state={state} menuProps={menuProps} buttonRef={ref}>
+            <SelectBody state={state} />
+            <SelectFooter>{footer}</SelectFooter>
+          </SelectOverlay>
         )}
       </section>
       {/* A HiddenSelect is used to render a hidden native <select>, which enables browser form autofill support */}
@@ -153,7 +204,9 @@ function SelectContainer<OptionKey extends string>({
   )
 }
 
-type SelectBodyProps<OptionKey extends string> = {
+type SelectOverlayProps<OptionKey extends string> = {
+  /** Body and Footer to render inside this Overlay */
+  children: [React.ReactElement, React.ReactElement]
   /** Props to spread over the overlay */
   menuProps: React.HTMLAttributes<HTMLUListElement>
   /** The global Select state */
@@ -163,11 +216,12 @@ type SelectBodyProps<OptionKey extends string> = {
 }
 
 /** An overlay that renders individual Select Options */
-function SelectBody<OptionKey extends string>({
+function SelectOverlay<OptionKey extends string>({
+  children,
   menuProps,
   state,
   buttonRef,
-}: SelectBodyProps<OptionKey>) {
+}: SelectOverlayProps<OptionKey>) {
   const overlayRef = useRef<HTMLDivElement>(null)
   const { overlayProps } = useOverlay(
     {
@@ -220,33 +274,42 @@ function SelectBody<OptionKey extends string>({
             })}
             style={{ maxHeight: "inherit" }}
           >
-            {[...state.collection].map((option) => {
-              if (option.type === "section") {
-                return (
-                  <SelectSection
-                    key={option.key}
-                    title={option.rendered as string}
-                    state={state}
-                    section={option}
-                  />
-                )
-              } else if (option.type === "item") {
-                return (
-                  <SelectOption
-                    key={option.key}
-                    option={option}
-                    state={state}
-                  />
-                )
-              } else {
-                return null
-              }
-            })}
+            {children}
           </ul>
           <DismissButton onDismiss={state.close} />
         </div>
       </FocusScope>
     </OverlayContainer>
+  )
+}
+
+type SelectBodyProps<OptionKey extends string> = {
+  /** The global Select state */
+  state: SelectState<SelectOption<OptionKey>>
+}
+
+function SelectBody<OptionKey extends string>({
+  state,
+}: SelectBodyProps<OptionKey>) {
+  return (
+    <>
+      {[...state.collection].map((option) => {
+        if (option.type === "section") {
+          return (
+            <SelectSection
+              key={option.key}
+              title={option.rendered as string}
+              state={state}
+              section={option}
+            />
+          )
+        } else if (option.type === "item") {
+          return <SelectOption key={option.key} option={option} state={state} />
+        } else {
+          return null
+        }
+      })}
+    </>
   )
 }
 
@@ -331,7 +394,7 @@ function SelectOption<Key extends string>({
       {...optionProps}
       className={cn(
         "rounded-md px-2 py-1",
-        "cursor-default",
+        "cursor-default whitespace-nowrap",
         {
           "bg-gray-100 dark:bg-gray-800": isFocused,
         },
@@ -343,8 +406,17 @@ function SelectOption<Key extends string>({
   )
 }
 
+type SelectFooterProps = React.PropsWithChildren<{
+  onPress?: () => void
+}>
+
+function SelectFooter({ children, onPress }: SelectFooterProps) {
+  return <PressResponder onPress={onPress}>{children}</PressResponder>
+}
+
 export const Select = {
   Container: SelectContainer,
   Section,
   Option: Item,
+  Footer: SelectFooter,
 }

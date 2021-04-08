@@ -1,6 +1,7 @@
 import { storiesOf } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
 import { Select, SelectOption } from "./Select"
+import { Button } from "../button/Button"
 
 type ProviderId =
   | "planetscale"
@@ -103,6 +104,33 @@ storiesOf("Lens/Select", module)
           <Select.Option key={option.key}>{option.title}</Select.Option>
         )}
       </Select.Section>
+    </Select.Container>
+  ))
+  .add("With Footer (with static data)", () => (
+    <Select.Container
+      label="Database Provider"
+      onSelectionChange={action("onSelectionChange")}
+    >
+      <Select.Option key="planetscale">PlanetScale</Select.Option>
+      <Select.Option key="heroku">Heroku</Select.Option>
+      <Select.Option key="aws">Amazon Web Services</Select.Option>
+      <Select.Footer onPress={action("onSelectFooterPress")}>
+        Can't find a supported provider? <Button>Request one</Button>
+      </Select.Footer>
+    </Select.Container>
+  ))
+  .add("With Footer (with dynamic data)", () => (
+    <Select.Container
+      label="Database Provider"
+      options={dynamicData}
+      onSelectionChange={action("onSelectionChange")}
+    >
+      {(option) => (
+        <Select.Option key={option.key}>{option.title}</Select.Option>
+      )}
+      <Select.Footer onPress={action("onSelectFooterPress")}>
+        Can't find a supported provider? <Button>Request one</Button>
+      </Select.Footer>
     </Select.Container>
   ))
   .add("With placeholder", () => (
