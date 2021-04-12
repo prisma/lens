@@ -4,6 +4,7 @@ import { Card } from "../card/Card"
 import { Icon } from "../icon/Icon"
 import { Title } from "../../typography/title/Title"
 import { Label } from "../label/Label"
+import { Link, LinkProps } from "../link/Link"
 
 export type InfoCardContainerProps = React.PropsWithChildren<{
   /** An identifying icon */
@@ -14,6 +15,8 @@ export type InfoCardContainerProps = React.PropsWithChildren<{
   width?: number
   /** If provided, fixes the Card's width */
   height?: number
+  /** If provided, adds a right aligned link to the Card's title row */
+  link?: LinkProps
 }>
 
 /** An InfoCard displays */
@@ -22,6 +25,7 @@ function InfoCardContainer({
   title,
   width,
   height,
+  link,
   children,
 }: InfoCardContainerProps) {
   return (
@@ -29,8 +33,12 @@ function InfoCardContainer({
       <section className="flex items-center px-6 py-4">
         {icon && <Icon name={icon} size="md"></Icon>}
         {title && <Title className="ml-6">{title}</Title>}
+        {link && (
+          <span className="ml-auto">
+            <Link {...link} />
+          </span>
+        )}
       </section>
-
       {children}
     </Card>
   )
