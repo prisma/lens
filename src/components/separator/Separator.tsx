@@ -1,4 +1,5 @@
 import React from "react"
+import cn from "classnames"
 import { useSeparator } from "@react-aria/separator"
 
 export type SeparatorProps = {
@@ -14,15 +15,15 @@ export function Separator({ orientation = "horizontal" }: SeparatorProps) {
     return (
       <div
         {...separatorProps}
-        className="border-b-2 border-gray-300 dark:border-gray-700"
+        className={cn("border-b my-2", "border-gray-300 dark:border-gray-700")}
       />
     )
   } else {
     return (
       <div
         {...separatorProps}
-        className="border-r-2 border-color-gray-300 dark:border-gray-700"
-      ></div>
+        className="border-r border-color-gray-300 dark:border-gray-700"
+      />
     )
   }
 }

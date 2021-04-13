@@ -1,6 +1,7 @@
 import { storiesOf } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
 import { Select, SelectOption } from "./Select"
+import { Link } from "../link/Link"
 
 type ProviderId =
   | "planetscale"
@@ -71,7 +72,7 @@ storiesOf("Lens/Select", module)
       )}
     </Select.Container>
   ))
-  .add("Default with sections (with static data)", () => (
+  .add("With sections (with static data)", () => (
     <Select.Container
       label="Database Provider"
       onSelectionChange={action("onSelectionChange")}
@@ -87,7 +88,7 @@ storiesOf("Lens/Select", module)
       </Select.Section>
     </Select.Container>
   ))
-  .add("Default with sections (with dynamic data)", () => (
+  .add("With sections (with dynamic data)", () => (
     <Select.Container
       label="Database Provider"
       options={dynamicData}
@@ -103,6 +104,39 @@ storiesOf("Lens/Select", module)
           <Select.Option key={option.key}>{option.title}</Select.Option>
         )}
       </Select.Section>
+    </Select.Container>
+  ))
+  .add("With Footer (with static data)", () => (
+    <Select.Container
+      label="Database Provider"
+      onSelectionChange={action("onSelectionChange")}
+    >
+      <Select.Option key="planetscale">PlanetScale</Select.Option>
+      <Select.Option key="heroku">Heroku</Select.Option>
+      <Select.Option key="aws">Amazon Web Services</Select.Option>
+      <Select.Footer onPress={action("onSelectFooterPress")}>
+        Can't find a supported provider?{" "}
+        <Link href="" openInNewTab>
+          Request one
+        </Link>
+      </Select.Footer>
+    </Select.Container>
+  ))
+  .add("With Footer (with dynamic data)", () => (
+    <Select.Container
+      label="Database Provider"
+      options={dynamicData}
+      onSelectionChange={action("onSelectionChange")}
+    >
+      {(option) => (
+        <Select.Option key={option.key}>{option.title}</Select.Option>
+      )}
+      <Select.Footer onPress={action("onSelectFooterPress")}>
+        Can't find a supported provider?{" "}
+        <Link href="" openInNewTab>
+          Request one
+        </Link>
+      </Select.Footer>
     </Select.Container>
   ))
   .add("With placeholder", () => (
