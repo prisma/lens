@@ -1,4 +1,4 @@
-import React, { Children, useRef } from "react"
+import React, { useRef } from "react"
 import cn from "classnames"
 import last from "lodash-es/last"
 import isFunction from "lodash-es/isFunction"
@@ -14,12 +14,13 @@ import {
   useOverlayPosition,
 } from "@react-aria/overlays"
 import { useButton } from "@react-aria/button"
+import { PressResponder } from "@react-aria/interactions"
 import { FocusScope } from "@react-aria/focus"
 import { mergeProps } from "@react-aria/utils"
 import { Label } from "../label/Label"
 import { Icon } from "../icon/Icon"
+import { Separator } from "../separator/Separator"
 import { FocusRing } from "../focus-ring/FocusRing"
-import { PressResponder } from "@react-aria/interactions"
 
 /** Value for a single Option inside this Select */
 export type SelectOption<Key extends string> = {
@@ -277,7 +278,7 @@ function SelectOverlay<OptionKey extends string>({
             style={{ maxHeight: "inherit" }}
           >
             <SelectBody state={state} />
-            <SelectFooter>{footer}</SelectFooter>
+            {footer}
           </ul>
           <DismissButton onDismiss={state.close} />
         </div>
@@ -414,7 +415,13 @@ type SelectFooterProps = React.PropsWithChildren<{
 }>
 
 function SelectFooter({ children, onPress }: SelectFooterProps) {
-  return <PressResponder onPress={onPress}>{children}</PressResponder>
+  console.log(children)
+  return (
+    <PressResponder onPress={onPress}>
+      <Separator />
+      <div className="p-2 whitespace-nowrap">{children}</div>
+    </PressResponder>
+  )
 }
 
 export const Select = {

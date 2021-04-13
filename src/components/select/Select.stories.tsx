@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
 import { Select, SelectOption } from "./Select"
-import { Button } from "../button/Button"
+import { Link } from "../link/Link"
 
 type ProviderId =
   | "planetscale"
@@ -115,7 +115,10 @@ storiesOf("Lens/Select", module)
       <Select.Option key="heroku">Heroku</Select.Option>
       <Select.Option key="aws">Amazon Web Services</Select.Option>
       <Select.Footer onPress={action("onSelectFooterPress")}>
-        Can't find a supported provider? <Button>Request one</Button>
+        Can't find a supported provider?{" "}
+        <Link href="" openInNewTab>
+          Request one
+        </Link>
       </Select.Footer>
     </Select.Container>
   ))
@@ -129,7 +132,10 @@ storiesOf("Lens/Select", module)
         <Select.Option key={option.key}>{option.title}</Select.Option>
       )}
       <Select.Footer onPress={action("onSelectFooterPress")}>
-        Can't find a supported provider? <Button>Request one</Button>
+        Can't find a supported provider?{" "}
+        <Link href="" openInNewTab>
+          Request one
+        </Link>
       </Select.Footer>
     </Select.Container>
   ))
