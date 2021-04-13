@@ -56,6 +56,7 @@ storiesOf("Lens/Dialog", module)
               email="lens@prisma.io"
             />
             <Select.Container
+              autoFocus
               label=""
               defaultSelectedKey="developer"
               onSelectionChange={action("onSelectionChange")}
@@ -70,7 +71,6 @@ storiesOf("Lens/Dialog", module)
           <Dialog.Footer>
             <ButtonGroup>
               <Button
-                autoFocus
                 variant="primary"
                 onPress={chain(close, action("onPress"))}
               >

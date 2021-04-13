@@ -78,7 +78,7 @@ function DialogContainer({
       <PressResponder isPressed={state.isOpen} onPress={state.toggle}>
         {trigger}
       </PressResponder>
-      {state.isOpen && content(close)}
+      {state.isOpen && content(state.close)}
     </DialogContext.Provider>
   )
 }
@@ -117,54 +117,52 @@ function DialogBody({ children }: DialogBodyProps) {
 
   return (
     <OverlayContainer>
-      <div
-        className={cn(
-          "flex justify-center items-center",
-          "fixed top-0 bottom-0 left-0 right-0 z-30",
-          "bg-black-fade-50"
-        )}
-      >
-        <FocusScope contain autoFocus restoreFocus>
-          <>
-            <DismissButton onDismiss={close} />
-            <div
-              ref={overlayRef}
-              {...mergeProps(overlayProps, dialogProps, modalProps)}
+      <FocusScope contain autoFocus restoreFocus>
+        <DismissButton onDismiss={close} />
+        <div
+          className={cn(
+            "flex justify-center items-center",
+            "fixed top-0 bottom-0 left-0 right-0 z-30",
+            "bg-black-fade-50"
+          )}
+        >
+          <div
+            ref={overlayRef}
+            {...mergeProps(overlayProps, modalProps, dialogProps)}
+            className={cn(
+              "left-0 right-0 w-full",
+              "rounded-md shadow-md overflow-hidden",
+              "bg-gray-100 dark:bg-gray-800",
+              "animate-dialog-enter"
+            )}
+            style={{ width: 580 }}
+          >
+            <TitleGroup
+              title={title}
+              subtitle={subtitle}
+              icon={icon}
+              titleProps={titleProps}
               className={cn(
-                "left-0 right-0 w-full",
-                "rounded-md shadow-md overflow-hidden",
-                "bg-gray-100 dark:bg-gray-800",
-                "animate-dialog-enter"
+                "px-6 py-4",
+                "bg-white dark:bg-gray-900",
+                "border-b border-gray-300 dark:border-gray-600"
               )}
-              style={{ width: 580 }}
+            />
+
+            <section
+              className={cn(
+                "px-6 py-4",
+                "border-b border-gray-300 dark:border-gray-600"
+              )}
             >
-              <TitleGroup
-                title={title}
-                subtitle={subtitle}
-                icon={icon}
-                titleProps={titleProps}
-                className={cn(
-                  "px-6 py-4",
-                  "bg-white dark:bg-gray-900",
-                  "border-b border-gray-300 dark:border-gray-600"
-                )}
-              />
+              {body}
+            </section>
 
-              <section
-                className={cn(
-                  "px-6 py-4",
-                  "border-b border-gray-300 dark:border-gray-600"
-                )}
-              >
-                {body}
-              </section>
-
-              {footer}
-            </div>
-            <DismissButton onDismiss={close} />
-          </>
-        </FocusScope>
-      </div>
+            {footer}
+          </div>
+        </div>
+        <DismissButton onDismiss={close} />
+      </FocusScope>
     </OverlayContainer>
   )
 }

@@ -146,24 +146,22 @@ function ComboBoxContainer<OptionKey extends string>({
               }
             )}
           >
-            <>
-              <input
-                ref={inputRef}
-                type="text"
-                {...inputProps}
-                name={name}
-                className={cn("flex-grow", "mr-4", {
-                  "bg-white dark:bg-gray-900": !isDisabled,
-                  "bg-gray-100 dark:bg-gray-800": isDisabled,
-                  "text-gray-800 dark:text-gray-100": !isDisabled,
-                  "text-gray-400 dark:text-gray-400": isDisabled,
-                  "cursor-not-allowed": isDisabled,
-                })}
-              />
-              <button ref={buttonRef} {...buttonProps}>
-                <Icon name="chevron-down" size="xs" />
-              </button>
-            </>
+            <input
+              ref={inputRef}
+              type="text"
+              {...inputProps}
+              name={name}
+              className={cn("flex-grow", "mr-4", {
+                "bg-white dark:bg-gray-900": !isDisabled,
+                "bg-gray-100 dark:bg-gray-800": isDisabled,
+                "text-gray-800 dark:text-gray-100": !isDisabled,
+                "text-gray-400 dark:text-gray-400": isDisabled,
+                "cursor-not-allowed": isDisabled,
+              })}
+            />
+            <button ref={buttonRef} {...buttonProps}>
+              <Icon name="chevron-down" size="xs" />
+            </button>
           </div>
         </FocusRing>
         {state.isOpen && (
