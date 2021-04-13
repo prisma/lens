@@ -148,7 +148,7 @@ function MenuBody<OptionKey extends string>({
 
   return (
     <OverlayContainer>
-      <FocusScope autoFocus contain restoreFocus>
+      <FocusScope restoreFocus>
         <div
           ref={overlayRef}
           {...mergeProps(positionProps, overlayProps)}

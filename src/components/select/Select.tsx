@@ -157,7 +157,7 @@ function SelectContainer<OptionKey extends string>({
     <div id={id} className="table-row">
       <Label labelProps={labelProps}>{label}</Label>
       <section className="table-cell w-full relative">
-        <FocusRing autoFocus={autoFocus}>
+        <FocusRing autoFocus={autoFocus} within>
           <button
             ref={ref}
             {...buttonProps}
@@ -257,7 +257,7 @@ function SelectOverlay<OptionKey extends string>({
 
   return (
     <OverlayContainer>
-      <FocusScope autoFocus restoreFocus contain>
+      <FocusScope restoreFocus>
         <div
           ref={overlayRef}
           {...mergeProps(overlayProps, positionProps)}
@@ -277,43 +277,35 @@ function SelectOverlay<OptionKey extends string>({
             })}
             style={{ maxHeight: "inherit" }}
           >
-            <SelectBody state={state} />
+            {[...state.collection].map((option) => {
+              if (option.type === "section") {
+                return (
+                  <SelectSection
+                    key={option.key}
+                    title={option.rendered as string}
+                    state={state}
+                    section={option}
+                  />
+                )
+              } else if (option.type === "item") {
+                return (
+                  <SelectOption
+                    key={option.key}
+                    option={option}
+                    state={state}
+                  />
+                )
+              } else {
+                return null
+              }
+            })}
+
             {footer}
           </ul>
           <DismissButton onDismiss={state.close} />
         </div>
       </FocusScope>
     </OverlayContainer>
-  )
-}
-
-type SelectBodyProps<OptionKey extends string> = {
-  /** The global Select state */
-  state: SelectState<SelectOption<OptionKey>>
-}
-
-function SelectBody<OptionKey extends string>({
-  state,
-}: SelectBodyProps<OptionKey>) {
-  return (
-    <>
-      {[...state.collection].map((option) => {
-        if (option.type === "section") {
-          return (
-            <SelectSection
-              key={option.key}
-              title={option.rendered as string}
-              state={state}
-              section={option}
-            />
-          )
-        } else if (option.type === "item") {
-          return <SelectOption key={option.key} option={option} state={state} />
-        } else {
-          return null
-        }
-      })}
-    </>
   )
 }
 
@@ -387,6 +379,7 @@ function SelectOption<Key extends string>({
       isDisabled,
       shouldSelectOnPressUp: true,
       shouldFocusOnHover: true,
+      shouldUseVirtualFocus: true,
     },
     state,
     ref
