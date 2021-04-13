@@ -12,6 +12,8 @@ export type ButtonProps = React.PropsWithChildren<{
   id?: string
   /** Controls if this button is disabled */
   isDisabled?: boolean
+  /** Controls if the button will grow to fill its parent */
+  fillParent?: boolean
   /** Callback invoked when this button is pressed */
   onPress?: () => void
   /** Controls what kind of button this is */
@@ -20,10 +22,11 @@ export type ButtonProps = React.PropsWithChildren<{
 
 function Button(
   {
+    autoFocus = false,
     id,
     variant = "primary",
     isDisabled = false,
-    autoFocus = false,
+    fillParent = false,
     children,
     onPress,
   }: ButtonProps,
@@ -49,6 +52,7 @@ function Button(
           "text-sm whitespace-nowrap",
           {
             "cursor-not-allowed": isDisabled,
+            "flex-grow": fillParent,
           },
           {
             "font-bold bg-gray-700 text-white": variant === "primary",
