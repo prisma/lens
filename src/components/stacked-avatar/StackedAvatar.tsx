@@ -13,7 +13,7 @@ export type StackedAvatarProps = {
   size?: Size
   /** List of avatars to render */
   avatars: Omit<AvatarProps, "size">[]
-  /** Callback involed when StackedAvatar is pressed */
+  /** Callback invoked when StackedAvatar is pressed */
   onPress?: () => void
 }
 
@@ -70,7 +70,7 @@ export function StackedAvatar({
             {(a.name || a.email) && isHovered && (
               <Tooltip target={avatarRef} position="bottom">
                 <div className="flex flex-col">
-                  <div className="font-bold text-sm">{a.name}</div>
+                  <div className="font-semibold text-sm">{a.name}</div>
                   <div className="text-xs">{a.email}</div>
                 </div>
               </Tooltip>

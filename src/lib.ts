@@ -24,6 +24,8 @@ export * from "./components/stacked-avatar/StackedAvatar"
 export * from "./components/table/Table"
 export * from "./components/text-field/TextField"
 export * from "./components/title-group/TitleGroup"
+export * from "./components/toast/Toast"
+export * from "./components/tooltip/Tooltip"
 
 // Cloud
 export * from "./cloud/project-picker/ProjectPicker"

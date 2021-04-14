@@ -55,15 +55,16 @@ function Button(
             "flex-grow": fillParent,
           },
           {
-            "font-bold bg-gray-700 text-white": variant === "primary",
-            "font-bold bg-gray-500 text-white":
+            "font-semibold bg-gray-700 text-white": variant === "primary",
+            "font-semibold bg-gray-500 text-white":
               variant === "primary" && isDisabled,
             "bg-gray-800": variant === "primary" && isHovered,
             "bg-gray-900": variant === "primary" && isPressed,
           },
           {
-            "font-bold bg-gray-200 text-gray-800": variant === "secondary",
-            "font-bold text-gray-500": variant === "secondary" && isDisabled,
+            "font-semibold bg-gray-200 text-gray-800": variant === "secondary",
+            "font-semibold text-gray-500":
+              variant === "secondary" && isDisabled,
             "bg-gray-300": variant === "secondary" && isHovered,
             "bg-gray-400": variant === "secondary" && isPressed,
           },

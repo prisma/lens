@@ -247,7 +247,7 @@ function ProjectPickerOption({ option, state }: ProjectPickerOptionProps) {
         "cursor-default whitespace-nowrap",
         {
           "bg-gray-100 dark:bg-gray-800": isFocused,
-          "font-bold": isSelected,
+          "font-semibold": isSelected,
         },
         "hover:bg-gray-100"
       )}
