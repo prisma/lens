@@ -1,4 +1,5 @@
 import { storiesOf } from "@storybook/react"
+import { action } from "@storybook/addon-actions"
 import { Card } from "./Card"
 import { Form } from "../form/Form"
 import { TextField } from "../text-field/TextField"
@@ -12,21 +13,39 @@ storiesOf("Lens/Card", module)
     </Card>
   ))
   .add("With Title", () => (
-    <section className="w-96">
+    <section className="w-full">
       {/* Cards fill their parent by default. This `section` only exists to make the story look better */}
       <Card title="Instance configuration">{renderForm()}</Card>
     </section>
   ))
   .add("With Icon & Title", () => (
-    <section className="w-96">
+    <section className="w-full">
       {/* Cards fill their parent by default. This `section` only exists to make the story look better */}
       <Card icon="server" title="Instance configuration">
         {renderForm()}
       </Card>
     </section>
   ))
+  .add("With Action", () => (
+    <section className="w-full">
+      {/* Cards fill their parent by default. This `section` only exists to make the story look better */}
+      <Card
+        icon="server"
+        title="Instance configuration"
+        action={{ title: "Pricing", onPress: action("onAction") }}
+      >
+        {renderForm()}
+      </Card>
+    </section>
+  ))
   .add("With fixed dimensions", () => (
-    <Card icon="server" title="Instance configuration" width={500} height={400}>
+    <Card
+      icon="server"
+      title="Instance configuration"
+      width={500}
+      height={400}
+      action={{ title: "Learn More", onPress: action("onAction") }}
+    >
       {renderForm()}
     </Card>
   ))
