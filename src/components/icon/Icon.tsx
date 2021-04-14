@@ -16,7 +16,11 @@ function Icon(
   forwardedRef: React.ForwardedRef<SVGSVGElement>
 ) {
   const width = sizeToNumeric(size)
-  const computedClassName = cn("text-gray-400 dark:text-gray-300", className)
+  const computedClassName = cn(
+    "flex-grow-0 flex-shrink-0",
+    "text-gray-400 dark:text-gray-300",
+    className
+  )
 
   // Exceptions to FeatherIcons
   if (name === "prisma") {

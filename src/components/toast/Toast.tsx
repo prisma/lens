@@ -24,15 +24,13 @@ export function Toast({ title, variant = "neutral", onClose }: ToastProps) {
         "animate-slide-right"
       )}
     >
-      <div
-        className={cn("w-2 h-full", {
-          "bg-green-600": variant === "positive",
-          "bg-red-600": variant === "negative",
-          "bg-blue-600": variant === "neutral",
+      <section
+        className={cn("flex items-center p-3", "border-l-8", {
+          "border-green-600": variant === "positive",
+          "border-red-600": variant === "negative",
+          "border-blue-600": variant === "neutral",
         })}
-      />
-
-      <section className="flex items-center p-3">
+      >
         {variant === "positive" && (
           <Icon
             name="check"
