@@ -22,6 +22,7 @@ export * from "./components/separator/Separator"
 export * from "./components/table/Table"
 export * from "./components/text-field/TextField"
 export * from "./components/title-group/TitleGroup"
+export * from "./components/stacked-avatar/StackedAvatar"
 
 // Cloud
 export * from "./components/project-picker/ProjectPicker"
