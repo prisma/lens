@@ -8,8 +8,6 @@ import { sizeToNumeric, Size } from "../../utils/sizeToNumeric"
 
 const MAX_AVATARS = 5
 
-export { AvatarProps }
-
 export type StackedAvatarProps = {
   /** Size of the Avatar */
   size?: Size

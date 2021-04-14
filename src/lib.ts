@@ -26,7 +26,7 @@ export * from "./components/text-field/TextField"
 export * from "./components/title-group/TitleGroup"
 
 // Cloud
-export * from "./components/project-picker/ProjectPicker"
+export * from "./cloud/project-picker/ProjectPicker"
 
 // Utilities
 export { chain } from "@react-aria/utils"
