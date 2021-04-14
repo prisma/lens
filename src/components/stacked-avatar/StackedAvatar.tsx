@@ -49,7 +49,7 @@ export function StackedAvatar({
         const avatarRef = useRef(null)
 
         return (
-          <>
+          <React.Fragment key={i}>
             <ImageOrIcon
               {...a}
               size={size}
@@ -75,7 +75,7 @@ export function StackedAvatar({
                 </div>
               </Tooltip>
             )}
-          </>
+          </React.Fragment>
         )
       })}
       {avatars.length > MAX_AVATARS && (
