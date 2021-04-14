@@ -38,7 +38,6 @@ function Icon(
     )
   }
 
-  // Exceptions to FeatherIcons
   if (name === "chevron-down") {
     return (
       <svg

@@ -75,7 +75,7 @@ export type AvatarProps = {
   name?: string
   /** Email of the user this Avatar belongs to */
   email?: string
-  /** Callback involed when this avatar is pressed */
+  /** Callback invoked when this avatar is pressed */
   onPress?: () => void
 }
 
@@ -108,7 +108,7 @@ export function Avatar({
       >
         {avatar}
         <div className="flex flex-col">
-          <span className="font-bold text-gray-800 dark:text-gray-100">
+          <span className="font-semibold text-gray-800 dark:text-gray-100">
             {name}
           </span>
           <span className="text-gray-600 dark:text-gray-300">{email}</span>
