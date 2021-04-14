@@ -54,7 +54,14 @@ export function Toast({ title, variant = "neutral", onClose }: ToastProps) {
             className="p-1 rounded-full bg-blue-600 text-white"
           />
         )}
-        <div className={cn("ml-3", "text-sm font-semibold")}>{title}</div>
+        <div
+          className={cn(
+            "ml-3",
+            "text-sm font-semibold text-gray-800 dark:text-gray-100"
+          )}
+        >
+          {title}
+        </div>
       </section>
 
       <Button variant="quiet" onPress={onClose}>
