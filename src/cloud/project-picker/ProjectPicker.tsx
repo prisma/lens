@@ -13,8 +13,8 @@ import {
 import { useButton } from "@react-aria/button"
 import { FocusScope } from "@react-aria/focus"
 import { mergeProps } from "@react-aria/utils"
-import { Icon } from "../icon/Icon"
-import { Button } from "../button/Button"
+import { Icon } from "../../components/icon/Icon"
+import { Button } from "../../components/button/Button"
 
 export type ProjectId = string
 export type Project = {
