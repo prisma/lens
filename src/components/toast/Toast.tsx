@@ -17,11 +17,12 @@ export type ToastProps = {
 export function Toast({ title, variant = "neutral", onClose }: ToastProps) {
   return (
     <div
+      role="alert"
       className={cn(
-        "flex items-center",
+        "flex items-center m-1",
         "rounded-md shadow-lg overflow-hidden",
         "bg-white dark:bg-gray-800",
-        "animate-slide-right"
+        "animate-slide-bottom"
       )}
     >
       <section

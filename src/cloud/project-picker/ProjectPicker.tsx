@@ -1,5 +1,6 @@
 import React, { useRef } from "react"
 import cn from "classnames"
+import { chain } from "@react-aria/utils"
 import { SelectState, useSelectState } from "@react-stately/select"
 import { Item, Section } from "@react-stately/collections"
 import { Node } from "@react-types/shared"
@@ -14,10 +15,7 @@ import { useButton } from "@react-aria/button"
 import { FocusScope } from "@react-aria/focus"
 import { mergeProps } from "@react-aria/utils"
 import { Icon } from "../../components/icon/Icon"
-import { 
-  Button,
-  ButtonProps,
-} from "../../components/button/Button"
+import { Button, ButtonProps } from "../../components/button/Button"
 
 export type ProjectId = string
 export type Project = {
@@ -31,7 +29,7 @@ type ProjectPickerProps = {
   defaultSelectedKey: ProjectId
   onSelectionChange?: (key: React.Key) => void
   /** The action of the Button at the end **/
-  overlayButtonAction?: { title: string; onPress: ButtonProps['onPress'] }
+  overlayButtonAction?: { title: string; onPress: ButtonProps["onPress"] }
 }
 
 export function ProjectPicker({
@@ -84,7 +82,11 @@ export function ProjectPicker({
         </button>
       </div>
       {state.isOpen && (
-        <ProjectPickerOverlay state={state} buttonRef={buttonRef} action={overlayButtonAction} />
+        <ProjectPickerOverlay
+          state={state}
+          buttonRef={buttonRef}
+          action={overlayButtonAction}
+        />
       )}
     </>
   )
@@ -96,10 +98,14 @@ type ProjectPickerOverlayProps = {
   /** Ref of the Select button */
   buttonRef: React.RefObject<HTMLButtonElement>
   /** The action of the Button at the end **/
-  action?: { title: string; onPress: ButtonProps['onPress'] }
+  action?: { title: string; onPress: ButtonProps["onPress"] }
 }
 
-function ProjectPickerOverlay({ state, buttonRef, action }: ProjectPickerOverlayProps) {
+function ProjectPickerOverlay({
+  state,
+  buttonRef,
+  action,
+}: ProjectPickerOverlayProps) {
   const overlayRef = useRef<HTMLDivElement>(null)
   const { overlayProps } = useOverlay(
     {
@@ -158,13 +164,18 @@ function ProjectPickerOverlay({ state, buttonRef, action }: ProjectPickerOverlay
                 section={section}
               />
             ))}
-            {action &&
+            {action && (
               <li className="flex mt">
-                <Button variant="primary" autoFocus={false} onPress={action.onPress} fillParent>
+                <Button
+                  variant="primary"
+                  autoFocus={false}
+                  onPress={chain(state.close, action.onPress)}
+                  fillParent
+                >
                   {action.title}
                 </Button>
               </li>
-            }
+            )}
           </ul>
           <DismissButton onDismiss={state.close} />
         </div>
