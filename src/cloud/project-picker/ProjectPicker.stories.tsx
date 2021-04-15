@@ -18,5 +18,11 @@ storiesOf("Cloud/ProjectPicker", module).add("Default", () => (
     collaboratedProjects={collaborations}
     defaultSelectedKey={ownedProjects[0].id}
     onSelectionChange={action("onSelectionChange")}
+    overlayButtonAction={{ 
+      title: 'Who is the best?', 
+      onPress: () =>{
+        alert('You are <3')
+      } 
+    }}
   />
 ))
