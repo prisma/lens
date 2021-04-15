@@ -19,7 +19,7 @@ export function Toast({ title, variant = "neutral", onClose }: ToastProps) {
     <div
       className={cn(
         "flex items-center",
-        "rounded-md shadow-md overflow-hidden",
+        "rounded-md shadow-lg overflow-hidden",
         "bg-white dark:bg-gray-800",
         "animate-slide-right"
       )}
