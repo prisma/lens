@@ -1,4 +1,3 @@
-import { storiesOf } from "@storybook/react"
 import { Form } from "./Form"
 import { TextField } from "../text-field/TextField"
 import { Select } from "../select/Select"
@@ -39,8 +38,8 @@ const repositories: ComboBoxOption<RepositoryId>[] = [
   },
 ]
 
-storiesOf("Lens/Form", module).add("Default", () => (
-  <Form>
+export const Default = (props) => (
+  <Form {...props}>
     <TextField label="First Name" />
     <TextField label="Environment" placeholder="production" />
     <TextField label="Handle" prefix="cloud.prisma.io/spacex/" />
@@ -52,4 +51,9 @@ storiesOf("Lens/Form", module).add("Default", () => (
       {(item) => <ComboBox.Option key={item.key}>{item.title}</ComboBox.Option>}
     </ComboBox.Container>
   </Form>
-))
+)
+Default.storyName = "[Controlled]"
+export default {
+  title: "Lens/Form",
+  component: Form,
+}
