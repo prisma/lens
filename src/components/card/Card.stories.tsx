@@ -3,7 +3,11 @@ import { Card } from "./Card"
 import { Form } from "../form/Form"
 import { Select } from "../select/Select"
 
-export const Default = (props) => <Card {...props}>{renderForm()}</Card>
+export const Default = (props) => (
+  <Card icon="server" title="Instance configuration" {...props}>
+    {renderForm()}
+  </Card>
+)
 Default.storyName = "[Controlled]"
 export default {
   title: "Lens/Card",
