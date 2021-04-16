@@ -9,7 +9,7 @@ export default {
   argTypes: {
     variant: {
       control: {
-        type: "select",
+        type: "inline-radio",
       },
       defaultValue: "primary",
     },

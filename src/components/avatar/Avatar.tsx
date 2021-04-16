@@ -11,58 +11,55 @@ type ImageOrIconProps = AvatarProps & {
 }
 
 /**
- * Internal component, do not use!
+ * Internal component, DO NOT USE!
  */
-function _ImageOrIcon(
-  {
-    url,
-    label,
-    size = "lg",
-    onPress,
-    className,
-    style,
-    otherProps,
-  }: ImageOrIconProps,
-  forwardedRef: React.ForwardedRef<HTMLImageElement | SVGSVGElement>
-) {
-  const width = sizeToNumeric(size)
+export const ImageOrIcon = forwardRef<HTMLImageElement, ImageOrIconProps>(
+  (
+    {
+      url,
+      label,
+      size = "lg",
+      onPress,
+      className,
+      style,
+      otherProps,
+    }: ImageOrIconProps,
+    forwardedRef
+  ) => {
+    const width = sizeToNumeric(size)
 
-  if (url) {
+    if (url) {
+      return (
+        <img
+          ref={forwardedRef}
+          src={url}
+          className={cn("rounded-full", className)}
+          style={style}
+          width={width}
+          height={width}
+          alt={
+            onPress ? undefined : label
+          } /* If the Avatar is clickable, treat it as a button, AKA no alt-text, otherwise add alt-text */
+          {...otherProps}
+        />
+      )
+    }
     return (
-      <img
-        ref={forwardedRef as React.ForwardedRef<HTMLImageElement>}
-        src={url}
-        className={cn("rounded-full", className)}
-        style={style}
-        width={width}
-        height={width}
-        alt={
-          onPress ? undefined : label
-        } /* If the Avatar is clickable, treat it as a button, AKA no alt-text, otherwise add alt-text */
+      <Icon
+        ref={forwardedRef as React.ForwardedRef<SVGSVGElement>}
+        name="user"
+        size={size}
+        className={cn(
+          "rounded-full",
+          "bg-gray-300 dark:bg-gray-800",
+          "text-gray-700 dark:text-gray-300",
+          "p-1"
+        )}
         {...otherProps}
       />
     )
   }
-  return (
-    <Icon
-      ref={forwardedRef as React.ForwardedRef<SVGSVGElement>}
-      name="user"
-      size={size}
-      className={cn(
-        "rounded-full",
-        "bg-gray-300 dark:bg-gray-800",
-        "text-gray-700 dark:text-gray-300",
-        "p-1"
-      )}
-      {...otherProps}
-    />
-  )
-}
-
-const ImageOrIcon = forwardRef(_ImageOrIcon) as (
-  props: ImageOrIconProps & { ref?: React.ForwardedRef<SVGSVGElement> }
-) => React.ReactElement
-export { ImageOrIcon }
+)
 
 export type AvatarProps = {
   /** URL to the image resource to display */
@@ -118,7 +115,11 @@ export function Avatar({
   }
 
   if (onPress) {
-    rendered = <Button variant="quiet">{rendered}</Button>
+    rendered = (
+      <Button variant="quiet" onPress={onPress}>
+        {rendered}
+      </Button>
+    )
   }
 
   return rendered
