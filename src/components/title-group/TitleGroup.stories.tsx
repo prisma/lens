@@ -1,10 +1,16 @@
-import { storiesOf } from "@storybook/react"
 import { TitleGroup } from "./TitleGroup"
 
-storiesOf("Lens/TitleGroup", module).add("Default", () => (
-  <TitleGroup
-    icon="folder-plus"
-    title="New Project"
-    subtitle="Create a new project or connect to an existing one on Github"
-  />
-))
+export const Default = (props) => <TitleGroup {...props} />
+Default.storyName = "[Controlled]"
+export default {
+  title: "Lens/TitleGroup",
+  component: TitleGroup,
+  argTypes: {
+    icon: { defaultValue: "folder-plus" },
+    title: { defaultValue: "New project" },
+    subtitle: {
+      defaultValue:
+        "Create a new project or connect to an existing one on Github",
+    },
+  },
+}

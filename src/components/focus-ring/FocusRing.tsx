@@ -13,7 +13,7 @@ export function FocusRing({ children, ...props }: FocusRingProps) {
   return (
     <AriaFocusRing
       {...props}
-      focusRingClass="ring-2 ring-offset-2 ring-offset-white dark:ring-offset-gray-900 ring-blue-400"
+      focusRingClass="ring-2 ring-offset-2 rounded-md ring-offset-white dark:ring-offset-gray-900 ring-blue-400"
     >
       {children}
     </AriaFocusRing>
