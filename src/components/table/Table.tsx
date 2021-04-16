@@ -45,10 +45,12 @@ type ReactAriaTableNode = {
 }
 
 type TableContainerProps = {
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
+  id?: string
   children: React.ReactElement[]
 }
 
-function TableContainer({ children }: TableContainerProps) {
+function TableContainer({ id, children }: TableContainerProps) {
   const ref = useRef<HTMLTableElement>(null)
 
   if (children.length < 2) {
@@ -66,7 +68,7 @@ function TableContainer({ children }: TableContainerProps) {
     selectionMode: "none",
     children: tableChildren,
   })
-  const { gridProps } = useTable({ ref }, state)
+  const { gridProps } = useTable({ ref, id }, state)
 
   return (
     <TableContext.Provider value={state}>
@@ -99,7 +101,7 @@ function TableHeader({}: TableHeaderProps) {
   }
 
   return (
-    <thead ref={ref} {...rowGroupProps}>
+    <thead ref={ref} lens-role="table-header" {...rowGroupProps}>
       {state.collection.headerRows.map((r) => (
         <TableHeaderRow key={r.key} row={r} />
       ))}
@@ -116,7 +118,12 @@ function TableHeaderRow({ row }: TableHeaderRowProps) {
   const { rowProps } = useTableRow({ node: row, ref }, state)
 
   return (
-    <tr ref={ref} {...rowProps} className="table-row">
+    <tr
+      ref={ref}
+      lens-role="table-header-row"
+      {...rowProps}
+      className="table-row"
+    >
       {[...row.childNodes].map((c) => (
         <TableColumnHeader key={c.key} column={c} />
       ))}
@@ -138,6 +145,7 @@ function TableColumnHeader({ column }: TableColumnHeaderProps) {
   return (
     <th
       ref={ref}
+      lens-role="table-column-header"
       {...columnHeaderProps}
       className={cn(
         "table-cell",
@@ -153,7 +161,7 @@ function TableColumnHeader({ column }: TableColumnHeaderProps) {
 export function TableBody({}) {
   const state = useContext(TableContext)
   return (
-    <tbody>
+    <tbody lens-role="table-body">
       {[...state.collection.body.childNodes].map((row) => (
         <TableRow key={row.key} row={row} />
       ))}
@@ -172,6 +180,7 @@ function TableRow({ row }: TableRowProps) {
   return (
     <tr
       ref={ref}
+      lens-role="table-row"
       {...rowProps}
       className={cn(
         "table-row",
@@ -196,6 +205,7 @@ function TableCell({ cell }: TableCellProps) {
   return (
     <td
       ref={ref}
+      lens-role="table-cell"
       {...gridCellProps}
       className={cn(
         "table-cell px-6 py-3",
@@ -212,9 +222,14 @@ type TableFooterProps = {
 }
 function TableFooter({ children }: TableFooterProps) {
   return (
-    <tfoot className="border-t border-gray-300 dark:border-gray-600">
-      <tr>
-        <td className="px-4 py-3">{children}</td>
+    <tfoot
+      lens-role="table-footer"
+      className="border-t border-gray-300 dark:border-gray-600"
+    >
+      <tr lens-role="table-footer-row">
+        <td lens-role="table-footer-cell" className="px-4 py-3">
+          {children}
+        </td>
       </tr>
     </tfoot>
   )

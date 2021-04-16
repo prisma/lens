@@ -15,7 +15,7 @@ import {
   OverlayTriggerState,
   useOverlayTriggerState,
 } from "@react-stately/overlays"
-import { TitleGroup } from "../title-group/TitleGroup"
+import { TitleGroup } from "../../typography/title-group/TitleGroup"
 
 type DialogContext = {
   close: OverlayTriggerState["close"]
@@ -78,6 +78,7 @@ function DialogContainer({
       <PressResponder isPressed={state.isOpen} onPress={state.toggle}>
         {trigger}
       </PressResponder>
+
       {state.isOpen && content(state.close)}
     </DialogContext.Provider>
   )
@@ -85,11 +86,13 @@ function DialogContainer({
 
 /** The Dialog's Body when opened */
 export type DialogBodyProps = {
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
+  id?: string
   /** The Dialog's body and footer, in order */
   children: React.ReactElement | [React.ReactElement, React.ReactElement]
 }
 
-function DialogBody({ children }: DialogBodyProps) {
+function DialogBody({ id, children }: DialogBodyProps) {
   const [body, footer] = Children.toArray(children)
   const { close, title, subtitle, icon, shouldCloseOnBlur } = useContext(
     DialogContext
@@ -116,7 +119,7 @@ function DialogBody({ children }: DialogBodyProps) {
   )
 
   return (
-    <OverlayContainer>
+    <OverlayContainer id={id}>
       <FocusScope contain autoFocus restoreFocus>
         <DismissButton onDismiss={close} />
         <div
@@ -150,6 +153,7 @@ function DialogBody({ children }: DialogBodyProps) {
             />
 
             <section
+              lens-role="dialog-body"
               className={cn(
                 "px-6 py-4",
                 "border-b border-gray-300 dark:border-gray-600"
@@ -173,7 +177,11 @@ export type DialogFooterProps = {
 }
 
 function DialogFooter({ children }: DialogFooterProps) {
-  return <div className="px-3 py-2">{children}</div>
+  return (
+    <div lens-role="dialog-footer" className="px-3 py-2">
+      {children}
+    </div>
+  )
 }
 
 export const Dialog = {

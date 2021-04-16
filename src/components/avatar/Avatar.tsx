@@ -31,6 +31,7 @@ export const ImageOrIcon = forwardRef<HTMLImageElement, ImageOrIconProps>(
     if (url) {
       return (
         <img
+          lens-role="avatar"
           ref={forwardedRef}
           src={url}
           className={cn("rounded-full", className)}
@@ -46,6 +47,7 @@ export const ImageOrIcon = forwardRef<HTMLImageElement, ImageOrIconProps>(
     }
     return (
       <Icon
+        lens-role="default-avatar"
         ref={forwardedRef as React.ForwardedRef<SVGSVGElement>}
         name="user"
         size={size}
@@ -62,6 +64,8 @@ export const ImageOrIcon = forwardRef<HTMLImageElement, ImageOrIconProps>(
 )
 
 export type AvatarProps = {
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
+  id?: string
   /** URL to the image resource to display */
   url?: string
   /** A small description of this image */
@@ -77,6 +81,7 @@ export type AvatarProps = {
 }
 
 export function Avatar({
+  id,
   url,
   label,
   size = "lg",
@@ -99,16 +104,23 @@ export function Avatar({
   if (name || email) {
     rendered = (
       <div
+        // `id` must be applied at the top-most parent only
+        id={onPress ? undefined : id}
         className={cn("flex items-center space-x-4", {
           "cursor-pointer": !!onPress,
         })}
       >
         {avatar}
         <div className="flex flex-col">
-          <span className="font-semibold text-gray-800 dark:text-gray-100">
+          <span
+            lens-role="name"
+            className="font-semibold text-gray-800 dark:text-gray-100"
+          >
             {name}
           </span>
-          <span className="text-gray-600 dark:text-gray-300">{email}</span>
+          <span lens-role="email" className="text-gray-600 dark:text-gray-300">
+            {email}
+          </span>
         </div>
       </div>
     )

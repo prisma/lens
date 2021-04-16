@@ -71,6 +71,8 @@ function getBodyAndFooter<OptionKey extends string>(
 }
 
 export type SelectContainerProps<OptionKey extends string> = {
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
+  id?: string
   /** Controls if this Select should steal focus when first rendered */
   autoFocus?: boolean
   /** A list of Options to render inside this Select */
@@ -81,8 +83,6 @@ export type SelectContainerProps<OptionKey extends string> = {
   defaultOpen?: boolean
   /** Key of the Option that is selected when this Select is first rendered */
   defaultSelectedKey?: OptionKey
-  /** A ID that will be attached to the rendered Select. Useful when targeting the Select from tests */
-  id?: string
   /** Controls if this Select is disabled */
   isDisabled?: boolean
   /** Controls is this Select is readonly */
@@ -105,11 +105,11 @@ export type SelectContainerProps<OptionKey extends string> = {
  * A Select displays a list of options that you may choose one from. Its value can only ever be one of these options.
  */
 function SelectContainer<OptionKey extends string>({
+  id,
   autoFocus = false,
   children,
   defaultOpen = false,
   defaultSelectedKey,
-  id,
   isDisabled = false,
   isReadOnly = false,
   options,
@@ -135,11 +135,11 @@ function SelectContainer<OptionKey extends string>({
   })
   const { labelProps, menuProps, triggerProps, valueProps } = useSelect(
     {
+      id,
       autoFocus,
       children: body,
       defaultOpen,
       defaultSelectedKey,
-      id,
       isDisabled,
       isReadOnly,
       items: options,
@@ -270,6 +270,7 @@ function SelectOverlay<OptionKey extends string>({
           <DismissButton onDismiss={state.close} />
           <ul
             ref={listBoxRef}
+            lens-role="select-overlay"
             {...listBoxProps}
             className={cn("menu w-full", {
               "animate-slide-bottom": placement === "top",
@@ -332,7 +333,7 @@ function SelectSection<OptionKey extends string>({
   })
 
   return (
-    <section {...groupProps} className={cn("p-2")}>
+    <section lens-role="select-section" {...groupProps} className={cn("p-2")}>
       {state.collection.getFirstKey() !== section.key && (
         <li className="divide-solid"></li>
       )}
@@ -388,6 +389,7 @@ function SelectOption<Key extends string>({
   return (
     <li
       ref={ref}
+      lens-role="select-option"
       {...optionProps}
       className={cn(
         "rounded-md px-2 py-1",

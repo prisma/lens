@@ -9,6 +9,8 @@ import { sizeToNumeric, Size } from "../../utils/sizeToNumeric"
 const MAX_AVATARS = 5
 
 export type StackedAvatarProps = {
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
+  id?: string
   /** Size of the Avatar */
   size?: Size
   /** List of avatars to render */
@@ -18,6 +20,7 @@ export type StackedAvatarProps = {
 }
 
 export function StackedAvatar({
+  id,
   avatars,
   size = "lg",
   onPress,
@@ -39,6 +42,7 @@ export function StackedAvatar({
   return (
     <div
       ref={ref}
+      id={id}
       {...buttonProps}
       className={cn("flex", {
         "opacity-75": isPressed,
@@ -70,8 +74,12 @@ export function StackedAvatar({
             {(a.name || a.email) && isHovered && (
               <Tooltip target={avatarRef} position="bottom">
                 <div className="flex flex-col">
-                  <div className="font-semibold text-sm">{a.name}</div>
-                  <div className="text-xs">{a.email}</div>
+                  <div lens-role="name" className="font-semibold text-sm">
+                    {a.name}
+                  </div>
+                  <div lens-role="email" className="text-xs">
+                    {a.email}
+                  </div>
                 </div>
               </Tooltip>
             )}
@@ -82,6 +90,7 @@ export function StackedAvatar({
         <>
           <div
             ref={truncateRef}
+            lens-role="truncate"
             {...truncateHoverProps}
             className={cn(
               "flex items-center justify-center",
@@ -101,7 +110,7 @@ export function StackedAvatar({
           {truncateIsHovered && (
             <Tooltip target={truncateRef} position="bottom">
               <div className="flex flex-col">
-                <div className="text-sm">
+                <div className="text-sm" lens-role="truncate-count">
                   {avatars.length - MAX_AVATARS} more
                 </div>
               </div>

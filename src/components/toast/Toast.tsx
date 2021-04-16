@@ -17,6 +17,7 @@ export type ToastProps = {
 export function Toast({ title, variant = "neutral", onClose }: ToastProps) {
   return (
     <div
+      lens-role="toast"
       role="alert"
       className={cn(
         "flex items-center m-1",
@@ -54,6 +55,7 @@ export function Toast({ title, variant = "neutral", onClose }: ToastProps) {
           />
         )}
         <div
+          lens-role="toast-title"
           className={cn(
             "ml-3",
             "text-sm font-semibold text-gray-800 dark:text-gray-100"
