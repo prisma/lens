@@ -1,4 +1,3 @@
-import { storiesOf } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
 import { Table } from "./Table"
 import { Avatar } from "../avatar/Avatar"
