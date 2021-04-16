@@ -1,54 +1,55 @@
-import { storiesOf } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
 import { Card } from "./Card"
 import { Form } from "../form/Form"
-import { TextField } from "../text-field/TextField"
 import { Select } from "../select/Select"
 
-storiesOf("Lens/Card", module)
-  .add("Default", () => (
-    <Card>
-      <div className="mb-4 text-gray-800 dark:text-gray-100">Anything goes</div>
-      <TextField label="Text field" />
+export const Default = (props) => <Card {...props}>{renderForm()}</Card>
+Default.storyName = "[Controlled]"
+export default {
+  title: "Lens/Card",
+  component: Card,
+}
+
+export const WithTitle = () => (
+  <section className="w-full">
+    {/* Cards fill their parent by default. This `section` only exists to make the story look better */}
+    <Card title="Instance configuration">{renderForm()}</Card>
+  </section>
+)
+
+export const WithIconAndTitle = () => (
+  <section className="w-full">
+    {/* Cards fill their parent by default. This `section` only exists to make the story look better */}
+    <Card icon="server" title="Instance configuration">
+      {renderForm()}
     </Card>
-  ))
-  .add("With Title", () => (
-    <section className="w-full">
-      {/* Cards fill their parent by default. This `section` only exists to make the story look better */}
-      <Card title="Instance configuration">{renderForm()}</Card>
-    </section>
-  ))
-  .add("With Icon & Title", () => (
-    <section className="w-full">
-      {/* Cards fill their parent by default. This `section` only exists to make the story look better */}
-      <Card icon="server" title="Instance configuration">
-        {renderForm()}
-      </Card>
-    </section>
-  ))
-  .add("With Action", () => (
-    <section className="w-full">
-      {/* Cards fill their parent by default. This `section` only exists to make the story look better */}
-      <Card
-        icon="server"
-        title="Instance configuration"
-        action={{ title: "Pricing", onPress: action("onAction") }}
-      >
-        {renderForm()}
-      </Card>
-    </section>
-  ))
-  .add("With fixed dimensions", () => (
+  </section>
+)
+
+export const WithAction = () => (
+  <section className="w-full">
+    {/* Cards fill their parent by default. This `section` only exists to make the story look better */}
     <Card
       icon="server"
       title="Instance configuration"
-      width={500}
-      height={400}
-      action={{ title: "Learn More", onPress: action("onAction") }}
+      action={{ title: "Pricing", onPress: action("onAction") }}
     >
       {renderForm()}
     </Card>
-  ))
+  </section>
+)
+
+export const WithFixedDimensions = () => (
+  <Card
+    icon="server"
+    title="Instance configuration"
+    width={500}
+    height={400}
+    action={{ title: "Learn More", onPress: action("onAction") }}
+  >
+    {renderForm()}
+  </Card>
+)
 
 function renderForm() {
   return (
