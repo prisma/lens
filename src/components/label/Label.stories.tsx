@@ -1,4 +1,13 @@
-import { storiesOf } from "@storybook/react"
 import { Label } from "./Label"
 
-storiesOf("Lens/Label", module).add("Default", () => <Label>Label</Label>)
+export const Default = (props) => <Label>Label</Label>
+Default.storyName = "[Controlled]"
+export default {
+  title: "Lens/Label",
+  component: Label,
+  argTypes: {
+    name: {
+      defaultValue: "database",
+    },
+  },
+}

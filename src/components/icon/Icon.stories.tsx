@@ -1,4 +1,3 @@
-import { storiesOf } from "@storybook/react"
 import { Icon } from "./Icon"
 
 export const Default = (props) => <Icon {...props} />
