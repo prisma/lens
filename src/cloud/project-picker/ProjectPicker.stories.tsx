@@ -1,4 +1,3 @@
-import { storiesOf } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
 import { Project, ProjectPicker } from "./ProjectPicker"
 
@@ -12,7 +11,7 @@ const collaborations: Project[] = [
   { id: "5", title: "White Bronze Daffodil" },
 ]
 
-storiesOf("Cloud/ProjectPicker", module).add("Default", () => (
+export const Default = (props) => (
   <ProjectPicker
     ownedProjects={ownedProjects}
     collaboratedProjects={collaborations}
@@ -23,4 +22,10 @@ storiesOf("Cloud/ProjectPicker", module).add("Default", () => (
       onPress: action("onPress"),
     }}
   />
-))
+)
+
+Default.storyName = "[Controlled]"
+export default {
+  title: "Cloud/ProjectPicker",
+  component: ProjectPicker,
+}

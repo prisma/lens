@@ -1,6 +1,9 @@
-import { storiesOf } from "@storybook/react"
 import { Subtitle } from "./Subtitle"
 
-storiesOf("Typography/Subtitle", module).add("Default", () => (
-  <Subtitle>This is a subtitle</Subtitle>
-))
+export const Default = (props) => <Subtitle>This is a subtitle</Subtitle>
+
+Default.storyName = "[Controlled]"
+export default {
+  title: "Typography/Subtitle",
+  component: Subtitle,
+}

@@ -14,13 +14,21 @@ export function ButtonGroup({ id, children }: ButtonGroupProps) {
 
   if (buttons.length === 1 || buttons.length === 2) {
     return (
-      <section id={id} className="flex flex-grow space-x-4">
+      <section
+        id={id}
+        lens-rolw="button-group"
+        className="flex flex-grow space-x-4"
+      >
         {children}
       </section>
     )
   } else {
     return (
-      <section id={id} className="flex flex-grow justify-between">
+      <section
+        id={id}
+        lens-role="button-group"
+        className="flex flex-grow justify-between"
+      >
         <div className="flex space-x-4">
           {buttons[0]}
           {buttons[1]}
