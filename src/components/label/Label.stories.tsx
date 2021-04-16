@@ -5,9 +5,4 @@ Default.storyName = "[Controlled]"
 export default {
   title: "Lens/Label",
   component: Label,
-  argTypes: {
-    name: {
-      defaultValue: "database",
-    },
-  },
 }
