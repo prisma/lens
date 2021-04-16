@@ -11,12 +11,7 @@ export function ButtonGroup({ children }: ButtonGroupProps) {
   const buttons = Children.toArray(children)
 
   if (buttons.length === 1 || buttons.length === 2) {
-    return (
-      <section className="flex flex-grow space-x-4">
-        {buttons.length === 1 && children}
-        {buttons.length === 2 && children}
-      </section>
-    )
+    return <section className="flex flex-grow space-x-4">{children}</section>
   } else {
     return (
       <section className="flex flex-grow justify-between">
