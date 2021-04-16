@@ -1,8 +1,8 @@
 import React from "react"
 import cn from "classnames"
-import { Icon } from "../icon/Icon"
-import { Title } from "../../typography/title/Title"
-import { Subtitle } from "../../typography/subtitle/Subtitle"
+import { Icon } from "../../components/icon/Icon"
+import { Title } from "../title/Title"
+import { Subtitle } from "../subtitle/Subtitle"
 
 export type TitleGroupProps = {
   /** An identifying icon */
@@ -25,7 +25,10 @@ export function TitleGroup({
   className,
 }: TitleGroupProps) {
   return (
-    <section className={cn("flex items-center", className)}>
+    <section
+      lens-role="title-group"
+      className={cn("flex items-center", className)}
+    >
       <Icon name={icon} size="lg" />
       <div className="flex-column ml-6">
         <Title titleProps={titleProps}>{title}</Title>

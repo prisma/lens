@@ -28,6 +28,8 @@ export type ComboBoxOption<Key extends string> = {
 }
 
 export type ComboBoxContainerProps<OptionKey extends string> = {
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
+  id?: string
   /** Controls if this ComboBox should steal focus when first rendered */
   autoFocus?: boolean
   /** A list of Options to render inside this ComboBox */
@@ -38,8 +40,6 @@ export type ComboBoxContainerProps<OptionKey extends string> = {
   defaultOpen?: boolean
   /** Key of the Option that is selected when this ComboBox is first rendered */
   defaultSelectedKey?: OptionKey
-  /** A ID that will be attached to the rendered ComboBox. Useful when targeting the ComboBox from tests */
-  id?: string
   /** Controls if this ComboBox is disabled */
   isDisabled?: boolean
   /** Controls is this ComboBox is readonly */
@@ -63,12 +63,12 @@ export type ComboBoxContainerProps<OptionKey extends string> = {
  * It displays a list of options below the text field. This list keeps getting shorter as you type, since fewer options match the text field's value.
  */
 function ComboBoxContainer<OptionKey extends string>({
+  id,
   autoFocus,
   children,
   defaultOpen = false,
   defaultInputValue,
   defaultSelectedKey,
-  id,
   isDisabled = false,
   isReadOnly = false,
   options,
@@ -79,12 +79,12 @@ function ComboBoxContainer<OptionKey extends string>({
 }: ComboBoxContainerProps<OptionKey>) {
   const { contains } = useFilter({ sensitivity: "base" })
   const state = useComboBoxState({
+    id,
     autoFocus,
     children,
     defaultInputValue,
     defaultOpen,
     defaultSelectedKey,
-    id,
     isDisabled,
     isReadOnly,
     items: options,
@@ -127,7 +127,7 @@ function ComboBoxContainer<OptionKey extends string>({
   const { buttonProps } = useButton({ ...triggerProps, isDisabled }, buttonRef)
 
   return (
-    <div className="table-row">
+    <div id={id} className="table-row">
       <Label labelProps={labelProps}>{label}</Label>
       <section className="table-cell w-full relative">
         <FocusRing autoFocus={autoFocus} within>
@@ -149,6 +149,7 @@ function ComboBoxContainer<OptionKey extends string>({
             <input
               ref={inputRef}
               type="text"
+              lens-role="input"
               {...inputProps}
               name={name}
               className={cn("flex-grow", "mr-4", {
@@ -159,7 +160,7 @@ function ComboBoxContainer<OptionKey extends string>({
                 "cursor-not-allowed": isDisabled,
               })}
             />
-            <button ref={buttonRef} {...buttonProps}>
+            <button lens-role="chevron" ref={buttonRef} {...buttonProps}>
               <Icon name="chevron-down" size="xs" />
             </button>
           </div>
@@ -298,7 +299,7 @@ function ComboBoxSection<OptionKey extends string>({
   })
 
   return (
-    <section {...groupProps} className={cn("p-2")}>
+    <section lens-role="combobox-section" {...groupProps} className={cn("p-2")}>
       {state.collection.getFirstKey() !== section.key && (
         <li className="divide-solid"></li>
       )}
@@ -354,6 +355,7 @@ function ComboBoxOption<Key extends string>({
   return (
     <li
       ref={ref}
+      lens-role="combobox-option"
       {...optionProps}
       className={cn(
         "rounded-md px-2 py-1",

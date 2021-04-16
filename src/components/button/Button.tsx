@@ -8,7 +8,7 @@ import { FocusRing } from "../focus-ring/FocusRing"
 export type ButtonProps = React.PropsWithChildren<{
   /** A React ref to attach to the rendered Button */
   ref?: React.ForwardedRef<HTMLButtonElement>
-  /** A ID that will be attached to the rendered button. Useful when targeting the button from tests */
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
   id?: string
   /** Controls what kind of button this is */
   variant?: "primary" | "secondary" | "quiet" | "link"
@@ -25,8 +25,8 @@ export type ButtonProps = React.PropsWithChildren<{
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
-      autoFocus = false,
       id,
+      autoFocus = false,
       variant = "primary",
       isDisabled = false,
       fillParent = false,
@@ -47,6 +47,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <FocusRing autoFocus={autoFocus}>
         <button
           id={id}
+          lens-role="button"
           ref={ref}
           {...mergeProps(buttonProps, hoverProps)}
           className={cn(

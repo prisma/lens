@@ -5,6 +5,8 @@ import { Title } from "../../typography/title/Title"
 import { Button, ButtonProps } from "../button/Button"
 
 export type CardProps = React.PropsWithChildren<{
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
+  id?: string
   /** An identifying icon */
   icon?: string
   /** The title of the Card */
@@ -20,6 +22,7 @@ export type CardProps = React.PropsWithChildren<{
 }>
 
 export function Card({
+  id,
   children,
   icon,
   title,
@@ -30,6 +33,8 @@ export function Card({
 }: CardProps) {
   return (
     <div
+      id={id}
+      lens-role="card"
       className={cn(
         "px-6 py-4 w-full",
         "rounded-lg shadow-md overflow-hidden",
@@ -39,7 +44,10 @@ export function Card({
       style={{ width, height }}
     >
       {(icon || title) && (
-        <section className="flex items-center justify-between space-x-4">
+        <section
+          lens-role="card-header"
+          className="flex items-center justify-between space-x-4"
+        >
           <div className="flex">
             {icon && <Icon name={icon} size="md" className="mr-6"></Icon>}
             {title && <Title>{title}</Title>}
@@ -51,7 +59,8 @@ export function Card({
           )}
         </section>
       )}
-      <section>{children}</section>
+
+      <section lens-role="card-body">{children}</section>
     </div>
   )
 }

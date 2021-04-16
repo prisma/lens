@@ -5,6 +5,8 @@ import { Size, sizeToNumeric } from "../../utils/sizeToNumeric"
 export type IconProps = {
   /** A React ref to attach to the rendered Button */
   ref?: React.ForwardedRef<SVGSVGElement>
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
+  id?: string
   /** Name of the icon to render. Reference: https://feathericons.com */
   name: string
   /** Size of the icon */
@@ -13,26 +15,26 @@ export type IconProps = {
   className?: string
 }
 
-export const Icon = forwardRef<SVGElement, IconProps>(
-  ({ name, size = "md", className }: IconProps, forwardedRef) => {
+export const Icon = forwardRef<SVGSVGElement, IconProps>(
+  ({ id, name, size = "md", className }: IconProps, forwardedRef) => {
     const width = sizeToNumeric(size)
-    const computedClassName = cn(
-      "flex-grow-0 flex-shrink-0",
-      "text-gray-400 dark:text-gray-300",
-      className
-    )
+    const commonProps = {
+      id,
+      "lens-role": "icon",
+      ref: forwardedRef,
+      width,
+      height: width,
+      className: cn(
+        "flex-grow-0 flex-shrink-0",
+        "text-gray-400 dark:text-gray-300",
+        className
+      ),
+    }
 
     // Exceptions to FeatherIcons
     if (name === "prisma") {
       return (
-        <svg
-          ref={forwardedRef as React.LegacyRef<SVGSVGElement>}
-          width={width}
-          height={width}
-          viewBox="0 0 32 32"
-          fill="currentColor"
-          className={computedClassName}
-        >
+        <svg {...commonProps} viewBox="0 0 32 32" fill="currentColor">
           <path
             fillRule="evenodd"
             clipRule="evenodd"
@@ -44,14 +46,7 @@ export const Icon = forwardRef<SVGElement, IconProps>(
 
     if (name === "chevron-down") {
       return (
-        <svg
-          ref={forwardedRef as React.LegacyRef<SVGSVGElement>}
-          width={width}
-          height={width}
-          viewBox="0 0 9 6"
-          fill="currentColor"
-          className={computedClassName}
-        >
+        <svg {...commonProps} viewBox="0 0 9 6" fill="currentColor">
           <path d="M4.12835 5.08706L0.751034 1.33448C0.461449 1.01272 0.689796 0.5 1.12268 0.5H7.87732C8.3102 0.5 8.53855 1.01272 8.24897 1.33448L4.87165 5.08706C4.67303 5.30775 4.32697 5.30775 4.12835 5.08706Z" />
         </svg>
       )
@@ -59,14 +54,7 @@ export const Icon = forwardRef<SVGElement, IconProps>(
 
     if (name === "i") {
       return (
-        <svg
-          ref={forwardedRef as React.LegacyRef<SVGSVGElement>}
-          width={width}
-          height={width}
-          viewBox="0 0 32 32"
-          fill="currentColor"
-          className={computedClassName}
-        >
+        <svg {...commonProps} viewBox="0 0 32 32" fill="currentColor">
           <path
             fillRule="evenodd"
             clipRule="evenodd"
@@ -83,10 +71,7 @@ export const Icon = forwardRef<SVGElement, IconProps>(
 
     return (
       <svg
-        ref={forwardedRef as React.LegacyRef<SVGSVGElement>}
-        width={width}
-        height={width}
-        className={computedClassName}
+        {...commonProps}
         fill="none"
         stroke="currentColor"
         strokeWidth="2"

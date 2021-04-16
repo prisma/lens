@@ -24,6 +24,8 @@ export type Project = {
 }
 
 type ProjectPickerProps = {
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
+  id?: string
   ownedProjects: Project[]
   collaboratedProjects: Project[]
   defaultSelectedKey: ProjectId
@@ -33,6 +35,7 @@ type ProjectPickerProps = {
 }
 
 export function ProjectPicker({
+  id,
   ownedProjects,
   collaboratedProjects,
   defaultSelectedKey,
@@ -61,6 +64,7 @@ export function ProjectPicker({
   return (
     <>
       <div
+        id={id}
         ref={buttonRef}
         {...buttonProps}
         className="flex space-x-2 cursor-pointer"
@@ -75,12 +79,16 @@ export function ProjectPicker({
           )}
         />
         <button className="flex items-center space-x-2">
-          <span className="text-md text-gray-800 dark:text-gray-100">
+          <span
+            lens-role="active-project"
+            className="text-md text-gray-800 dark:text-gray-100"
+          >
             {state.selectedItem?.rendered}
           </span>
           <Icon name="chevron-down" size="xs" className="ml-4" />
         </button>
       </div>
+
       {state.isOpen && (
         <ProjectPickerOverlay
           state={state}
@@ -207,7 +215,11 @@ function ProjectPickerSection({
   })
 
   return (
-    <section {...groupProps} className={cn("p-2")}>
+    <section
+      lens-role="project-picker-section"
+      {...groupProps}
+      className={cn("p-2")}
+    >
       {state.collection.getFirstKey() !== section.key && (
         <li className="divide-solid"></li>
       )}
@@ -262,6 +274,7 @@ function ProjectPickerOption({ option, state }: ProjectPickerOptionProps) {
   return (
     <li
       ref={ref}
+      lens-role="project-picker-option"
       {...optionProps}
       className={cn(
         "rounded-md px-2 py-1",

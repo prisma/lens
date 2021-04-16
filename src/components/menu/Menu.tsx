@@ -93,11 +93,14 @@ function MenuContainer({
 }
 
 export type MenuBodyProps<OptionKey extends string> = {
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
+  id?: string
   /** Children to render */
   children: CollectionChildren<MenuOption<OptionKey>>
   /** A string describing what this Menu represents */
   title: string
-  /** A (dynamic) list of options and/or sections to render within this Menu.
+  /**
+   * A (dynamic) list of options and/or sections to render within this Menu.
    * This may be provided upfront instead of providing static children.
    */
   options?: MenuOption<OptionKey>[]
@@ -109,6 +112,7 @@ export type MenuBodyProps<OptionKey extends string> = {
  * Container for all Menu Sections and Options
  */
 function MenuBody<OptionKey extends string>({
+  id,
   children,
   title,
   options,
@@ -125,6 +129,7 @@ function MenuBody<OptionKey extends string>({
   })
   const { menuProps } = useMenu(
     {
+      id,
       children,
       "aria-label": title,
       items: options,
@@ -161,7 +166,7 @@ function MenuBody<OptionKey extends string>({
           <DismissButton onDismiss={context.close} />
           <ul
             ref={ref}
-            {...mergeProps(menuProps, context.menuProps)}
+            {...mergeProps(context.menuProps, menuProps)}
             className={cn(
               "p-2 min-w-min overflow-auto",
               "rounded-md shadow-md border border-gray-300 dark:border-gray-700",
@@ -230,7 +235,7 @@ function MenuSection<OptionKey extends string>({
   })
 
   return (
-    <section {...groupProps} className={cn("p-2")}>
+    <section lens-role="menu-section" {...groupProps} className={cn("p-2")}>
       {state.collection.getFirstKey() !== section.key && (
         <li className="divide-solid"></li>
       )}
@@ -292,11 +297,12 @@ function MenuOption<Key extends string>({
 
   return (
     <li
+      lens-role="menu-option"
       ref={ref}
       {...menuOptionProps}
       className={cn(
         "rounded-md px-2 py-1",
-        "cursor-default",
+        "cursor-pointer",
         {
           "bg-gray-100 dark:bg-gray-800": isFocused,
         },

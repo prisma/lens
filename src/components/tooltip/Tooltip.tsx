@@ -12,6 +12,8 @@ const SPACING = 8
 type Position = "top" | "bottom" | "left" | "right"
 
 export type TooltipProps = React.PropsWithChildren<{
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
+  id?: string
   /** React Ref of an HTML Element to position this Tooltip against */
   target: React.RefObject<HTMLElement>
   /** Position of the tooltip relative to the target. The Tooltip might still be flipped if there isn't enough space. */
@@ -21,9 +23,9 @@ export type TooltipProps = React.PropsWithChildren<{
 /**
  * A tooltip is an overlay that is most commonly used to display a short description about an icon / image
  */
-export function Tooltip({ children, target, position }: TooltipProps) {
+export function Tooltip({ id, children, target, position }: TooltipProps) {
   const state = useTooltipTriggerState({ isOpen: true })
-  const { tooltipProps } = useTooltip({}, state)
+  const { tooltipProps } = useTooltip({ id }, state)
 
   const ref = useRef<HTMLDivElement>(null)
 
@@ -86,6 +88,7 @@ export function Tooltip({ children, target, position }: TooltipProps) {
   return createPortal(
     <div
       ref={ref}
+      lens-role="tooltip"
       {...mergeProps(overlayProps, tooltipProps)}
       style={{
         ...overlayProps.style,
@@ -135,6 +138,7 @@ type ArrowProps = {
 function Arrow({ arrowProps, position }: ArrowProps) {
   return (
     <div
+      lens-role="tooltip-arrow"
       {...arrowProps}
       className={cn("absolute", "border-gray-800 dark:border-gray-800")}
       style={{

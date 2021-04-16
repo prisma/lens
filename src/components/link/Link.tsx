@@ -6,6 +6,8 @@ import { mergeProps } from "@react-aria/utils"
 import { FocusRing } from "../focus-ring/FocusRing"
 
 export type LinkProps = {
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
+  id?: string
   /** The visual text for the hyperlink */
   children: string
   /** The location this Link points to */
@@ -16,7 +18,13 @@ export type LinkProps = {
   openInNewTab?: boolean
 }
 
-export function Link({ children, href, isDisabled, openInNewTab }: LinkProps) {
+export function Link({
+  id,
+  children,
+  href,
+  isDisabled,
+  openInNewTab,
+}: LinkProps) {
   const ref = useRef<HTMLAnchorElement>(null)
   const { linkProps } = useLink({ children, elementType: "a", isDisabled }, ref)
   const { hoverProps, isHovered } = useHover({ isDisabled })
@@ -24,6 +32,8 @@ export function Link({ children, href, isDisabled, openInNewTab }: LinkProps) {
   return (
     <FocusRing within>
       <a
+        id={id}
+        lens-role="link"
         ref={ref}
         {...mergeProps(linkProps, hoverProps)}
         href={href}

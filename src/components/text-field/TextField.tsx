@@ -9,12 +9,12 @@ import { FocusRing } from "../focus-ring/FocusRing"
 export type TextFieldProps = React.PropsWithChildren<{
   /** A React ref to attach to the rendered Button */
   ref?: React.ForwardedRef<HTMLInputElement>
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
+  id?: string
   /** Controls if this TextField should steal focus when mounted */
   autoFocus?: boolean
   /** Initial value to populate the TextField with */
   defaultValue?: string
-  /** A ID that will be attached to the rendered TextField. Useful when targeting the TextField from tests */
-  id?: string
   /** Hints at the type of data that might be entered into this TextField */
   inputMode?: "text" | "email" | "tel" | "url" | "numeric" | "decimal"
   /** Additional props to spread over the input component */
@@ -42,10 +42,10 @@ export type TextFieldProps = React.PropsWithChildren<{
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
   (
     {
+      id,
       autoFocus = false,
       children,
       defaultValue,
-      id,
       inputMode,
       inputProps = {},
       isDisabled = false,
@@ -64,9 +64,9 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     const inputRef = forwardedRef || _inputRef
     const { labelProps, inputProps: textFieldInputProps } = useTextField(
       {
+        id,
         autoFocus,
         defaultValue,
-        id,
         inputMode,
         isDisabled,
         isReadOnly,
@@ -116,6 +116,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
               </div>
               <input
                 ref={inputRef}
+                lens-role="text-field"
                 {...mergeProps(
                   inputProps,
                   textFieldInputProps as React.InputHTMLAttributes<HTMLInputElement>
