@@ -1,4 +1,3 @@
-import { storiesOf } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
 import { Menu, MenuOption } from "./Menu"
 import { Button } from "../button/Button"

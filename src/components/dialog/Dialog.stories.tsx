@@ -7,12 +7,7 @@ import { Select } from "../select/Select"
 import { ButtonGroup } from "../button-group/ButtonGroup"
 
 export const Default = (props) => (
-  <Dialog.Container
-    title="Edit Membership"
-    subtitle="Edit user's membership in current project"
-    icon="user"
-    {...props}
-  >
+  <Dialog.Container {...props}>
     <Button>Dialog Trigger</Button>
     {(close) => (
       <Dialog.Body>
@@ -42,6 +37,17 @@ Default.storyName = "[Controlled]"
 export default {
   title: "Lens/Dialog",
   component: Dialog,
+  argTypes: {
+    title: {
+      defaultValue: "Edit Membership",
+    },
+    subtitle: {
+      defaultValue: "Edit user's membership in current project",
+    },
+    icon: {
+      defaultValue: "user",
+    },
+  },
 }
 
 export const WithFooter = () => (

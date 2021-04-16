@@ -79,6 +79,9 @@ Default.storyName = "[Controlled]"
 export default {
   title: "Lens/ComboBox",
   component: ComboBox.Container,
+  argTypes: {
+    label: { defaultValue: "Repository" },
+  },
 }
 
 export const WithStaticData = () => (
