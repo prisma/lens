@@ -10,14 +10,14 @@ export type ButtonProps = React.PropsWithChildren<{
   autoFocus?: boolean
   /** A ID that will be attached to the rendered button. Useful when targeting the button from tests */
   id?: string
+  /** Controls what kind of button this is */
+  variant?: "primary" | "secondary" | "quiet" | "link"
   /** Controls if this button is disabled */
   isDisabled?: boolean
   /** Controls if the button will grow to fill its parent */
   fillParent?: boolean
   /** Callback invoked when this button is pressed */
   onPress?: () => void
-  /** Controls what kind of button this is */
-  variant?: "primary" | "secondary" | "quiet" | "link"
 }>
 
 function Button(

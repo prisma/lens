@@ -1,41 +1,61 @@
-import { storiesOf } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
 import { Button } from "./Button"
 
-storiesOf("Lens/Button", module)
-  .add("Primary variant", () => (
-    <div className="flex space-x-4">
-      <Button onPress={action("onPress")}>Primary</Button>
-      <Button isDisabled>Disabled</Button>
-    </div>
-  ))
-  .add("Secondary variant", () => (
-    <div className="flex space-x-4">
-      <Button onPress={action("onPress")} variant="secondary">
-        Secondary
-      </Button>
-      <Button variant="secondary" isDisabled>
-        Disabled
-      </Button>
-    </div>
-  ))
-  .add("Quiet variant", () => (
-    <div className="flex space-x-4">
-      <Button onPress={action("onPress")} variant="quiet">
-        Button
-      </Button>
-      <Button variant="quiet" isDisabled>
-        Disabled
-      </Button>
-    </div>
-  ))
-  .add("Link variant", () => (
-    <div className="flex space-x-4">
-      <Button onPress={action("onPress")} variant="link">
-        Button
-      </Button>
-      <Button variant="link" isDisabled>
-        Disabled
-      </Button>
-    </div>
-  ))
+export const Default = (props) => <Button {...props}>Save Changes</Button>
+Default.storyName = "[Controlled]"
+export default {
+  title: "Lens/Button",
+  component: Button,
+  argTypes: {
+    variant: {
+      control: {
+        type: "select",
+        options: ["primary", "secondary"],
+      },
+    },
+  },
+}
+
+export const Primary = () => (
+  <div className="flex space-x-4">
+    <Button variant="primary" onPress={action("onPress")}>
+      Primary
+    </Button>
+    <Button variant="primary" isDisabled>
+      Disabled
+    </Button>
+  </div>
+)
+
+export const Secondary = () => (
+  <div className="flex space-x-4">
+    <Button variant="secondary" onPress={action("onPress")}>
+      Primary
+    </Button>
+    <Button variant="secondary" isDisabled>
+      Disabled
+    </Button>
+  </div>
+)
+
+export const Link = () => (
+  <div className="flex space-x-4">
+    <Button variant="link" onPress={action("onPress")}>
+      Primary
+    </Button>
+    <Button variant="link" isDisabled>
+      Disabled
+    </Button>
+  </div>
+)
+
+export const Quiet = () => (
+  <div className="flex space-x-4">
+    <Button variant="quiet" onPress={action("onPress")}>
+      Primary
+    </Button>
+    <Button variant="quiet" isDisabled>
+      Disabled
+    </Button>
+  </div>
+)
