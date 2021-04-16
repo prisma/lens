@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/prisma/lens#readme",
   "scripts": {
-    "dev": "start-storybook -p 6006 -s public --ci",
+    "dev": "start-storybook --docs -p 6006 -s public --ci",
     "format": "prettier -w . --ignore-path .gitignore",
     "build": "rm -rf dist && NODE_ENV=production rollup -c",
     "build-storybook": "build-storybook -s public",
