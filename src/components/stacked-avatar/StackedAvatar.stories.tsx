@@ -1,6 +1,7 @@
 import { storiesOf } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
-import { StackedAvatar, AvatarProps } from "./StackedAvatar"
+import { AvatarProps } from "../avatar/Avatar"
+import { StackedAvatar } from "./StackedAvatar"
 
 const avatars: AvatarProps[] = [
   {
@@ -47,17 +48,32 @@ const avatars: AvatarProps[] = [
   },
 ]
 
-storiesOf("Lens/StackedAvatar", module)
-  .add("Default", () => (
-    <StackedAvatar avatars={avatars.slice(0, 5)} onPress={action("onPress")} />
-  ))
-  .add("Sizes", () => (
-    <div className="flex flex-col items-center space-y-4">
-      <StackedAvatar size="xs" avatars={avatars.slice(0, 5)} />
-      <StackedAvatar size="sm" avatars={avatars.slice(0, 5)} />
-      <StackedAvatar size="md" avatars={avatars.slice(0, 5)} />
-      <StackedAvatar size="lg" avatars={avatars.slice(0, 5)} />
-      <StackedAvatar size="xl" avatars={avatars.slice(0, 5)} />
-    </div>
-  ))
-  .add("With truncation", () => <StackedAvatar avatars={avatars} />)
+export const Default = (props) => (
+  <StackedAvatar avatars={avatars.slice(0, 5)} onPress={action("onPress")} />
+)
+Default.storyName = "[Controlled]"
+export default {
+  title: "Lens/StackedAvatar",
+  component: StackedAvatar,
+  argTypes: {
+    size: {
+      control: {
+        type: "inline-radio",
+        options: ["xs", "sm", "md", "lg", "xl"],
+      },
+      defaultValue: "lg",
+    },
+  },
+}
+
+export const Sizes = () => (
+  <div className="flex flex-col items-center space-y-4">
+    <StackedAvatar size="xs" avatars={avatars.slice(0, 5)} />
+    <StackedAvatar size="sm" avatars={avatars.slice(0, 5)} />
+    <StackedAvatar size="md" avatars={avatars.slice(0, 5)} />
+    <StackedAvatar size="lg" avatars={avatars.slice(0, 5)} />
+    <StackedAvatar size="xl" avatars={avatars.slice(0, 5)} />
+  </div>
+)
+
+export const WithTruncation = () => <StackedAvatar avatars={avatars} />
