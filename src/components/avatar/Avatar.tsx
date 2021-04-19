@@ -128,7 +128,7 @@ export function Avatar({
 
   if (onPress) {
     rendered = (
-      <Button variant="quiet" onPress={onPress}>
+      <Button id={id} variant="quiet" onPress={onPress}>
         {rendered}
       </Button>
     )
