@@ -49,7 +49,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           id={id}
           lens-role="button"
           ref={ref}
-          {...mergeProps(buttonProps, hoverProps)}
+          {...mergeProps(hoverProps, buttonProps)}
           className={cn(
             "flex justify-center px-3 py-1.5",
             "rounded-md",

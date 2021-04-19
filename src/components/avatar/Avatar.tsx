@@ -1,6 +1,5 @@
 import React, { forwardRef } from "react"
 import cn from "classnames"
-import { Button } from "../button/Button"
 import { Icon } from "../icon/Icon"
 import { Size, sizeToNumeric } from "../../utils/sizeToNumeric"
 
@@ -15,15 +14,7 @@ type ImageOrIconProps = AvatarProps & {
  */
 export const ImageOrIcon = forwardRef<HTMLImageElement, ImageOrIconProps>(
   (
-    {
-      url,
-      label,
-      size = "lg",
-      onPress,
-      className,
-      style,
-      otherProps,
-    }: ImageOrIconProps,
+    { url, label, size = "lg", className, style, otherProps }: ImageOrIconProps,
     forwardedRef
   ) => {
     const width = sizeToNumeric(size)
@@ -39,7 +30,7 @@ export const ImageOrIcon = forwardRef<HTMLImageElement, ImageOrIconProps>(
           width={width}
           height={width}
           alt={
-            onPress ? undefined : label
+            label
           } /* If the Avatar is clickable, treat it as a button, AKA no alt-text, otherwise add alt-text */
           {...otherProps}
         />
@@ -76,8 +67,6 @@ export type AvatarProps = {
   name?: string
   /** Email of the user this Avatar belongs to */
   email?: string
-  /** Callback invoked when this avatar is pressed */
-  onPress?: () => void
 }
 
 export function Avatar({
@@ -87,30 +76,21 @@ export function Avatar({
   size = "lg",
   name,
   email,
-  onPress,
 }: AvatarProps) {
-  const avatar = (
-    <ImageOrIcon
-      url={url}
-      label={label}
-      size={size}
-      name={name}
-      email={email}
-      onPress={onPress}
-    />
-  )
-
-  let rendered = avatar
-  if (name || email) {
-    rendered = (
-      <div
-        // `id` must be applied at the top-most parent only
-        id={onPress ? undefined : id}
-        className={cn("flex items-center space-x-4", {
-          "cursor-pointer": !!onPress,
-        })}
-      >
-        {avatar}
+  return (
+    <div
+      // `id` must be applied at the top-most parent only
+      id={id}
+      className={cn("flex items-center space-x-4")}
+    >
+      <ImageOrIcon
+        url={url}
+        label={label}
+        size={size}
+        name={name}
+        email={email}
+      />
+      {(name || email) && (
         <div className="flex flex-col">
           <span
             lens-role="name"
@@ -122,17 +102,7 @@ export function Avatar({
             {email}
           </span>
         </div>
-      </div>
-    )
-  }
-
-  if (onPress) {
-    rendered = (
-      <Button id={id} variant="quiet" onPress={onPress}>
-        {rendered}
-      </Button>
-    )
-  }
-
-  return rendered
+      )}
+    </div>
+  )
 }
