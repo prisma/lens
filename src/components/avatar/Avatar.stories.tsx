@@ -1,4 +1,3 @@
-import { action } from "@storybook/addon-actions"
 import { Avatar } from "./Avatar"
 
 export const Default = (props) => <Avatar {...props} />
@@ -18,7 +17,7 @@ export default {
 }
 
 export const WithCustomURL = () => (
-  <Avatar url="/avatar1.png" label="Lens user" onPress={action("onPress")} />
+  <Avatar url="/avatar1.png" label="Lens user" />
 )
 
 export const Sizes = () => (
