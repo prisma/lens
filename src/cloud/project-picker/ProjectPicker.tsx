@@ -173,7 +173,7 @@ function ProjectPickerOverlay({
               />
             ))}
             {action && (
-              <li className="flex mt">
+              <li className="flex mt" lens-role="action">
                 <Button
                   variant="primary"
                   autoFocus={false}
