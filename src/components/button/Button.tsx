@@ -51,7 +51,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           ref={ref}
           {...mergeProps(hoverProps, buttonProps)}
           className={cn(
-            "flex justify-center px-3 py-1.5",
+            "flex justify-center items-center px-3 py-1.5",
             "rounded-md",
             "text-sm whitespace-nowrap",
             {
