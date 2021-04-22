@@ -147,6 +147,7 @@ function ProjectPickerOverlay({
     <OverlayContainer>
       <FocusScope autoFocus restoreFocus contain>
         <div
+          lens-role="project-picker-body"
           ref={overlayRef}
           {...mergeProps(overlayProps, positionProps)}
           style={{
@@ -173,7 +174,7 @@ function ProjectPickerOverlay({
               />
             ))}
             {action && (
-              <li className="flex mt" lens-role="action">
+              <li className="flex mt" lens-role="project-picker-action">
                 <Button
                   variant="primary"
                   autoFocus={false}

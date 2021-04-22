@@ -155,6 +155,7 @@ function MenuBody<OptionKey extends string>({
     <OverlayContainer>
       <FocusScope restoreFocus>
         <div
+          lens-role="menu-body"
           ref={overlayRef}
           {...mergeProps(positionProps, overlayProps)}
           style={{

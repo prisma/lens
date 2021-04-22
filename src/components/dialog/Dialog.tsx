@@ -119,10 +119,12 @@ function DialogBody({ id, children }: DialogBodyProps) {
   )
 
   return (
-    <OverlayContainer id={id}>
+    <OverlayContainer>
       <FocusScope contain autoFocus restoreFocus>
         <DismissButton onDismiss={close} />
         <div
+          id={id}
+          lens-role="dialog-body"
           className={cn(
             "flex justify-center items-center",
             "fixed top-0 bottom-0 left-0 right-0 z-30",
