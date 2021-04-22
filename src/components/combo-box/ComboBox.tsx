@@ -228,6 +228,7 @@ function ComboBoxBody<OptionKey extends string>({
     <OverlayContainer>
       <FocusScope restoreFocus>
         <div
+        id="combobox-body"
           {...mergeProps(overlayProps, positionProps)}
           ref={overlayRef}
           style={{

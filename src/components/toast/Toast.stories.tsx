@@ -43,12 +43,12 @@ export const WithTriggerAndAutoVanishing = () => {
 
   return (
     <Button
-      onPress={() => {
+      onPress={() =>
         toasts.add({
           title: `Changes saved ${toasts.toasts.length + 1}`,
           variant: "positive",
         })
-      }}
+      }
     >
       Save Changes
     </Button>
@@ -60,13 +60,13 @@ export const WithTriggerAndSticky = () => {
 
   return (
     <Button
-      onPress={() => {
+      onPress={() =>
         toasts.add({
           title: `Changes saved ${toasts.toasts.length + 1}`,
           sticky: true,
           variant: "positive",
         })
-      }}
+      }
     >
       Save Changes
     </Button>

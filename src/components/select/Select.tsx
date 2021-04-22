@@ -259,6 +259,7 @@ function SelectOverlay<OptionKey extends string>({
     <OverlayContainer>
       <FocusScope restoreFocus>
         <div
+        lens-role="select-body"
           ref={overlayRef}
           {...mergeProps(overlayProps, positionProps)}
           style={{
