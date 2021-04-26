@@ -18,6 +18,10 @@ export type ButtonProps = React.PropsWithChildren<{
   isDisabled?: boolean
   /** Controls if the button will grow to fill its parent */
   fillParent?: boolean
+  /** Icon element placed before the children. */
+  startIcon?: React.ReactNode | null
+  /** Icon element placed after the children. */
+  endIcon?: React.ReactNode | null
   /** Callback invoked when this button is pressed */
   onPress?: () => void
 }>
@@ -30,6 +34,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       variant = "primary",
       isDisabled = false,
       fillParent = false,
+      startIcon = null,
+      endIcon = null,
       children,
       onPress,
     }: ButtonProps,
@@ -90,7 +96,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             }
           )}
         >
+          {startIcon && (
+            <span className="mr-1">{startIcon}</span>
+          )}
           {children}
+          {endIcon && (
+            <span className="ml-1">{endIcon}</span>
+          )}
         </button>
       </FocusRing>
     )
