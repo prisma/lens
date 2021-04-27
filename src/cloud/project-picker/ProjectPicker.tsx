@@ -28,7 +28,7 @@ type ProjectPickerProps = {
   id?: string
   ownedProjects: Project[]
   collaboratedProjects: Project[]
-  defaultSelectedKey: ProjectId
+  selectedKey: ProjectId
   onSelectionChange?: (key: React.Key) => void
   /** The action of the Button at the end **/
   overlayButtonAction?: { title: string; onPress: ButtonProps["onPress"] }
@@ -38,7 +38,7 @@ export function ProjectPicker({
   id,
   ownedProjects,
   collaboratedProjects,
-  defaultSelectedKey,
+  selectedKey,
   onSelectionChange,
   overlayButtonAction,
 }: ProjectPickerProps) {
@@ -77,6 +77,7 @@ export function ProjectPicker({
 
   const state = useSelectState<Project>({
     children,
+    selectedKey,
     onSelectionChange,
   })
 
