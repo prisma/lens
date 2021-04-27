@@ -77,20 +77,20 @@ function ComboBoxContainer<OptionKey extends string>({
   placeholder = "Select an option",
   onSelectionChange,
 }: ComboBoxContainerProps<OptionKey>) {
-  const { contains } = useFilter({})
+  const { contains } = useFilter({ sensitivity: "base" })
   const state = useComboBoxState({
     id,
     autoFocus,
     children,
+    defaultFilter: contains,
     defaultInputValue,
     defaultOpen,
     defaultSelectedKey,
     isDisabled,
     isReadOnly,
-    items: options,
+    defaultItems: options,
     placeholder,
     onSelectionChange: onSelectionChange as (k: React.Key) => void,
-    defaultFilter: contains,
   })
 
   const containerRef = useRef<HTMLDivElement>(null)
