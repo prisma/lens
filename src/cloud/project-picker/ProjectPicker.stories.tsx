@@ -29,3 +29,29 @@ export default {
   title: "Cloud/ProjectPicker",
   component: ProjectPicker,
 }
+
+export const WithNoOwnedProjects = (props) => (
+  <ProjectPicker
+    ownedProjects={[]}
+    collaboratedProjects={collaborations}
+    selectedKey={ownedProjects[0].id}
+    onSelectionChange={action("onSelectionChange")}
+    overlayButtonAction={{
+      title: "Create a new project",
+      onPress: action("onPress"),
+    }}
+  />
+)
+
+export const WithNoCollaborations = (props) => (
+  <ProjectPicker
+    ownedProjects={ownedProjects}
+    collaboratedProjects={[]}
+    selectedKey={ownedProjects[0].id}
+    onSelectionChange={action("onSelectionChange")}
+    overlayButtonAction={{
+      title: "Create a new project",
+      onPress: action("onPress"),
+    }}
+  />
+)

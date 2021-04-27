@@ -42,16 +42,41 @@ export function ProjectPicker({
   onSelectionChange,
   overlayButtonAction,
 }: ProjectPickerProps) {
+  const children = []
+  if (ownedProjects.length > 0) {
+    children.push(
+      <Section
+        title="Your projects"
+        items={ownedProjects.sort(
+          (
+            a: { id: string; title: string },
+            b: { id: string; title: string }
+          ) => a.title.localeCompare(b.title)
+        )}
+      >
+        {(project) => <Item key={project.id}>{project.title}</Item>}
+      </Section>
+    )
+  }
+
+  if (collaboratedProjects.length > 0) {
+    children.push(
+      <Section
+        title="Collaborations"
+        items={collaboratedProjects.sort(
+          (
+            a: { id: string; title: string },
+            b: { id: string; title: string }
+          ) => a.title.localeCompare(b.title)
+        )}
+      >
+        {(project) => <Item key={project.id}>{project.title}</Item>}
+      </Section>
+    )
+  }
+
   const state = useSelectState<Project>({
-    children: [
-      <Section title="Your projects" items={ownedProjects}>
-        {(project) => <Item key={project.id}>{project.title}</Item>}
-      </Section>,
-      <Section title="Collaborations" items={collaboratedProjects}>
-        {(project) => <Item key={project.id}>{project.title}</Item>}
-      </Section>,
-    ],
-    defaultSelectedKey,
+    children,
     onSelectionChange,
   })
 
@@ -78,18 +103,21 @@ export function ProjectPicker({
             "bg-gray-700"
           )}
         />
-        <button className="flex items-center space-x-2">
-          <span
-            lens-role="active-project"
-            className="text-md text-gray-800 dark:text-gray-100"
-          >
-            {state.selectedItem?.rendered}
-          </span>
-          <Icon name="chevron-down" size="xs" className="ml-4" />
-        </button>
+
+        {children.length > 0 && (
+          <button className="flex items-center space-x-2">
+            <span
+              lens-role="active-project"
+              className="text-md text-gray-800 dark:text-gray-100"
+            >
+              {state.selectedItem?.rendered}
+            </span>
+            <Icon name="chevron-down" size="xs" className="ml-4" />
+          </button>
+        )}
       </div>
 
-      {state.isOpen && (
+      {children.length > 0 && state.isOpen && (
         <ProjectPickerOverlay
           state={state}
           buttonRef={buttonRef}
