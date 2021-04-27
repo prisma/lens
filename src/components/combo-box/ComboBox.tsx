@@ -77,7 +77,7 @@ function ComboBoxContainer<OptionKey extends string>({
   placeholder = "Select an option",
   onSelectionChange,
 }: ComboBoxContainerProps<OptionKey>) {
-  const { contains } = useFilter({ sensitivity: "base" })
+  const { contains } = useFilter({})
   const state = useComboBoxState({
     id,
     autoFocus,
@@ -111,6 +111,7 @@ function ComboBoxContainer<OptionKey extends string>({
       defaultInputValue,
       defaultSelectedKey,
       id,
+      label,
       isDisabled,
       isReadOnly,
       items: options,
@@ -120,8 +121,8 @@ function ComboBoxContainer<OptionKey extends string>({
       buttonRef,
       popoverRef: overlayRef,
       listBoxRef,
-      menuTrigger: "input",
-    },
+      menuTrigger: "focus",
+    } as any, // need `as any` because types do not allow `label` to be passed on, which causes warnings to show up about missing labels
     state
   )
   const { buttonProps } = useButton({ ...triggerProps, isDisabled }, buttonRef)
@@ -168,6 +169,8 @@ function ComboBoxContainer<OptionKey extends string>({
         {state.isOpen && (
           <ComboBoxBody
             {...listBoxProps}
+            id={id}
+            label={label}
             containerRef={containerRef}
             listBoxRef={listBoxRef}
             overlayRef={overlayRef}
@@ -180,6 +183,10 @@ function ComboBoxContainer<OptionKey extends string>({
 }
 
 type ComboBoxBodyProps<OptionKey extends string> = {
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
+  id?: string
+  /** A string describing what this ComboBox represents */
+  label: string
   /** A ref object that will be attached to the Options container */
   listBoxRef: React.RefObject<HTMLUListElement>
   /** A ref object that will be attached to the overlay element */
@@ -192,6 +199,8 @@ type ComboBoxBodyProps<OptionKey extends string> = {
 
 /** An overlay that renders individual ComboBox Options */
 function ComboBoxBody<OptionKey extends string>({
+  id,
+  label,
   listBoxRef,
   overlayRef,
   state,
@@ -199,7 +208,9 @@ function ComboBoxBody<OptionKey extends string>({
 }: ComboBoxBodyProps<OptionKey>) {
   const { listBoxProps } = useListBox(
     {
+      id,
       autoFocus: state.focusStrategy,
+      label,
       disallowEmptySelection: true,
     },
     state,
@@ -228,7 +239,7 @@ function ComboBoxBody<OptionKey extends string>({
     <OverlayContainer>
       <FocusScope restoreFocus>
         <div
-        id="combobox-body"
+          id="combobox-body"
           {...mergeProps(overlayProps, positionProps)}
           ref={overlayRef}
           style={{
