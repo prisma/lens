@@ -57,33 +57,23 @@ function TableContainer({ id, children }: TableContainerProps) {
     throw new Error("A Table.Container must contain at least two children")
   }
 
-  const [lastChild] = children.slice(children.length - 1)
-  let tableChildren = children
-  if (lastChild.type === TableFooter) {
-    // If the last child is a TableFooter, remove it before passing children on to `useTableState` since react-stately does not understand it.
-    tableChildren = children.slice(0, children.length - 1)
-  }
-
   const state = useTableState<TableValue>({
     selectionMode: "none",
-    children: tableChildren,
+    children,
   })
   const { gridProps } = useTable({ ref, id }, state)
 
   return (
     <TableContext.Provider value={state}>
-      <Card className="px-0 py-0">
-        <table
-          ref={ref}
-          className="table w-full"
-          style={{ borderSpacing: "0 1rem" }}
-          {...gridProps}
-        >
-          <TableHeader />
-          <TableBody />
-          {lastChild}
-        </table>
-      </Card>
+      <table
+        ref={ref}
+        className="table w-full"
+        style={{ borderSpacing: "0 1rem" }}
+        {...gridProps}
+      >
+        <TableHeader />
+        <TableBody />
+      </table>
     </TableContext.Provider>
   )
 }
@@ -217,24 +207,6 @@ function TableCell({ cell }: TableCellProps) {
   )
 }
 
-type TableFooterProps = {
-  children: React.ReactElement
-}
-function TableFooter({ children }: TableFooterProps) {
-  return (
-    <tfoot
-      lens-role="table-footer"
-      className="border-t border-gray-300 dark:border-gray-600"
-    >
-      <tr lens-role="table-footer-row">
-        <td lens-role="table-footer-cell" className="px-4 py-3">
-          {children}
-        </td>
-      </tr>
-    </tfoot>
-  )
-}
-
 export const Table = {
   Container: TableContainer,
   Header: ReactAriaTableHeader,
@@ -242,5 +214,4 @@ export const Table = {
   Row: ReactAriaTableRow,
   Column: ReactAriaTableColumn,
   Cell: ReactAriaTableCell,
-  Footer: TableFooter,
 }
