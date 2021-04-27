@@ -82,15 +82,15 @@ function ComboBoxContainer<OptionKey extends string>({
     id,
     autoFocus,
     children,
+    defaultFilter: contains,
     defaultInputValue,
     defaultOpen,
     defaultSelectedKey,
     isDisabled,
     isReadOnly,
-    items: options,
+    defaultItems: options,
     placeholder,
     onSelectionChange: onSelectionChange as (k: React.Key) => void,
-    defaultFilter: contains,
   })
 
   const containerRef = useRef<HTMLDivElement>(null)
