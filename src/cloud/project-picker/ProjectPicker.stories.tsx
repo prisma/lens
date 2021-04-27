@@ -15,7 +15,7 @@ export const Default = (props) => (
   <ProjectPicker
     ownedProjects={ownedProjects}
     collaboratedProjects={collaborations}
-    defaultSelectedKey={ownedProjects[0].id}
+    selectedKey={ownedProjects[0].id}
     onSelectionChange={action("onSelectionChange")}
     overlayButtonAction={{
       title: "Create a new project",
@@ -29,3 +29,42 @@ export default {
   title: "Cloud/ProjectPicker",
   component: ProjectPicker,
 }
+
+export const WithNoOwnedProjects = (props) => (
+  <ProjectPicker
+    ownedProjects={[]}
+    collaboratedProjects={collaborations}
+    selectedKey={collaborations[0].id}
+    onSelectionChange={action("onSelectionChange")}
+    overlayButtonAction={{
+      title: "Create a new project",
+      onPress: action("onPress"),
+    }}
+  />
+)
+
+export const WithNoCollaborations = (props) => (
+  <ProjectPicker
+    ownedProjects={ownedProjects}
+    collaboratedProjects={[]}
+    selectedKey={ownedProjects[0].id}
+    onSelectionChange={action("onSelectionChange")}
+    overlayButtonAction={{
+      title: "Create a new project",
+      onPress: action("onPress"),
+    }}
+  />
+)
+
+export const WithNoProjects = (props) => (
+  <ProjectPicker
+    ownedProjects={[]}
+    collaboratedProjects={[]}
+    selectedKey={null}
+    onSelectionChange={action("onSelectionChange")}
+    overlayButtonAction={{
+      title: "Create a new project",
+      onPress: action("onPress"),
+    }}
+  />
+)

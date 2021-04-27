@@ -312,9 +312,6 @@ function ComboBoxSection<OptionKey extends string>({
 
   return (
     <section lens-role="combobox-section" {...groupProps} className={cn("p-2")}>
-      {state.collection.getFirstKey() !== section.key && (
-        <li className="divide-solid"></li>
-      )}
       <div
         {...headingProps}
         className={cn(
