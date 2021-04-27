@@ -108,7 +108,7 @@ export function ProjectPicker({
           <button className="flex items-center space-x-2">
             <span
               lens-role="active-project"
-              className="text-md text-gray-800 dark:text-gray-100"
+              className="text-md font-semibold text-gray-800 dark:text-gray-100"
             >
               {state.selectedItem?.rendered}
             </span>
