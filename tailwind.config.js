@@ -29,6 +29,8 @@ module.exports = {
         "blue-700": "#2B6CB0",
         "blue-800": "#2C5282",
         "blue-900": "#2A4365",
+        "purple-100": "#EDE9FE",
+        "purple-800": "#5B21B6",
       },
       fontFamily: {
         barlow: ["Barlow", "sans-serif"],
