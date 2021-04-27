@@ -249,9 +249,6 @@ function ProjectPickerSection({
       {...groupProps}
       className={cn("p-2")}
     >
-      {state.collection.getFirstKey() !== section.key && (
-        <li className="divide-solid"></li>
-      )}
       <div
         {...headingProps}
         className={cn(

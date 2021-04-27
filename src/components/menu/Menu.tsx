@@ -147,6 +147,7 @@ function MenuBody<OptionKey extends string>({
     offset: 8,
     containerPadding: 0,
     onClose: context.close,
+    shouldFlip: true,
   })
   // Figure out trigger dimensions so we can size the overlay
   const triggerDimensions = context.triggerRef.current?.getBoundingClientRect()
@@ -237,9 +238,6 @@ function MenuSection<OptionKey extends string>({
 
   return (
     <section lens-role="menu-section" {...groupProps} className={cn("p-2")}>
-      {state.collection.getFirstKey() !== section.key && (
-        <li className="divide-solid"></li>
-      )}
       <div
         {...headingProps}
         className={cn(

@@ -259,7 +259,7 @@ function SelectOverlay<OptionKey extends string>({
     <OverlayContainer>
       <FocusScope restoreFocus>
         <div
-        lens-role="select-body"
+          lens-role="select-body"
           ref={overlayRef}
           {...mergeProps(overlayProps, positionProps)}
           style={{
@@ -335,9 +335,6 @@ function SelectSection<OptionKey extends string>({
 
   return (
     <section lens-role="select-section" {...groupProps} className={cn("p-2")}>
-      {state.collection.getFirstKey() !== section.key && (
-        <li className="divide-solid"></li>
-      )}
       <div
         {...headingProps}
         className={cn(
