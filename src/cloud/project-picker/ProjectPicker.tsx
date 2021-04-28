@@ -105,13 +105,13 @@ export function ProjectPicker({
           )}
         />
 
-        {children.length > 0 && (
+        {children.length > 0 && selectedKey && (
           <button className="flex items-center space-x-2">
             <span
               lens-role="active-project"
               className="text-md font-semibold text-gray-800 dark:text-gray-100"
             >
-              {state.selectedItem?.rendered}
+              {state.selectedItem.rendered}
             </span>
             <Icon name="chevron-down" size="xs" className="ml-4" />
           </button>
@@ -120,6 +120,7 @@ export function ProjectPicker({
 
       {children.length > 0 && state.isOpen && (
         <ProjectPickerOverlay
+          id={id}
           state={state}
           buttonRef={buttonRef}
           action={overlayButtonAction}
@@ -130,6 +131,8 @@ export function ProjectPicker({
 }
 
 type ProjectPickerOverlayProps = {
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
+  id?: string
   /** The global Select state */
   state: SelectState<Project>
   /** Ref of the Select button */
@@ -139,6 +142,7 @@ type ProjectPickerOverlayProps = {
 }
 
 function ProjectPickerOverlay({
+  id,
   state,
   buttonRef,
   action,
@@ -165,6 +169,7 @@ function ProjectPickerOverlay({
   const listBoxRef = useRef<HTMLUListElement>(null)
   const { listBoxProps } = useListBox(
     {
+      id,
       disallowEmptySelection: true,
       autoFocus: state.focusStrategy || true,
     },

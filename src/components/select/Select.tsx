@@ -408,7 +408,6 @@ type SelectFooterProps = React.PropsWithChildren<{
 }>
 
 function SelectFooter({ children, onPress }: SelectFooterProps) {
-  console.log(children)
   return (
     <PressResponder onPress={onPress}>
       <Separator />

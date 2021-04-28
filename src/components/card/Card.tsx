@@ -60,7 +60,9 @@ export function Card({
         </section>
       )}
 
-      <section lens-role="card-body">{children}</section>
+      <section lens-role="card-body" className="flex flex-col">
+        {children}
+      </section>
     </div>
   )
 }
