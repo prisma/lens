@@ -16,7 +16,6 @@ import {
   Column as ReactAriaTableColumn,
   Cell as ReactAriaTableCell,
 } from "@react-stately/table"
-import { Card } from "../card/Card"
 
 // @ts-expect-error: We cannot provide a valid initial value, but TSC does not understand that it is okay
 const TableContext = createContext<TableState<TableValue>>(null)
@@ -47,10 +46,12 @@ type ReactAriaTableNode = {
 type TableContainerProps = {
   /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
   id?: string
+  /** A label describing what this table represents (for accessibility) */
+  label: string
   children: React.ReactElement[]
 }
 
-function TableContainer({ id, children }: TableContainerProps) {
+function TableContainer({ id, label, children }: TableContainerProps) {
   const ref = useRef<HTMLTableElement>(null)
 
   if (children.length < 2) {
@@ -61,7 +62,7 @@ function TableContainer({ id, children }: TableContainerProps) {
     selectionMode: "none",
     children,
   })
-  const { gridProps } = useTable({ ref, id }, state)
+  const { gridProps } = useTable({ ref, id, "aria-label": label }, state)
 
   return (
     <TableContext.Provider value={state}>
