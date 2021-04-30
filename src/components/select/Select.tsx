@@ -176,6 +176,7 @@ function SelectContainer<OptionKey extends string>({
           >
             <span
               {...valueProps}
+              lens-role="selected-option"
               className={cn("flex flex-grow", "mr-4", {
                 "text-gray-400 dark:text-gray-300": !state.selectedItem,
                 "text-gray-800 dark:text-gray-100": state.selectedItem,

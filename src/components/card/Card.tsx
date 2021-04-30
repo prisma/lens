@@ -48,7 +48,7 @@ export function Card({
           lens-role="card-header"
           className="flex items-center justify-between space-x-4"
         >
-          <div className="flex">
+          <div className="flex items-center">
             {icon && <Icon name={icon} size="md" className="mr-6"></Icon>}
             {title && <Title>{title}</Title>}
           </div>
