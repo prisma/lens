@@ -35,12 +35,12 @@ const FooterSection = styled.div`
     display: block;
     margin-top: ${theme.space[24]};
     font-size: ${theme.fontSizes[16]};
-    line-height: 1;
+    line-height: 1.3;
     color: ${theme.colors.gray500};
   }
 
   .column .link + .link {
-    margin-top: ${theme.space[16]};
+    margin-top: ${theme.space[12]};
   }
 
   .column .link:hover {
@@ -173,6 +173,11 @@ const WebsiteFooter = ({ newsletterComponent, absoluteLinks = false }: WebsiteFo
         </a>
         <a className="link" href="https://app.prisma.io/login">
           Prisma 1 Cloud
+        </a>
+        <a className="link" href="https://cloud.prisma.io">
+          Prisma Data Platform
+          <br/>
+          (Early Access)
         </a>
         <a className="link" href="https://pris.ly/roadmap">
           Product Roadmap
