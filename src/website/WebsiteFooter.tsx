@@ -176,8 +176,6 @@ const WebsiteFooter = ({ newsletterComponent, absoluteLinks = false }: WebsiteFo
         </a>
         <a className="link" href="https://cloud.prisma.io">
           Prisma Data Platform
-          <br/>
-          (Early Access)
         </a>
         <a className="link" href="https://pris.ly/roadmap">
           Product Roadmap
