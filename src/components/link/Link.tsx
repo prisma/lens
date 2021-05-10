@@ -26,7 +26,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
     const _ref = useRef<HTMLAnchorElement>(null)
     const ref = forwardedRef || _ref
     const { linkProps } = useLink(
-      { children, elementType: "a", isDisabled },
+      { elementType: "a", isDisabled },
       ref as React.RefObject<HTMLAnchorElement>
     )
     const { hoverProps, isHovered } = useHover({ isDisabled })
