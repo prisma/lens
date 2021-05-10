@@ -46,6 +46,17 @@ export const Primary = () => (
   </div>
 )
 
+export const Negative = () => (
+  <div className="flex space-x-4">
+    <Button variant="negative" onPress={action("onPress")}>
+      Negative
+    </Button>
+    <Button variant="negative" isDisabled>
+      Disabled
+    </Button>
+  </div>
+)
+
 export const Secondary = () => (
   <div className="flex space-x-4">
     <Button variant="secondary" onPress={action("onPress")}>

@@ -16,7 +16,6 @@ import {
   Column as ReactAriaTableColumn,
   Cell as ReactAriaTableCell,
 } from "@react-stately/table"
-import { Card } from "../card/Card"
 
 // @ts-expect-error: We cannot provide a valid initial value, but TSC does not understand that it is okay
 const TableContext = createContext<TableState<TableValue>>(null)
@@ -47,43 +46,35 @@ type ReactAriaTableNode = {
 type TableContainerProps = {
   /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
   id?: string
+  /** A label describing what this table represents (for accessibility) */
+  label: string
   children: React.ReactElement[]
 }
 
-function TableContainer({ id, children }: TableContainerProps) {
+function TableContainer({ id, label, children }: TableContainerProps) {
   const ref = useRef<HTMLTableElement>(null)
 
   if (children.length < 2) {
     throw new Error("A Table.Container must contain at least two children")
   }
 
-  const [lastChild] = children.slice(children.length - 1)
-  let tableChildren = children
-  if (lastChild.type === TableFooter) {
-    // If the last child is a TableFooter, remove it before passing children on to `useTableState` since react-stately does not understand it.
-    tableChildren = children.slice(0, children.length - 1)
-  }
-
   const state = useTableState<TableValue>({
     selectionMode: "none",
-    children: tableChildren,
+    children,
   })
-  const { gridProps } = useTable({ ref, id }, state)
+  const { gridProps } = useTable({ ref, id, "aria-label": label }, state)
 
   return (
     <TableContext.Provider value={state}>
-      <Card className="px-0 py-0">
-        <table
-          ref={ref}
-          className="table w-full"
-          style={{ borderSpacing: "0 1rem" }}
-          {...gridProps}
-        >
-          <TableHeader />
-          <TableBody />
-          {lastChild}
-        </table>
-      </Card>
+      <table
+        ref={ref}
+        className="table w-full"
+        style={{ borderSpacing: "0 1rem" }}
+        {...gridProps}
+      >
+        <TableHeader />
+        <TableBody />
+      </table>
     </TableContext.Provider>
   )
 }
@@ -217,24 +208,6 @@ function TableCell({ cell }: TableCellProps) {
   )
 }
 
-type TableFooterProps = {
-  children: React.ReactElement
-}
-function TableFooter({ children }: TableFooterProps) {
-  return (
-    <tfoot
-      lens-role="table-footer"
-      className="border-t border-gray-300 dark:border-gray-600"
-    >
-      <tr lens-role="table-footer-row">
-        <td lens-role="table-footer-cell" className="px-4 py-3">
-          {children}
-        </td>
-      </tr>
-    </tfoot>
-  )
-}
-
 export const Table = {
   Container: TableContainer,
   Header: ReactAriaTableHeader,
@@ -242,5 +215,4 @@ export const Table = {
   Row: ReactAriaTableRow,
   Column: ReactAriaTableColumn,
   Cell: ReactAriaTableCell,
-  Footer: TableFooter,
 }
