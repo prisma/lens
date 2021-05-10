@@ -29,7 +29,8 @@
   "homepage": "https://github.com/prisma/lens#readme",
   "scripts": {
     "dev": "start-storybook -p 4000 -s public --ci",
-    "format": "prettier -w . --ignore-path .gitignore",
+    "format": "prettier --ignore-path .gitignore -w .",
+    "format:check": "prettier --ignore-path .gitignore -c .",
     "build": "rm -rf dist && NODE_ENV=production rollup -c",
     "build-storybook": "build-storybook -s public",
     "prepublishOnly": "npm run build"
