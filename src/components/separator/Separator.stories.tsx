@@ -15,9 +15,9 @@ export default {
   component: Separator,
   argTypes: {
     orientation: {
+      options: ["horizontal", "vertical"],
       control: {
         type: "inline-radio",
-        options: ["horizontal", "vertical"],
       },
       defaultValue: "horizontal",
     },

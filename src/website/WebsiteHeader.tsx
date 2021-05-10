@@ -35,13 +35,21 @@ const NavLinksWrapper = styled.div`
 `
 const NavLinks = ({ absoluteLinks = false }: NavigationLinkProps) => (
   <NavLinksWrapper>
-    <a href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/docs/getting-started/quickstart-typescript`}>
+    <a
+      href={`${
+        absoluteLinks ? "https://www.prisma.io" : ""
+      }/docs/getting-started/quickstart-typescript`}
+    >
       Quickstart
     </a>
-    <a href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/docs/`}>Docs</a>
-    <a href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/docs/about/faq`}>FAQ</a>
-    <a href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/community`}>Community</a>
-    <a href={`${absoluteLinks ? 'https://www.prisma.io' : ''}/blog/`}>Blog</a>
+    <a href={`${absoluteLinks ? "https://www.prisma.io" : ""}/docs/`}>Docs</a>
+    <a href={`${absoluteLinks ? "https://www.prisma.io" : ""}/docs/about/faq`}>
+      FAQ
+    </a>
+    <a href={`${absoluteLinks ? "https://www.prisma.io" : ""}/community`}>
+      Community
+    </a>
+    <a href={`${absoluteLinks ? "https://www.prisma.io" : ""}/blog/`}>Blog</a>
     <a href="https://github.com/prisma" className="github">
       GitHub
     </a>
