@@ -113,6 +113,7 @@ function DialogBody({ id, children }: DialogBodyProps) {
 
   const { dialogProps, titleProps } = useDialog(
     {
+      id,
       role: "dialog",
     },
     overlayRef
@@ -123,7 +124,6 @@ function DialogBody({ id, children }: DialogBodyProps) {
       <FocusScope contain autoFocus restoreFocus>
         <DismissButton onDismiss={close} />
         <div
-          id={id}
           lens-role="dialog-body"
           className={cn(
             "flex justify-center items-center",

@@ -174,6 +174,9 @@ const WebsiteFooter = ({ newsletterComponent, absoluteLinks = false }: WebsiteFo
         <a className="link" href="https://app.prisma.io/login">
           Prisma 1 Cloud
         </a>
+        <a className="link" href="https://cloud.prisma.io">
+          Prisma Data Platform
+        </a>
         <a className="link" href="https://pris.ly/roadmap">
           Product Roadmap
         </a>

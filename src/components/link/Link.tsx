@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import React, { forwardRef, useRef } from "react"
 import cn from "classnames"
 import { useHover } from "@react-aria/interactions"
 import { useLink } from "@react-aria/link"
@@ -18,35 +18,38 @@ export type LinkProps = {
   openInNewTab?: boolean
 }
 
-export function Link({
-  id,
-  children,
-  href,
-  isDisabled,
-  openInNewTab,
-}: LinkProps) {
-  const ref = useRef<HTMLAnchorElement>(null)
-  const { linkProps } = useLink({ children, elementType: "a", isDisabled }, ref)
-  const { hoverProps, isHovered } = useHover({ isDisabled })
+export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
+  (
+    { id, children, href, isDisabled, openInNewTab }: LinkProps,
+    forwardedRef
+  ) => {
+    const _ref = useRef<HTMLAnchorElement>(null)
+    const ref = forwardedRef || _ref
+    const { linkProps } = useLink(
+      { children, elementType: "a", isDisabled },
+      ref as React.RefObject<HTMLAnchorElement>
+    )
+    const { hoverProps, isHovered } = useHover({ isDisabled })
 
-  return (
-    <FocusRing within>
-      <a
-        id={id}
-        lens-role="link"
-        ref={ref}
-        {...mergeProps(linkProps, hoverProps)}
-        href={href}
-        rel="noopener noreferrer"
-        className={cn("mx-1", "underline", {
-          "text-gray-500 dark:text-gray-200": !isHovered && !isDisabled,
-          "text-gray-600 dark:text-gray-500": isHovered,
-          "text-gray-400 dark:text-gray-700": isDisabled,
-        })}
-        target={openInNewTab ? "_blank" : undefined}
-      >
-        {children}
-      </a>
-    </FocusRing>
-  )
-}
+    return (
+      <FocusRing within>
+        <a
+          id={id}
+          lens-role="link"
+          ref={ref}
+          {...mergeProps(linkProps, hoverProps)}
+          href={href}
+          rel="noopener noreferrer"
+          className={cn("mx-1", "underline", {
+            "text-gray-500 dark:text-gray-200": !isHovered && !isDisabled,
+            "text-gray-600 dark:text-gray-500": isHovered,
+            "text-gray-400 dark:text-gray-700": isDisabled,
+          })}
+          target={openInNewTab ? "_blank" : undefined}
+        >
+          {children}
+        </a>
+      </FocusRing>
+    )
+  }
+)

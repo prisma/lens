@@ -176,6 +176,7 @@ function SelectContainer<OptionKey extends string>({
           >
             <span
               {...valueProps}
+              lens-role="selected-option"
               className={cn("flex flex-grow", "mr-4", {
                 "text-gray-400 dark:text-gray-300": !state.selectedItem,
                 "text-gray-800 dark:text-gray-100": state.selectedItem,
@@ -259,7 +260,7 @@ function SelectOverlay<OptionKey extends string>({
     <OverlayContainer>
       <FocusScope restoreFocus>
         <div
-        lens-role="select-body"
+          lens-role="select-body"
           ref={overlayRef}
           {...mergeProps(overlayProps, positionProps)}
           style={{
@@ -335,9 +336,6 @@ function SelectSection<OptionKey extends string>({
 
   return (
     <section lens-role="select-section" {...groupProps} className={cn("p-2")}>
-      {state.collection.getFirstKey() !== section.key && (
-        <li className="divide-solid"></li>
-      )}
       <div
         {...headingProps}
         className={cn(
@@ -411,7 +409,6 @@ type SelectFooterProps = React.PropsWithChildren<{
 }>
 
 function SelectFooter({ children, onPress }: SelectFooterProps) {
-  console.log(children)
   return (
     <PressResponder onPress={onPress}>
       <Separator />

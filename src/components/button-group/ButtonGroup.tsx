@@ -16,7 +16,7 @@ export function ButtonGroup({ id, children }: ButtonGroupProps) {
     return (
       <section
         id={id}
-        lens-rolw="button-group"
+        lens-role="button-group"
         className="flex flex-grow space-x-4"
       >
         {children}
