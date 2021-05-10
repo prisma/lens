@@ -7,9 +7,9 @@ export default {
   component: Avatar,
   argTypes: {
     size: {
+      options: ["xs", "sm", "md", "lg", "xl"],
       control: {
         type: "inline-radio",
-        options: ["xs", "sm", "md", "lg", "xl"],
       },
       defaultValue: "lg",
     },
