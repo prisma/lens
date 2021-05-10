@@ -232,7 +232,11 @@ function MenuSection<OptionKey extends string>({
   state,
   onAction,
 }: MenuSectionProps<OptionKey>) {
-  const { groupProps, headingProps, itemProps: optionProps } = useMenuSection({
+  const {
+    groupProps,
+    headingProps,
+    itemProps: optionProps,
+  } = useMenuSection({
     heading: title,
   })
 

@@ -24,9 +24,9 @@ export default {
   component: Tooltip,
   argTypes: {
     position: {
+      options: ["top", "bottom", "left", "right"],
       control: {
         type: "inline-radio",
-        options: ["top", "bottom", "left", "right"],
       },
     },
   },

@@ -43,9 +43,8 @@ export function Tooltip({ id, children, target, position }: TooltipProps) {
 
   // Calculate arrow position styles on your own, taking react-aria's position into account
   // We cannot expect react-aria to position the arrow 100% correctly since it does not know what our tooltip looks like
-  const [arrowProps, setArrowProps] = useState<
-    React.HTMLAttributes<HTMLDivElement>
-  >(ariaArrowProps)
+  const [arrowProps, setArrowProps] =
+    useState<React.HTMLAttributes<HTMLDivElement>>(ariaArrowProps)
 
   useLayoutEffect(() => {
     // Figure out overlay dimensions so we can position the arrow accordingly

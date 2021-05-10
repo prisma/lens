@@ -94,9 +94,8 @@ export type DialogBodyProps = {
 
 function DialogBody({ id, children }: DialogBodyProps) {
   const [body, footer] = Children.toArray(children)
-  const { close, title, subtitle, icon, shouldCloseOnBlur } = useContext(
-    DialogContext
-  )
+  const { close, title, subtitle, icon, shouldCloseOnBlur } =
+    useContext(DialogContext)
 
   const overlayRef = useRef<HTMLDivElement>(null)
   const { overlayProps } = useOverlay(
