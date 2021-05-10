@@ -1,9 +1,8 @@
 import { action } from "@storybook/addon-actions"
 import { Button } from "./Button"
-import { Icon } from "../icon/Icon"
 
 const noIcon = null
-const databaseIcon = <Icon name="database" size="sm" />
+const databaseIcon = "database"
 const iconOptions = { noIcon, databaseIcon }
 
 const iconArgType = {
@@ -12,7 +11,7 @@ const iconArgType = {
   control: {
     type: "select",
     labels: {
-      noIcon: "No Icon (Null)",
+      noIcon: "No Icon",
       databaseIcon: "Database Icon",
     },
   },
@@ -32,6 +31,12 @@ export default {
     },
     startIcon: iconArgType,
     endIcon: iconArgType,
+    iconSize: {
+      control: {
+        type: "inline-radio",
+      },
+      defaultValue: "sm",
+    },
   },
 }
 
@@ -92,10 +97,10 @@ export const Quiet = () => (
 
 export const WithStartIcon = () => (
   <div className="flex space-x-4">
-    <Button variant="primary" startIcon={<Icon name="database" size="sm" />} onPress={action("onPress")}>
+    <Button variant="primary" startIcon="database" onPress={action("onPress")}>
       Primary
     </Button>
-    <Button variant="primary" startIcon={<Icon name="database" size="sm" />} isDisabled>
+    <Button variant="primary" startIcon="database" isDisabled>
       Disabled
     </Button>
   </div>
@@ -103,10 +108,10 @@ export const WithStartIcon = () => (
 
 export const WithEndIcon = () => (
   <div className="flex space-x-4">
-    <Button variant="primary" endIcon={<Icon name="database" size="sm" />} onPress={action("onPress")}>
+    <Button variant="primary" endIcon="database" onPress={action("onPress")}>
       Primary
     </Button>
-    <Button variant="primary" endIcon={<Icon name="database" size="sm" />} isDisabled>
+    <Button variant="primary" endIcon="database" isDisabled>
       Disabled
     </Button>
   </div>
