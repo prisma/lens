@@ -1,10 +1,5 @@
 name: "Run prettier"
-on:
-  push:
-    tags-ignore:
-      - "*.*"
-    branches:
-      - main
+on: push
 jobs:
   release:
     runs-on: ubuntu-latest
