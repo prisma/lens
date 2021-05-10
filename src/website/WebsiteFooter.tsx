@@ -35,12 +35,12 @@ const FooterSection = styled.div`
     display: block;
     margin-top: ${theme.space[24]};
     font-size: ${theme.fontSizes[16]};
-    line-height: 1.3;
+    line-height: 1;
     color: ${theme.colors.gray500};
   }
 
   .column .link + .link {
-    margin-top: ${theme.space[12]};
+    margin-top: ${theme.space[16]};
   }
 
   .column .link:hover {
