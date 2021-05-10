@@ -31,10 +31,8 @@ export function StackedAvatar({
   const width = sizeToNumeric(size)
 
   const truncateRef = useRef<HTMLDivElement>(null)
-  const {
-    hoverProps: truncateHoverProps,
-    isHovered: truncateIsHovered,
-  } = useHover({})
+  const { hoverProps: truncateHoverProps, isHovered: truncateIsHovered } =
+    useHover({})
 
   const ref = useRef<HTMLDivElement>(null)
   const { buttonProps, isPressed } = useButton({ onPress }, ref)
