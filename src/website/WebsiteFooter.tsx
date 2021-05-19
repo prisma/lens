@@ -226,6 +226,14 @@ const WebsiteFooter = ({
         >
           Data Guide
         </a>
+        <a
+          className="link"
+          href={`${
+            absoluteLinks ? "https://www.prisma.io" : ""
+          }/enterprise-event-2021`}
+        >
+          Enterprise Event
+        </a>
       </div>
       <div className="group">
         <h3 className="header">Prisma With</h3>
