@@ -54,6 +54,23 @@ npm version patch # Bump up the version
 npm publish # Publish package
 ```
 
+To test changes in a local dependent project you can use yalc (https://www.npmjs.com/package/yalc).
+Install yalc with `npm i yalc -g`
+Inside this project root:
+
+```
+yalc publish # Copies the new package version into `~/.yalc`
+```
+
+Inside the dependent project root:
+
+```
+yalc add @prisma/lens@<versionNumber> # Injects the new package from the `~/.yalc` store into the project's package.json
+yarn
+```
+
+You should be able to see your changes. Careful not to commit changes to the dependent project's package.json.
+
 ## Usage in other Prisma projects
 
 Integrating Lens into your project is as simple as wrapping your top level component with `LensProvider`.
