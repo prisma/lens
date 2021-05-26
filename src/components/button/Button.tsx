@@ -4,6 +4,7 @@ import { useButton } from "@react-aria/button"
 import { useHover } from "@react-aria/interactions"
 import { mergeProps } from "@react-aria/utils"
 import { FocusRing } from "../focus-ring/FocusRing"
+import { Icon } from "../icon/Icon"
 
 export type ButtonProps = React.PropsWithChildren<{
   /** A React ref to attach to the rendered Button */
@@ -18,6 +19,12 @@ export type ButtonProps = React.PropsWithChildren<{
   isDisabled?: boolean
   /** Controls if the button will grow to fill its parent */
   fillParent?: boolean
+  /** Icon element placed before the children. */
+  startIcon?: "database"
+  /** Icon element placed after the children. */
+  endIcon?: "database"
+  /** Icon element placed after the children. */
+  iconSize?: "xs" | "sm" | "md" | "lg" | "xl"
   /** Callback invoked when this button is pressed */
   onPress?: () => void
 }>
@@ -30,6 +37,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       variant = "primary",
       isDisabled = false,
       fillParent = false,
+      startIcon,
+      endIcon,
+      iconSize= "sm",
       children,
       onPress,
     }: ButtonProps,
@@ -97,7 +107,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             }
           )}
         >
+          {startIcon && (
+            <Icon name={startIcon} size={iconSize} className="mr-1" />
+          )}
           {children}
+          {endIcon && (
+            <Icon name={endIcon} size={iconSize} className="ml-1" />
+          )}
         </button>
       </FocusRing>
     )
