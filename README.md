@@ -1,5 +1,8 @@
 # Prisma Lens
 
+![npm (scoped)](https://img.shields.io/npm/v/@prisma/lens)
+![chromatic](https://github.com/prisma/lens/actions/workflows/chromatic.yml/badge.svg)
+
 Prisma Lens is a Design System, Guidelines and Component Library for the family of Prisma projects and products. Both this document and the actual artefacts are a living system that aims to be evolving incrementally and often.
 
 ## Principles

@@ -15,7 +15,7 @@ import {
   OverlayTriggerState,
   useOverlayTriggerState,
 } from "@react-stately/overlays"
-import { TitleGroup } from "../title-group/TitleGroup"
+import { TitleGroup } from "../../typography/title-group/TitleGroup"
 
 type DialogContext = {
   close: OverlayTriggerState["close"]
@@ -78,22 +78,24 @@ function DialogContainer({
       <PressResponder isPressed={state.isOpen} onPress={state.toggle}>
         {trigger}
       </PressResponder>
-      {state.isOpen && content(close)}
+
+      {state.isOpen && content(state.close)}
     </DialogContext.Provider>
   )
 }
 
 /** The Dialog's Body when opened */
 export type DialogBodyProps = {
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
+  id?: string
   /** The Dialog's body and footer, in order */
   children: React.ReactElement | [React.ReactElement, React.ReactElement]
 }
 
-function DialogBody({ children }: DialogBodyProps) {
+function DialogBody({ id, children }: DialogBodyProps) {
   const [body, footer] = Children.toArray(children)
-  const { close, title, subtitle, icon, shouldCloseOnBlur } = useContext(
-    DialogContext
-  )
+  const { close, title, subtitle, icon, shouldCloseOnBlur } =
+    useContext(DialogContext)
 
   const overlayRef = useRef<HTMLDivElement>(null)
   const { overlayProps } = useOverlay(
@@ -110,6 +112,7 @@ function DialogBody({ children }: DialogBodyProps) {
 
   const { dialogProps, titleProps } = useDialog(
     {
+      id,
       role: "dialog",
     },
     overlayRef
@@ -117,54 +120,54 @@ function DialogBody({ children }: DialogBodyProps) {
 
   return (
     <OverlayContainer>
-      <div
-        className={cn(
-          "flex justify-center items-center",
-          "fixed top-0 bottom-0 left-0 right-0 z-30",
-          "bg-black-fade-50"
-        )}
-      >
-        <FocusScope contain autoFocus restoreFocus>
-          <>
-            <DismissButton onDismiss={close} />
-            <div
-              ref={overlayRef}
-              {...mergeProps(overlayProps, dialogProps, modalProps)}
+      <FocusScope contain autoFocus restoreFocus>
+        <DismissButton onDismiss={close} />
+        <div
+          lens-role="dialog-body"
+          className={cn(
+            "flex justify-center items-center",
+            "fixed top-0 bottom-0 left-0 right-0 z-30",
+            "bg-black-fade-50"
+          )}
+        >
+          <div
+            ref={overlayRef}
+            {...mergeProps(overlayProps, modalProps, dialogProps)}
+            className={cn(
+              "left-0 right-0 w-full",
+              "rounded-md shadow-md overflow-hidden",
+              "bg-gray-100 dark:bg-gray-800",
+              "animate-dialog-enter"
+            )}
+            style={{ width: 580 }}
+          >
+            <TitleGroup
+              title={title}
+              subtitle={subtitle}
+              icon={icon}
+              titleProps={titleProps}
               className={cn(
-                "left-0 right-0 w-full",
-                "rounded-md shadow-md overflow-hidden",
-                "bg-gray-100 dark:bg-gray-800",
-                "animate-dialog-enter"
+                "px-6 py-4",
+                "bg-white dark:bg-gray-900",
+                "border-b border-gray-300 dark:border-gray-600"
               )}
-              style={{ width: 580 }}
+            />
+
+            <section
+              lens-role="dialog-body"
+              className={cn(
+                "px-6 py-4",
+                "border-b border-gray-300 dark:border-gray-600"
+              )}
             >
-              <TitleGroup
-                title={title}
-                subtitle={subtitle}
-                icon={icon}
-                titleProps={titleProps}
-                className={cn(
-                  "px-6 py-4",
-                  "bg-white dark:bg-gray-900",
-                  "border-b border-gray-300 dark:border-gray-600"
-                )}
-              />
+              {body}
+            </section>
 
-              <section
-                className={cn(
-                  "px-6 py-4",
-                  "border-b border-gray-300 dark:border-gray-600"
-                )}
-              >
-                {body}
-              </section>
-
-              {footer}
-            </div>
-            <DismissButton onDismiss={close} />
-          </>
-        </FocusScope>
-      </div>
+            {footer}
+          </div>
+        </div>
+        <DismissButton onDismiss={close} />
+      </FocusScope>
     </OverlayContainer>
   )
 }
@@ -175,7 +178,11 @@ export type DialogFooterProps = {
 }
 
 function DialogFooter({ children }: DialogFooterProps) {
-  return <div className="px-3 py-2">{children}</div>
+  return (
+    <div lens-role="dialog-footer" className="px-3 py-2">
+      {children}
+    </div>
+  )
 }
 
 export const Dialog = {

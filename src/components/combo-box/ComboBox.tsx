@@ -3,9 +3,9 @@ import cn from "classnames"
 import { useComboBox } from "@react-aria/combobox"
 import { ComboBoxState, useComboBoxState } from "@react-stately/combobox"
 import { useFilter } from "@react-aria/i18n"
-import { useListBox, useOption } from "@react-aria/listbox"
+import { useListBox, useListBoxSection, useOption } from "@react-aria/listbox"
 import { useButton } from "@react-aria/button"
-import { Item } from "@react-stately/collections"
+import { Item, Section } from "@react-stately/collections"
 import { CollectionChildren, Node } from "@react-types/shared"
 import {
   DismissButton,
@@ -28,6 +28,8 @@ export type ComboBoxOption<Key extends string> = {
 }
 
 export type ComboBoxContainerProps<OptionKey extends string> = {
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
+  id?: string
   /** Controls if this ComboBox should steal focus when first rendered */
   autoFocus?: boolean
   /** A list of Options to render inside this ComboBox */
@@ -38,8 +40,6 @@ export type ComboBoxContainerProps<OptionKey extends string> = {
   defaultOpen?: boolean
   /** Key of the Option that is selected when this ComboBox is first rendered */
   defaultSelectedKey?: OptionKey
-  /** A ID that will be attached to the rendered ComboBox. Useful when targeting the ComboBox from tests */
-  id?: string
   /** Controls if this ComboBox is disabled */
   isDisabled?: boolean
   /** Controls is this ComboBox is readonly */
@@ -63,12 +63,12 @@ export type ComboBoxContainerProps<OptionKey extends string> = {
  * It displays a list of options below the text field. This list keeps getting shorter as you type, since fewer options match the text field's value.
  */
 function ComboBoxContainer<OptionKey extends string>({
+  id,
   autoFocus,
   children,
   defaultOpen = false,
   defaultInputValue,
   defaultSelectedKey,
-  id,
   isDisabled = false,
   isReadOnly = false,
   options,
@@ -77,20 +77,20 @@ function ComboBoxContainer<OptionKey extends string>({
   placeholder = "Select an option",
   onSelectionChange,
 }: ComboBoxContainerProps<OptionKey>) {
-  const { contains } = useFilter({ sensitivity: "base" })
+  const { contains } = useFilter({})
   const state = useComboBoxState({
+    id,
     autoFocus,
     children,
+    defaultFilter: contains,
     defaultInputValue,
     defaultOpen,
     defaultSelectedKey,
-    id,
     isDisabled,
     isReadOnly,
-    items: options,
+    defaultItems: options,
     placeholder,
     onSelectionChange: onSelectionChange as (k: React.Key) => void,
-    defaultFilter: contains,
   })
 
   const containerRef = useRef<HTMLDivElement>(null)
@@ -111,6 +111,7 @@ function ComboBoxContainer<OptionKey extends string>({
       defaultInputValue,
       defaultSelectedKey,
       id,
+      label,
       isDisabled,
       isReadOnly,
       items: options,
@@ -120,14 +121,14 @@ function ComboBoxContainer<OptionKey extends string>({
       buttonRef,
       popoverRef: overlayRef,
       listBoxRef,
-      menuTrigger: "input",
-    },
+      menuTrigger: "focus",
+    } as any, // need `as any` because types do not allow `label` to be passed on, which causes warnings to show up about missing labels
     state
   )
   const { buttonProps } = useButton({ ...triggerProps, isDisabled }, buttonRef)
 
   return (
-    <div className="table-row">
+    <div id={id} className="table-row">
       <Label labelProps={labelProps}>{label}</Label>
       <section className="table-cell w-full relative">
         <FocusRing autoFocus={autoFocus} within>
@@ -146,29 +147,30 @@ function ComboBoxContainer<OptionKey extends string>({
               }
             )}
           >
-            <>
-              <input
-                ref={inputRef}
-                type="text"
-                {...inputProps}
-                name={name}
-                className={cn("flex-grow", "mr-4", {
-                  "bg-white dark:bg-gray-900": !isDisabled,
-                  "bg-gray-100 dark:bg-gray-800": isDisabled,
-                  "text-gray-800 dark:text-gray-100": !isDisabled,
-                  "text-gray-400 dark:text-gray-400": isDisabled,
-                  "cursor-not-allowed": isDisabled,
-                })}
-              />
-              <button ref={buttonRef} {...buttonProps}>
-                <Icon name="chevron-down" size="xs" />
-              </button>
-            </>
+            <input
+              ref={inputRef}
+              type="text"
+              lens-role="input"
+              {...inputProps}
+              name={name}
+              className={cn("flex-grow", "mr-4", {
+                "bg-white dark:bg-gray-900": !isDisabled,
+                "bg-gray-100 dark:bg-gray-800": isDisabled,
+                "text-gray-800 dark:text-gray-100": !isDisabled,
+                "text-gray-400 dark:text-gray-400": isDisabled,
+                "cursor-not-allowed": isDisabled,
+              })}
+            />
+            <button lens-role="chevron" ref={buttonRef} {...buttonProps}>
+              <Icon name="chevron-down" size="xs" />
+            </button>
           </div>
         </FocusRing>
         {state.isOpen && (
-          <ComboBoxOptions
+          <ComboBoxBody
             {...listBoxProps}
+            id={id}
+            label={label}
             containerRef={containerRef}
             listBoxRef={listBoxRef}
             overlayRef={overlayRef}
@@ -180,7 +182,11 @@ function ComboBoxContainer<OptionKey extends string>({
   )
 }
 
-type ComboBoxOptionsProps<OptionKey extends string> = {
+type ComboBoxBodyProps<OptionKey extends string> = {
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
+  id?: string
+  /** A string describing what this ComboBox represents */
+  label: string
   /** A ref object that will be attached to the Options container */
   listBoxRef: React.RefObject<HTMLUListElement>
   /** A ref object that will be attached to the overlay element */
@@ -192,15 +198,19 @@ type ComboBoxOptionsProps<OptionKey extends string> = {
 }
 
 /** An overlay that renders individual ComboBox Options */
-function ComboBoxOptions<OptionKey extends string>({
+function ComboBoxBody<OptionKey extends string>({
+  id,
+  label,
   listBoxRef,
   overlayRef,
   state,
   containerRef,
-}: ComboBoxOptionsProps<OptionKey>) {
+}: ComboBoxBodyProps<OptionKey>) {
   const { listBoxProps } = useListBox(
     {
+      id,
       autoFocus: state.focusStrategy,
+      label,
       disallowEmptySelection: true,
     },
     state,
@@ -218,7 +228,7 @@ function ComboBoxOptions<OptionKey extends string>({
   const { overlayProps: positionProps, placement } = useOverlayPosition({
     overlayRef,
     targetRef: containerRef,
-    offset: 6,
+    offset: 8,
     containerPadding: 0,
     onClose: state.close,
   })
@@ -229,6 +239,7 @@ function ComboBoxOptions<OptionKey extends string>({
     <OverlayContainer>
       <FocusScope restoreFocus>
         <div
+          id="combobox-body"
           {...mergeProps(overlayProps, positionProps)}
           ref={overlayRef}
           style={{
@@ -247,14 +258,78 @@ function ComboBoxOptions<OptionKey extends string>({
             })}
             style={{ maxHeight: "inherit" }}
           >
-            {[...state.collection].map((option) => (
-              <ComboBoxOption key={option.key} option={option} state={state} />
-            ))}
+            {[...state.collection].map((option) => {
+              if (option.type === "section") {
+                return (
+                  <ComboBoxSection
+                    key={option.key}
+                    title={option.rendered as string}
+                    state={state}
+                    section={option}
+                  />
+                )
+              } else if (option.type === "item") {
+                return (
+                  <ComboBoxOption
+                    key={option.key}
+                    option={option}
+                    state={state}
+                  />
+                )
+              } else {
+                return null
+              }
+            })}
           </ul>
           <DismissButton onDismiss={state.close} />
         </div>
       </FocusScope>
     </OverlayContainer>
+  )
+}
+
+type ComboBoxSectionProps<OptionKey extends string> = {
+  /** Title for this Section */
+  title: string
+  /** A group of similar options, only visual */
+  section: Node<ComboBoxOption<OptionKey>>
+  /** The global ComboBox state */
+  state: ComboBoxState<ComboBoxOption<OptionKey>>
+}
+
+function ComboBoxSection<OptionKey extends string>({
+  title,
+  section,
+  state,
+}: ComboBoxSectionProps<OptionKey>) {
+  const {
+    groupProps,
+    headingProps,
+    itemProps: optionProps,
+  } = useListBoxSection({
+    heading: title,
+  })
+
+  return (
+    <section lens-role="combobox-section" {...groupProps} className={cn("p-2")}>
+      <div
+        {...headingProps}
+        className={cn(
+          "mb-2",
+          "text-xs uppercase text-gray-500 dark:text-gray-400",
+          "select-none"
+        )}
+      >
+        {title}
+      </div>
+      <li {...optionProps}>
+        <ul>
+          {[...section.childNodes].map((i) => (
+            <ComboBoxOption key={i.key} option={i} state={state} />
+          ))}
+        </ul>
+      </li>
+    </section>
   )
 }
 
@@ -289,6 +364,7 @@ function ComboBoxOption<Key extends string>({
   return (
     <li
       ref={ref}
+      lens-role="combobox-option"
       {...optionProps}
       className={cn(
         "rounded-md px-2 py-1",
@@ -306,5 +382,6 @@ function ComboBoxOption<Key extends string>({
 
 export const ComboBox = {
   Container: ComboBoxContainer,
+  Section,
   Option: Item,
 }
