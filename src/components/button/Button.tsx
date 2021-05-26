@@ -39,7 +39,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       fillParent = false,
       startIcon,
       endIcon,
-      iconSize= "sm",
+      iconSize = "sm",
       children,
       onPress,
     }: ButtonProps,
@@ -111,9 +111,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             <Icon name={startIcon} size={iconSize} className="mr-1" />
           )}
           {children}
-          {endIcon && (
-            <Icon name={endIcon} size={iconSize} className="ml-1" />
-          )}
+          {endIcon && <Icon name={endIcon} size={iconSize} className="ml-1" />}
         </button>
       </FocusRing>
     )
