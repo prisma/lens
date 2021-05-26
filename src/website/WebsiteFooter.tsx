@@ -278,10 +278,7 @@ const WebsiteFooter = ({
     <div className="column three">
       <div className="group">
         <h3 className="header">Community</h3>
-        <a
-          className="link"
-          href="/ambassador"
-        >
+        <a className="link" href="/ambassador">
           Prisma Ambassador
         </a>
         <a
