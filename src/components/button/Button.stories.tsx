@@ -1,5 +1,5 @@
 import { action } from "@storybook/addon-actions"
-import { Button } from "./Button"
+import { Button, ButtonProps } from "./Button"
 
 const noIcon = null
 const databaseIcon = "database"
@@ -17,7 +17,9 @@ const iconArgType = {
   },
 }
 
-export const Default = (props) => <Button {...props}>Save Changes</Button>
+export const Default = (props: ButtonProps) => (
+  <Button {...props}>Save Changes</Button>
+)
 Default.storyName = "[Controlled]"
 export default {
   title: "Lens/Button",
@@ -95,23 +97,31 @@ export const Quiet = () => (
   </div>
 )
 
-export const WithStartIcon = () => (
+export const WithLeadingIcon = () => (
   <div className="flex space-x-4">
-    <Button variant="primary" startIcon="database" onPress={action("onPress")}>
+    <Button
+      variant="primary"
+      leadingIcon="database"
+      onPress={action("onPress")}
+    >
       Primary
     </Button>
-    <Button variant="primary" startIcon="database" isDisabled>
+    <Button variant="primary" leadingIcon="database" isDisabled>
       Disabled
     </Button>
   </div>
 )
 
-export const WithEndIcon = () => (
+export const WithTrailingIcon = () => (
   <div className="flex space-x-4">
-    <Button variant="primary" endIcon="database" onPress={action("onPress")}>
+    <Button
+      variant="primary"
+      trailingIcon="database"
+      onPress={action("onPress")}
+    >
       Primary
     </Button>
-    <Button variant="primary" endIcon="database" isDisabled>
+    <Button variant="primary" trailingIcon="database" isDisabled>
       Disabled
     </Button>
   </div>
