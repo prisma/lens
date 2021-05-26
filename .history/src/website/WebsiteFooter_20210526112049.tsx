@@ -223,12 +223,6 @@ const WebsiteFooter = ({ newsletterComponent }: any) => (
     <div className="column three">
       <div className="group">
         <h3 className="header">Community</h3>
-        <a
-          className="link"
-          href="/ambassador"
-        >
-          Prisma Ambassador
-        </a>
         <a className="link" href="https://www.prisma.io/community">
           Meet the Community
         </a>
@@ -250,6 +244,14 @@ const WebsiteFooter = ({ newsletterComponent }: any) => (
         <a
           className="link"
           href="https://www.meetup.com/advanced-typescript-trickery/"
+          rel="norefferer noopener"
+          target="_blank"
+        >
+          Advanced TypeScript Trickery
+        </a>
+        <a
+          className="link"
+          href="/ambassador"
           rel="norefferer noopener"
           target="_blank"
         >
