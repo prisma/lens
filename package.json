@@ -82,7 +82,7 @@
     "chromatic": "5.8.3",
     "classnames": "2.3.1",
     "lodash-es": "4.17.21",
-    "postcss": "8.2.14",
+    "postcss": "8.3.0",
     "postcss-inline-base64": "6.2.1",
     "prettier": "2.3.0",
     "react": "16.14.0",
