@@ -96,24 +96,28 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
               className={cn(
                 "flex flex-grow",
                 "rounded-md shadow-sm border border-gray-300 dark:border-gray-700",
-                "px-3 py-1.5",
                 "text-sm",
                 {
+                  "px-3 py-1.5": !prefix,
+                  "pr-1.5": prefix,
                   "bg-gray-100 dark:bg-gray-800": isDisabled,
                   "bg-white dark:bg-gray-900": !isDisabled,
                   "cursor-not-allowed": isDisabled,
                 }
               )}
             >
-              <div
-                className={cn(
-                  "mr-1",
-                  "text-gray-300 dark:text-gray-500",
-                  "select-none"
-                )}
-              >
-                {prefix}
-              </div>
+              {prefix && (
+                <div
+                  className={cn(
+                    "mr-3 py-1.5 px-3",
+                    "rounded-l-md",
+                    "bg-gray-200 dark:text-gray-800 font-semibold",
+                    "select-none"
+                  )}
+                >
+                  {prefix}
+                </div>
+              )}
               <input
                 ref={inputRef}
                 lens-role="text-field"
