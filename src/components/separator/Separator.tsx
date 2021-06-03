@@ -7,15 +7,9 @@ export type SeparatorProps = {
   id?: string
   /** This Separator's orientation */
   orientation?: "vertical" | "horizontal"
-  /** Additional classes that will be attached to the Separator. This is provided for layouting purposes. Avoid using classes that modify the separator visually. */
-  className?: string
 }
 
-export function Separator({
-  id,
-  orientation = "horizontal",
-  className,
-}: SeparatorProps) {
+export function Separator({ id, orientation = "horizontal" }: SeparatorProps) {
   const { separatorProps } = useSeparator({
     id,
     orientation,
@@ -25,14 +19,10 @@ export function Separator({
     <div
       lens-role="separator"
       {...separatorProps}
-      className={cn(
-        "border-gray-400 dark:border-gray-700",
-        {
-          "border-b my-2": orientation === "horizontal",
-          "border-r": orientation === "vertical",
-        },
-        className
-      )}
+      className={cn("border-gray-300 dark:border-gray-700", {
+        "border-b my-2": orientation === "horizontal",
+        "border-r": orientation === "vertical",
+      })}
     />
   )
 }
