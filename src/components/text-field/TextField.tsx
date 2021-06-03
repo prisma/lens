@@ -110,8 +110,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
                 <div
                   className={cn(
                     "mr-3 py-1.5 px-3",
-                    "rounded-l-md",
-                    "bg-gray-200 dark:text-gray-800 font-semibold",
+                    "bg-gray-200 dark:text-gray-800 font-medium",
                     "select-none"
                   )}
                 >
