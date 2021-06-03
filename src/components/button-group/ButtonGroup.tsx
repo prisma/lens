@@ -26,7 +26,7 @@ export function ButtonGroup({ id, reversed, children }: ButtonGroupProps) {
       <section
         id={id}
         lens-role="button-group"
-        className={cn("flex flex-grow space-x-4 py-4", {
+        className={cn("flex flex-grow space-x-4", {
           "flex-row-reverse": reversed,
         })}
       >
@@ -40,7 +40,7 @@ export function ButtonGroup({ id, reversed, children }: ButtonGroupProps) {
       <section
         id={id}
         lens-role="button-group"
-        className={cn("flex flex-grow justify-between py-4", {
+        className={cn("flex flex-grow justify-between", {
           "flex-row-reverse": reversed,
         })}
       >
@@ -57,7 +57,7 @@ export function ButtonGroup({ id, reversed, children }: ButtonGroupProps) {
       <section
         id={id}
         lens-role="button-group"
-        className={cn("flex flex-grow justify-between py-4", {
+        className={cn("flex flex-grow justify-between", {
           "flex-row-reverse": reversed,
         })}
       >
