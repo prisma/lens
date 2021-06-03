@@ -2,6 +2,11 @@ import React, { Children } from "react"
 import cn from "classnames"
 import { ButtonProps } from "../button/Button"
 
+/**
+ * A group of primary, seconday and tertiary buttons.
+ *
+ * Provide children in this order: Primary, Secondary, Tertiary
+ */
 export type ButtonGroupProps = {
   /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
   id?: string
@@ -59,7 +64,12 @@ export function ButtonGroup({ id, reversed, children }: ButtonGroupProps) {
         {React.cloneElement(buttons[0], {
           variant: "primary",
         } as ButtonProps)}
-        <div className="flex space-x-4">
+        <div
+          className={cn("flex", {
+            "space-x-4": reversed,
+            "flex-row-reverse -space-x-4": !reversed,
+          })}
+        >
           {React.cloneElement(buttons[1], {
             variant: "secondary",
           } as ButtonProps)}
