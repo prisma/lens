@@ -49,7 +49,7 @@ const dynamicData = [
 
 export const Default = (props) => (
   <Card className="px-0 py-0">
-    <Table.Container>
+    <Table.Container label="Default" id="test">
       <Table.Header>
         <Table.Column key="user">User</Table.Column>
         <Table.Column key="role">Role</Table.Column>
@@ -137,7 +137,7 @@ export default {
 
 export const WithStaticData = () => (
   <Card className="px-0 py-0">
-    <Table.Container>
+    <Table.Container label="With static data">
       <Table.Header>
         <Table.Column key="user">User</Table.Column>
         <Table.Column key="role">Role</Table.Column>
@@ -220,7 +220,7 @@ export const WithStaticData = () => (
 
 export const WithDynamicData = () => (
   <Card className="px-0 py-0">
-    <Table.Container>
+    <Table.Container label="With dynamic data">
       <Table.Header columns={dynamicColumns}>
         {(column) => <Table.Column>{column.key}</Table.Column>}
       </Table.Header>
