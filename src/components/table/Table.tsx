@@ -71,6 +71,7 @@ function TableContainer({ id, label, children }: TableContainerProps) {
         className="table w-full"
         style={{ borderSpacing: "0 1rem" }}
         {...gridProps}
+        id={id}
       >
         <TableHeader />
         <TableBody />
