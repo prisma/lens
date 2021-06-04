@@ -3,7 +3,6 @@ import cn from "classnames"
 import { CollectionChildren, Node } from "@react-types/shared"
 import { mergeProps } from "@react-aria/utils"
 import { PressResponder } from "@react-aria/interactions"
-import { FocusScope } from "@react-aria/focus"
 import {
   DismissButton,
   OverlayContainer,
@@ -66,6 +65,7 @@ function MenuContainer({
   const state = useMenuTriggerState({
     defaultOpen,
     closeOnSelect: true,
+    shouldFlip: true,
   })
   const { buttonProps, isPressed } = useButton({ isDisabled }, triggerRef)
   const { menuProps, menuTriggerProps } = useMenuTrigger(
@@ -75,20 +75,21 @@ function MenuContainer({
   )
 
   return (
-    <MenuContext.Provider value={{ triggerRef, menuProps, close: state.close }}>
-      <section className="flex relative">
-        <PressResponder
-          ref={triggerRef}
-          {...menuTriggerProps}
-          isPressed={isPressed}
-          onPress={() => state.toggle()}
-        >
-          {trigger}
-        </PressResponder>
+    <section className="flex relative">
+      <PressResponder
+        ref={triggerRef}
+        {...menuTriggerProps}
+        isPressed={isPressed}
+      >
+        {trigger}
+      </PressResponder>
 
+      <MenuContext.Provider
+        value={{ triggerRef, menuProps, close: state.close }}
+      >
         {state.isOpen && content}
-      </section>
-    </MenuContext.Provider>
+      </MenuContext.Provider>
+    </section>
   )
 }
 
@@ -154,60 +155,58 @@ function MenuBody<OptionKey extends string>({
 
   return (
     <OverlayContainer>
-      <FocusScope restoreFocus>
-        <div
-          lens-role="menu-body"
-          ref={overlayRef}
-          {...mergeProps(positionProps, overlayProps)}
-          style={{
-            ...positionProps.style,
-            left: triggerDimensions?.left,
-            minWidth: triggerDimensions?.width,
-          }}
+      <div
+        lens-role="menu-body"
+        ref={overlayRef}
+        {...mergeProps(positionProps, overlayProps)}
+        style={{
+          ...positionProps.style,
+          left: triggerDimensions?.left,
+          minWidth: triggerDimensions?.width,
+        }}
+      >
+        <DismissButton onDismiss={context.close} />
+        <ul
+          ref={ref}
+          {...mergeProps(context.menuProps, menuProps)}
+          className={cn(
+            "p-2 min-w-min overflow-auto",
+            "rounded-md shadow-md border border-gray-300 dark:border-gray-700",
+            "bg-white dark:bg-gray-900 text-sm text-gray-800 dark:text-gray-100",
+            {
+              "animate-slide-bottom": placement === "top",
+              "animate-slide-top": placement === "bottom",
+            }
+          )}
+          style={{ maxHeight: "inherit" }}
         >
-          <DismissButton onDismiss={context.close} />
-          <ul
-            ref={ref}
-            {...mergeProps(context.menuProps, menuProps)}
-            className={cn(
-              "p-2 min-w-min overflow-auto",
-              "rounded-md shadow-md border border-gray-300 dark:border-gray-700",
-              "bg-white dark:bg-gray-900 text-sm text-gray-800 dark:text-gray-100",
-              {
-                "animate-slide-bottom": placement === "top",
-                "animate-slide-top": placement === "bottom",
-              }
-            )}
-            style={{ maxHeight: "inherit" }}
-          >
-            {[...state.collection].map((option) => {
-              if (option.type === "section") {
-                return (
-                  <MenuSection
-                    key={option.key}
-                    title={option.rendered as string}
-                    state={state}
-                    section={option}
-                    onAction={onSelectionChange}
-                  />
-                )
-              } else if (option.type === "item") {
-                return (
-                  <MenuOption
-                    key={option.key}
-                    option={option}
-                    state={state}
-                    onAction={onSelectionChange}
-                  />
-                )
-              } else {
-                return null
-              }
-            })}
-          </ul>
-          <DismissButton onDismiss={context.close} />
-        </div>
-      </FocusScope>
+          {[...state.collection].map((option) => {
+            if (option.type === "section") {
+              return (
+                <MenuSection
+                  key={option.key}
+                  title={option.rendered as string}
+                  state={state}
+                  section={option}
+                  onAction={onSelectionChange}
+                />
+              )
+            } else if (option.type === "item") {
+              return (
+                <MenuOption
+                  key={option.key}
+                  option={option}
+                  state={state}
+                  onAction={onSelectionChange}
+                />
+              )
+            } else {
+              return null
+            }
+          })}
+        </ul>
+        <DismissButton onDismiss={context.close} />
+      </div>
     </OverlayContainer>
   )
 }
@@ -238,6 +237,7 @@ function MenuSection<OptionKey extends string>({
     itemProps: optionProps,
   } = useMenuSection({
     heading: title,
+    "aria-label": title,
   })
 
   return (
