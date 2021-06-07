@@ -30,14 +30,13 @@ type CustomAvatarProps = {
   width: number
 }
 
-/**
- * Internal component, DO NOT USE!
- */
-export const CustomAvatar = ({ a, i, size, width }: CustomAvatarProps) => {
+/** A single avatar inside the StackedAvatar */
+const SingleAvatar = ({ a, i, size, width }: CustomAvatarProps) => {
   const { hoverProps, isHovered } = useHover({})
   const avatarRef = useRef(null)
+
   return (
-    <React.Fragment key={i}>
+    <React.Fragment>
       <ImageOrIcon
         {...a}
         size={size}
@@ -99,7 +98,7 @@ export function StackedAvatar({
       })}
     >
       {avatars.slice(0, MAX_AVATARS).map((a, i) => {
-        return <CustomAvatar a={a} i={i} size={size} width={width} />
+        return <SingleAvatar a={a} i={i} size={size} width={width} />
       })}
       {avatars.length > MAX_AVATARS && (
         <>
