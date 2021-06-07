@@ -1,5 +1,6 @@
 import { action } from "@storybook/addon-actions"
 import { ComboBox, ComboBoxOption } from "./ComboBox"
+import { Link } from "../link/Link"
 
 type RepositoryId =
   | "prisma"
@@ -35,6 +36,8 @@ const dynamicData: ComboBoxOption<RepositoryId>[] = [
     title: "prisma/docs",
   },
 ]
+const promiseWithDynamicData: Promise<ComboBoxOption<RepositoryId>[]> =
+  new Promise((r) => setTimeout(() => r(dynamicData), 5000))
 
 const dynamicDataWebRepos: ComboBoxOption<RepositoryId>[] = [
   {
@@ -110,6 +113,27 @@ export const WithDynamicData = () => (
   </ComboBox.Container>
 )
 
+export const WithFooter = () => (
+  <ComboBox.Container
+    label="Repository"
+    onSelectionChange={action("onSelectionChange")}
+  >
+    <ComboBox.Option key="prisma">prisma/prisma</ComboBox.Option>
+    <ComboBox.Option key="studio">prisma/studio</ComboBox.Option>
+    <ComboBox.Option key="cloud">prisma/cloud</ComboBox.Option>
+    <ComboBox.Option key="engines">prisma/engines</ComboBox.Option>
+    <ComboBox.Option key="examples">prisma/examples</ComboBox.Option>
+    <ComboBox.Option key="docs">prisma/docs</ComboBox.Option>
+
+    <ComboBox.Footer onPress={action("onComboBoxFooterPress")}>
+      Can't find ye repository?
+      <Link href="" openInNewTab>
+        Configure
+      </Link>
+    </ComboBox.Footer>
+  </ComboBox.Container>
+)
+
 export const WithSectionsAndStaticData = () => (
   <ComboBox.Container
     label="Repository"
@@ -128,7 +152,7 @@ export const WithSectionsAndStaticData = () => (
   </ComboBox.Container>
 )
 
-export const WithSectionsDynamicData = () => (
+export const WithSectionsAndDynamicData = () => (
   <ComboBox.Container
     label="Repository"
     options={dynamicData}
@@ -185,5 +209,30 @@ export const Disabled = () => (
     <ComboBox.Option key="engines">prisma/engines</ComboBox.Option>
     <ComboBox.Option key="examples">prisma/examples</ComboBox.Option>
     <ComboBox.Option key="docs">prisma/docs</ComboBox.Option>
+  </ComboBox.Container>
+)
+
+export const WithNoOptions = () => (
+  <ComboBox.Container label="Repository"></ComboBox.Container>
+)
+
+export const WithAsyncLoading = () => {
+  return (
+    <ComboBox.Container label="Repository" options={promiseWithDynamicData}>
+      {(option) => (
+        <ComboBox.Option key={option.key}>{option.title}</ComboBox.Option>
+      )}
+    </ComboBox.Container>
+  )
+}
+
+export const WithAsyncError = () => (
+  <ComboBox.Container
+    label="Repository"
+    options={new Promise((_, r) => setTimeout(() => r("error"), 10))}
+  >
+    {(option) => (
+      <ComboBox.Option key={option.key}>{option.title}</ComboBox.Option>
+    )}
   </ComboBox.Container>
 )

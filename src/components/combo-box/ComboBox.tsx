@@ -6,6 +6,7 @@ import { useFilter } from "@react-aria/i18n"
 import { useListBox, useListBoxSection, useOption } from "@react-aria/listbox"
 import { useButton } from "@react-aria/button"
 import { Item, Section } from "@react-stately/collections"
+import { PressResponder } from "@react-aria/interactions"
 import { CollectionChildren, Node } from "@react-types/shared"
 import {
   DismissButton,
@@ -15,9 +16,14 @@ import {
 } from "@react-aria/overlays"
 import { FocusScope } from "@react-aria/focus"
 import { mergeProps } from "@react-aria/utils"
+
+import { useAsyncOptions } from "../../hooks/useAsyncOptions"
+import { useCollectionComponents } from "../../hooks/useCollectionComponents"
+import { Separator } from "../separator/Separator"
 import { Label } from "../label/Label"
 import { Icon } from "../icon/Icon"
 import { FocusRing } from "../focus-ring/FocusRing"
+import { Loader } from "../loader/Loader"
 
 /** Value for a single Option inside this ComboBox */
 export type ComboBoxOption<Key extends string> = {
@@ -33,7 +39,7 @@ export type ComboBoxContainerProps<OptionKey extends string> = {
   /** Controls if this ComboBox should steal focus when first rendered */
   autoFocus?: boolean
   /** A list of Options to render inside this ComboBox */
-  children: CollectionChildren<ComboBoxOption<OptionKey>>
+  children?: CollectionChildren<ComboBoxOption<OptionKey>>
   /** Value to be pre-populated in the input when this ComboBox is first rendered */
   defaultInputValue?: string
   /** Controls if this ComboBox will be open by default */
@@ -47,7 +53,7 @@ export type ComboBoxContainerProps<OptionKey extends string> = {
   /** A (dynamic) list of options to render within this ComboBox.
    * This may be provided upfront instead of providing static children.
    */
-  options?: ComboBoxOption<OptionKey>[]
+  options?: ComboBoxOption<OptionKey>[] | Promise<ComboBoxOption<OptionKey>[]>
   /** A string describing what this ComboBox represents */
   label: string
   /** Name of the value held by this ComboBox when placed inside a form */
@@ -71,25 +77,34 @@ function ComboBoxContainer<OptionKey extends string>({
   defaultSelectedKey,
   isDisabled = false,
   isReadOnly = false,
-  options,
+  options: propOptions,
   label,
   name,
   placeholder = "Select an option",
   onSelectionChange,
 }: ComboBoxContainerProps<OptionKey>) {
-  const { contains } = useFilter({})
+  const { body, footer } = useCollectionComponents({
+    children,
+    footerType: ComboBoxFooter,
+  })
+  const { loading, error, options } =
+    useAsyncOptions<ComboBoxOption<OptionKey>>(propOptions)
+
+  const { contains } = useFilter({ sensitivity: "base" })
   const state = useComboBoxState({
     id,
     autoFocus,
-    children,
-    defaultFilter: contains,
+    children: body,
+    allowsEmptyCollection: true,
     defaultInputValue,
     defaultOpen,
     defaultSelectedKey,
     isDisabled,
     isReadOnly,
-    defaultItems: options,
+    defaultItems: options, // `defaultFilter` only works when `items` is undefined
+    defaultFilter: contains,
     placeholder,
+    shouldFlip: true,
     onSelectionChange: onSelectionChange as (k: React.Key) => void,
   })
 
@@ -106,7 +121,7 @@ function ComboBoxContainer<OptionKey extends string>({
   } = useComboBox(
     {
       autoFocus,
-      children,
+      children: body,
       defaultOpen,
       defaultInputValue,
       defaultSelectedKey,
@@ -122,6 +137,7 @@ function ComboBoxContainer<OptionKey extends string>({
       popoverRef: overlayRef,
       listBoxRef,
       menuTrigger: "focus",
+      shouldFlip: true,
     } as any, // need `as any` because types do not allow `label` to be passed on, which causes warnings to show up about missing labels
     state
   )
@@ -166,6 +182,7 @@ function ComboBoxContainer<OptionKey extends string>({
             </button>
           </div>
         </FocusRing>
+
         {state.isOpen && (
           <ComboBoxBody
             {...listBoxProps}
@@ -175,6 +192,9 @@ function ComboBoxContainer<OptionKey extends string>({
             listBoxRef={listBoxRef}
             overlayRef={overlayRef}
             state={state}
+            footer={footer}
+            loading={loading}
+            error={error}
           />
         )}
       </section>
@@ -195,6 +215,10 @@ type ComboBoxBodyProps<OptionKey extends string> = {
   state: ComboBoxState<ComboBoxOption<OptionKey>>
   /** Ref of the ComboBox container. This is used to position the overlay */
   containerRef: React.RefObject<HTMLElement>
+  /** An optional footer to render within the Overlay, after the Body */
+  footer?: React.ReactElement
+  loading?: boolean
+  error?: Error
 }
 
 /** An overlay that renders individual ComboBox Options */
@@ -205,6 +229,9 @@ function ComboBoxBody<OptionKey extends string>({
   overlayRef,
   state,
   containerRef,
+  footer,
+  loading,
+  error,
 }: ComboBoxBodyProps<OptionKey>) {
   const { listBoxProps } = useListBox(
     {
@@ -230,6 +257,7 @@ function ComboBoxBody<OptionKey extends string>({
     targetRef: containerRef,
     offset: 8,
     containerPadding: 0,
+    shouldFlip: true,
     onClose: state.close,
   })
   // Figure out button dimensions so we can size the overlay
@@ -258,6 +286,10 @@ function ComboBoxBody<OptionKey extends string>({
             })}
             style={{ maxHeight: "inherit" }}
           >
+            {state.collection.size === 0 && !loading && !error && (
+              <ComboBoxEmptyOption />
+            )}
+
             {[...state.collection].map((option) => {
               if (option.type === "section") {
                 return (
@@ -280,7 +312,13 @@ function ComboBoxBody<OptionKey extends string>({
                 return null
               }
             })}
+
+            {loading && <ComboBoxLoadingOption />}
+            {error && <ComboBoxErrorOption />}
+
+            {footer}
           </ul>
+
           <DismissButton onDismiss={state.close} />
         </div>
       </FocusScope>
@@ -380,8 +418,58 @@ function ComboBoxOption<Key extends string>({
   )
 }
 
+function ComboBoxLoadingOption() {
+  return (
+    <li className={cn("flex flex-col justify-center items-center", "m-2")}>
+      <Loader size="md" />
+    </li>
+  )
+}
+
+type ComboBoxErrorOptionProps = {
+  children?: string
+}
+function ComboBoxErrorOption({
+  children = "An error occurred",
+}: ComboBoxErrorOptionProps) {
+  return (
+    <li className={cn("flex flex-col justify-center items-center", "m-2")}>
+      <Icon name="alert-circle" />
+      <span className="mt-2">{children}</span>
+    </li>
+  )
+}
+
+type ComboBoxEmptyOptionProps = {
+  children?: string
+}
+function ComboBoxEmptyOption({
+  children = "No matches",
+}: ComboBoxEmptyOptionProps) {
+  return (
+    <li className={cn("flex flex-col justify-center items-center", "m-2")}>
+      <Icon name="slash" />
+      <span className="mt-2">{children}</span>
+    </li>
+  )
+}
+
+type ComboBoxFooterProps = React.PropsWithChildren<{
+  onPress?: () => void
+}>
+
+function ComboBoxFooter({ children, onPress }: ComboBoxFooterProps) {
+  return (
+    <PressResponder onPress={onPress}>
+      <Separator />
+      <div className="p-2 whitespace-nowrap">{children}</div>
+    </PressResponder>
+  )
+}
+
 export const ComboBox = {
   Container: ComboBoxContainer,
   Section,
   Option: Item,
+  Footer: ComboBoxFooter,
 }
