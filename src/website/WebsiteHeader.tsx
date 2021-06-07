@@ -36,8 +36,9 @@ const NavLinksWrapper = styled.div`
 const NavLinks = ({ absoluteLinks = false }: NavigationLinkProps) => (
   <NavLinksWrapper>
     <a
-      href={`${absoluteLinks ? "https://www.prisma.io" : ""
-        }/docs/getting-started/quickstart`}
+      href={`${
+        absoluteLinks ? "https://www.prisma.io" : ""
+      }/docs/getting-started/quickstart`}
     >
       Quickstart
     </a>
