@@ -19,6 +19,58 @@ export type StackedAvatarProps = {
   onPress?: () => void
 }
 
+type CustomAvatarProps = {
+  /** Avatar to render */
+  a: Omit<AvatarProps, "size">
+  /** Key used for avatar */
+  i: number
+  /** Size of the Avatar */
+  size: Size
+  /** Size as a number */
+  width: number
+}
+
+/**
+ * Internal component, DO NOT USE!
+ */
+export const CustomAvatar = ({ a, i, size, width }: CustomAvatarProps) => {
+  const { hoverProps, isHovered } = useHover({})
+  const avatarRef = useRef(null)
+  return (
+    <React.Fragment key={i}>
+      <ImageOrIcon
+        {...a}
+        size={size}
+        ref={avatarRef}
+        otherProps={hoverProps}
+        className={cn(
+          "rounded-full",
+          "border-2 border-lightPageBg dark:border-darkPageBg", // A border that will match the page's background color. This will make it look like overlapping Avatars have an elliptical border around them.
+          {
+            "z-10": isHovered,
+          },
+          "cursor-pointer"
+        )}
+        style={{
+          marginLeft: i > 0 ? `-${0.3 * width}px` : "0",
+        }}
+      />
+      {(a.name || a.email) && isHovered && (
+        <Tooltip target={avatarRef} position="bottom">
+          <div className="flex flex-col">
+            <div lens-role="name" className="font-semibold text-sm">
+              {a.name}
+            </div>
+            <div lens-role="email" className="text-xs">
+              {a.email}
+            </div>
+          </div>
+        </Tooltip>
+      )}
+    </React.Fragment>
+  )
+}
+
 export function StackedAvatar({
   id,
   avatars,
@@ -47,42 +99,7 @@ export function StackedAvatar({
       })}
     >
       {avatars.slice(0, MAX_AVATARS).map((a, i) => {
-        const { hoverProps, isHovered } = useHover({})
-        const avatarRef = useRef(null)
-
-        return (
-          <React.Fragment key={i}>
-            <ImageOrIcon
-              {...a}
-              size={size}
-              ref={avatarRef}
-              otherProps={hoverProps}
-              className={cn(
-                "rounded-full",
-                "border-2 border-lightPageBg dark:border-darkPageBg", // A border that will match the page's background color. This will make it look like overlapping Avatars have an elliptical border around them.
-                {
-                  "z-10": isHovered,
-                },
-                "cursor-pointer"
-              )}
-              style={{
-                marginLeft: i > 0 ? `-${0.3 * width}px` : "0",
-              }}
-            />
-            {(a.name || a.email) && isHovered && (
-              <Tooltip target={avatarRef} position="bottom">
-                <div className="flex flex-col">
-                  <div lens-role="name" className="font-semibold text-sm">
-                    {a.name}
-                  </div>
-                  <div lens-role="email" className="text-xs">
-                    {a.email}
-                  </div>
-                </div>
-              </Tooltip>
-            )}
-          </React.Fragment>
-        )
+        return <CustomAvatar a={a} i={i} size={size} width={width} />
       })}
       {avatars.length > MAX_AVATARS && (
         <>
