@@ -100,11 +100,6 @@ export type MenuBodyProps<OptionKey extends string> = {
   children: CollectionChildren<MenuOption<OptionKey>>
   /** A string describing what this Menu represents */
   title: string
-  /**
-   * A (dynamic) list of options and/or sections to render within this Menu.
-   * This may be provided upfront instead of providing static children.
-   */
-  options?: MenuOption<OptionKey>[]
   /** Callback invoked when the Menu's selection changes */
   onSelectionChange?: (key: OptionKey) => void
 }
@@ -116,7 +111,6 @@ function MenuBody<OptionKey extends string>({
   id,
   children,
   title,
-  options,
   onSelectionChange,
 }: MenuBodyProps<OptionKey>) {
   const context = useContext(MenuContext)
@@ -125,7 +119,6 @@ function MenuBody<OptionKey extends string>({
   const overlayRef = useRef<HTMLDivElement>(null)
   const state = useTreeState({
     children,
-    items: options,
     selectionMode: "none",
   })
   const { menuProps } = useMenu(
@@ -133,7 +126,6 @@ function MenuBody<OptionKey extends string>({
       id,
       children,
       "aria-label": title,
-      items: options,
     },
     state,
     ref

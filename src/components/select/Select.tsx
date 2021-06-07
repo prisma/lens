@@ -1,7 +1,5 @@
 import React, { useRef } from "react"
 import cn from "classnames"
-import last from "lodash-es/last"
-import isFunction from "lodash-es/isFunction"
 import { useSelect, HiddenSelect } from "@react-aria/select"
 import { SelectState, useSelectState } from "@react-stately/select"
 import { Item, Section } from "@react-stately/collections"
@@ -17,6 +15,8 @@ import { useButton } from "@react-aria/button"
 import { PressResponder } from "@react-aria/interactions"
 import { FocusScope } from "@react-aria/focus"
 import { mergeProps } from "@react-aria/utils"
+
+import { useCollectionFooter } from "../../hooks/useCollectionFooter"
 import { Label } from "../label/Label"
 import { Icon } from "../icon/Icon"
 import { Separator } from "../separator/Separator"
@@ -28,46 +28,6 @@ export type SelectOption<Key extends string> = {
   key: Key
   /** The main text to display within this option */
   title: string
-}
-
-function getBodyAndFooter<OptionKey extends string>(
-  children:
-    | CollectionChildren<SelectOption<OptionKey>>
-    | [CollectionChildren<SelectOption<OptionKey>>, React.ReactElement]
-) {
-  // `children` may or may not contain a footer
-  // `children` may also either be static or dynamic data
-  // This means there are 4 cases for us to consider
-
-  let body: CollectionChildren<SelectOption<OptionKey>>
-  let footer: React.ReactElement | undefined
-
-  if (!Array.isArray(children)) {
-    // Dynamic data + no footer
-    body = children
-    footer = undefined
-  } else {
-    // Assume footer will be the last element (if it exists)
-    const lastChild = last(children) as React.ReactElement
-    if (lastChild?.type === SelectFooter) {
-      const allButLastChildren = children.slice(0, children.length - 1)
-      footer = lastChild
-
-      if (isFunction(allButLastChildren[0])) {
-        // Dynamic data + footer
-        body = allButLastChildren[0]
-      } else {
-        // Static data + footer
-        body = allButLastChildren as CollectionChildren<SelectOption<OptionKey>>
-      }
-    } else {
-      // Static data + no footer
-      body = children as any
-      footer = undefined
-    }
-  }
-
-  return { body, footer }
 }
 
 export type SelectContainerProps<OptionKey extends string> = {
@@ -87,10 +47,6 @@ export type SelectContainerProps<OptionKey extends string> = {
   isDisabled?: boolean
   /** Controls is this Select is readonly */
   isReadOnly?: boolean
-  /** A (dynamic) list of options to render within this Select.
-   * This may be provided upfront instead of providing static children.
-   */
-  options?: SelectOption<OptionKey>[]
   /** A string describing what this Select represents */
   label: string
   /** Name of the value held by this Select when placed inside a form */
@@ -112,7 +68,6 @@ function SelectContainer<OptionKey extends string>({
   defaultSelectedKey,
   isDisabled = false,
   isReadOnly = false,
-  options,
   label,
   name,
   placeholder = "Select an option",
@@ -120,7 +75,10 @@ function SelectContainer<OptionKey extends string>({
 }: SelectContainerProps<OptionKey>) {
   const ref = useRef(null)
 
-  const { body, footer } = getBodyAndFooter(children)
+  const { body, footer } = useCollectionFooter({
+    children,
+    footerType: SelectFooter,
+  })
 
   const state = useSelectState({
     autoFocus,
@@ -129,7 +87,6 @@ function SelectContainer<OptionKey extends string>({
     defaultSelectedKey,
     isDisabled,
     isReadOnly,
-    items: options,
     label,
     onSelectionChange: onSelectionChange as (k: React.Key) => void,
   })
@@ -142,7 +99,6 @@ function SelectContainer<OptionKey extends string>({
       defaultSelectedKey,
       isDisabled,
       isReadOnly,
-      items: options,
       label,
       placeholder,
       onSelectionChange: onSelectionChange as (k: React.Key) => void,
@@ -187,6 +143,7 @@ function SelectContainer<OptionKey extends string>({
             <Icon name="chevron-down" size="xs" />
           </button>
         </FocusRing>
+
         {state.isOpen && (
           <SelectOverlay
             state={state}
@@ -196,6 +153,7 @@ function SelectContainer<OptionKey extends string>({
           />
         )}
       </section>
+
       {/* A HiddenSelect is used to render a hidden native <select>, which enables browser form autofill support */}
       <HiddenSelect
         state={state}
