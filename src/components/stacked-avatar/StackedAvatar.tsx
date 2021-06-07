@@ -36,7 +36,7 @@ const SingleAvatar = ({ a, i, size, width }: CustomAvatarProps) => {
   const avatarRef = useRef(null)
 
   return (
-    <React.Fragment>
+    <>
       <ImageOrIcon
         {...a}
         size={size}
@@ -66,7 +66,7 @@ const SingleAvatar = ({ a, i, size, width }: CustomAvatarProps) => {
           </div>
         </Tooltip>
       )}
-    </React.Fragment>
+    </>
   )
 }
 
@@ -97,9 +97,9 @@ export function StackedAvatar({
         "opacity-75": isPressed,
       })}
     >
-      {avatars.slice(0, MAX_AVATARS).map((a, i) => {
-        return <SingleAvatar a={a} i={i} size={size} width={width} />
-      })}
+      {avatars.slice(0, MAX_AVATARS).map((a, i) => (
+        <SingleAvatar key={i} a={a} i={i} size={size} width={width} />
+      ))}
       {avatars.length > MAX_AVATARS && (
         <>
           <div
