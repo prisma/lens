@@ -90,19 +90,19 @@ function ComboBoxContainer<OptionKey extends string>({
   const { loading, error, options } =
     useAsyncOptions<ComboBoxOption<OptionKey>>(propOptions)
 
-  const { contains } = useFilter({})
+  const { contains } = useFilter({ sensitivity: "base" })
   const state = useComboBoxState({
     id,
     autoFocus,
     children: body,
-    defaultFilter: contains,
     allowsEmptyCollection: true,
     defaultInputValue,
     defaultOpen,
     defaultSelectedKey,
     isDisabled,
     isReadOnly,
-    items: options,
+    defaultItems: options, // `defaultFilter` only works when `items` is undefined
+    defaultFilter: contains,
     placeholder,
     shouldFlip: true,
     onSelectionChange: onSelectionChange as (k: React.Key) => void,
@@ -137,6 +137,7 @@ function ComboBoxContainer<OptionKey extends string>({
       popoverRef: overlayRef,
       listBoxRef,
       menuTrigger: "focus",
+      shouldFlip: true,
     } as any, // need `as any` because types do not allow `label` to be passed on, which causes warnings to show up about missing labels
     state
   )

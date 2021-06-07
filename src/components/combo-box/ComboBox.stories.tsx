@@ -1,9 +1,6 @@
 import { action } from "@storybook/addon-actions"
 import { ComboBox, ComboBoxOption } from "./ComboBox"
 import { Link } from "../link/Link"
-import { useState } from "react"
-import { Button } from "../button/Button"
-import { Separator } from "../separator/Separator"
 
 type RepositoryId =
   | "prisma"
@@ -39,6 +36,8 @@ const dynamicData: ComboBoxOption<RepositoryId>[] = [
     title: "prisma/docs",
   },
 ]
+const promiseWithDynamicData: Promise<ComboBoxOption<RepositoryId>[]> =
+  new Promise((r) => setTimeout(() => r(dynamicData), 5000))
 
 const dynamicDataWebRepos: ComboBoxOption<RepositoryId>[] = [
   {
@@ -219,10 +218,7 @@ export const WithNoOptions = () => (
 
 export const WithAsyncLoading = () => {
   return (
-    <ComboBox.Container
-      label="Repository"
-      options={new Promise((_, r) => setTimeout(() => r(), 5000))}
-    >
+    <ComboBox.Container label="Repository" options={promiseWithDynamicData}>
       {(option) => (
         <ComboBox.Option key={option.key}>{option.title}</ComboBox.Option>
       )}
