@@ -7,11 +7,11 @@ import isFunction from "lodash-es/isFunction"
  * @param children
  * @returns
  */
-export function useCollectionFooter<T>({
-  children,
+export function useCollectionComponents<T>({
+  children = [],
   footerType,
 }: {
-  children: CollectionChildren<T> | [CollectionChildren<T>, React.ReactElement]
+  children?: CollectionChildren<T> | [CollectionChildren<T>, React.ReactElement]
   footerType: React.FC
 }): { body: CollectionChildren<T>; footer: React.ReactElement | undefined } {
   // `children` may or may not contain a footer

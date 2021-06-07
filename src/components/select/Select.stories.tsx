@@ -48,7 +48,7 @@ export const WithSectionsAndStaticData = () => (
   </Select.Container>
 )
 
-export const WithFooterAndStaticData = () => (
+export const WithFooter = () => (
   <Select.Container
     label="Database Provider"
     onSelectionChange={action("onSelectionChange")}

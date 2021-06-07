@@ -16,7 +16,7 @@ import { PressResponder } from "@react-aria/interactions"
 import { FocusScope } from "@react-aria/focus"
 import { mergeProps } from "@react-aria/utils"
 
-import { useCollectionFooter } from "../../hooks/useCollectionFooter"
+import { useCollectionComponents } from "../../hooks/useCollectionComponents"
 import { Label } from "../label/Label"
 import { Icon } from "../icon/Icon"
 import { Separator } from "../separator/Separator"
@@ -75,7 +75,7 @@ function SelectContainer<OptionKey extends string>({
 }: SelectContainerProps<OptionKey>) {
   const ref = useRef(null)
 
-  const { body, footer } = useCollectionFooter({
+  const { body, footer } = useCollectionComponents({
     children,
     footerType: SelectFooter,
   })

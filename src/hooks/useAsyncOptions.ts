@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
  * @param options
  * @returns
  */
-export function useAsyncOptions<T>(options: T[] | Promise<T[]>): {
+export function useAsyncOptions<T>(options: T[] | Promise<T[]> = []): {
   loading: boolean
   error: Error | undefined
   options: T[]
@@ -26,7 +26,7 @@ export function useAsyncOptions<T>(options: T[] | Promise<T[]>): {
       .then((o) => setResolvedOptions(o))
       .catch((e) => setError(e))
       .finally(() => setLoading(false))
-  }, [options])
+  }, [])
 
   return { loading, error, options: resolvedOptions }
 }
