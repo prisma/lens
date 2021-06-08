@@ -96,6 +96,7 @@ function ComboBoxContainer<OptionKey extends string>({
     autoFocus,
     children: body,
     allowsEmptyCollection: true,
+    menuTrigger: "focus",
     defaultInputValue,
     defaultOpen,
     defaultSelectedKey,
@@ -120,24 +121,24 @@ function ComboBoxContainer<OptionKey extends string>({
     listBoxProps,
   } = useComboBox(
     {
+      id,
       autoFocus,
       children: body,
+      menuTrigger: "focus",
       defaultOpen,
       defaultInputValue,
       defaultSelectedKey,
-      id,
-      label,
       isDisabled,
       isReadOnly,
-      items: options,
+      defaultItems: options,
       placeholder,
+      shouldFlip: true,
+      label,
       onSelectionChange: onSelectionChange as (k: React.Key) => void,
       inputRef,
       buttonRef,
       popoverRef: overlayRef,
       listBoxRef,
-      menuTrigger: "focus",
-      shouldFlip: true,
     } as any, // need `as any` because types do not allow `label` to be passed on, which causes warnings to show up about missing labels
     state
   )
