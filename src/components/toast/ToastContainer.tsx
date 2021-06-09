@@ -12,7 +12,7 @@ export function ToastContainer() {
   return (
     <div
       className={cn(
-        "fixed bottom-8 left-0 right-0",
+        "fixed top-20 left-0 right-0",
         "flex flex-col items-center"
       )}
     >
