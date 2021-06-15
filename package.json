@@ -32,7 +32,7 @@
     "format": "prettier --ignore-path .gitignore -w .",
     "format:check": "prettier --ignore-path .gitignore -c .",
     "build": "rm -rf dist && NODE_ENV=production rollup -c",
-    "build-storybook": "build-storybook -s public",
+    "build-storybook": "npm run build && build-storybook -s public",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {

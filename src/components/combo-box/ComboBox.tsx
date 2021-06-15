@@ -98,7 +98,6 @@ function ComboBoxContainer<OptionKey extends string>({
     allowsEmptyCollection: true,
     menuTrigger: "focus",
     defaultInputValue,
-    defaultOpen,
     defaultSelectedKey,
     isDisabled,
     isReadOnly,
