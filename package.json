@@ -96,7 +96,7 @@
     "storybook-dark-mode": "1.0.8-canary.108.3214.0",
     "styled-components": "5.2.1",
     "tailwindcss": "2.2.0",
-    "tslib": "2.2.0",
+    "tslib": "2.3.0",
     "typescript": "4.2.4"
   },
   "peerDependencies": {
