@@ -4,6 +4,8 @@ import { Icon } from "../icon/Icon"
 import { Button } from "../button/Button"
 
 export type ToastProps = {
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
+  id?: string
   /** The text to display inside the Toast */
   title: string
   /** Controls what kind of emotion this Toast represents */
@@ -14,10 +16,11 @@ export type ToastProps = {
   onClose?: () => void
 }
 
-export function Toast({ title, variant = "neutral", onClose }: ToastProps) {
+export function Toast({ id, title, variant = "neutral", onClose }: ToastProps) {
   return (
     <div
-      lens-role="toast"
+      lens-role={`toast-${variant}`}
+      id={id}
       role="alert"
       className={cn(
         "flex items-center m-1",
