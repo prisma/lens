@@ -310,6 +310,14 @@ const WebsiteFooter = ({
         >
           Advanced TypeScript Trickery
         </a>
+        <a
+          className="link"
+          href="https://www.meetup.com/connect-dev-africa/"
+          rel="norefferer noopener"
+          target="_blank"
+        >
+          Connect Dev Africa
+        </a>
       </div>
       <div className="group">
         <h3 className="header">Company</h3>
