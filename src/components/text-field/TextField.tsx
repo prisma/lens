@@ -110,7 +110,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
                   className={cn(
                     "mr-3 py-1.5 px-3",
                     "bg-gray-200 dark:bg-gray-700",
-                    "text-gray-100 dark:text-gray-400 font-medium",
+                    "text-gray-800 dark:text-gray-400 font-medium",
                     "select-none"
                   )}
                 >
