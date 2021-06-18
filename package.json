@@ -80,7 +80,7 @@
     "@types/react-dom": "17.0.5",
     "@types/styled-components": "5.1.9",
     "autoprefixer": "10.2.6",
-    "chromatic": "5.9.1",
+    "chromatic": "5.9.2",
     "classnames": "2.3.1",
     "lodash-es": "4.17.21",
     "postcss": "8.3.0",
