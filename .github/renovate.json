@@ -4,5 +4,13 @@
   "semanticCommits": "enabled",
   "dependencyDashboard": true,
   "rebaseWhen": "conflicted",
-  "ignoreDeps": ["styled-components", "react", "react-dom"]
+  "ignoreDeps": ["styled-components", "react", "react-dom"],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch"
+    }
+  ]
 }
