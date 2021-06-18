@@ -10,8 +10,8 @@ import {
 import {
   useTableState,
   TableState,
-  TableBody as ReactAriaTableBody,
   TableHeader as ReactAriaTableHeader,
+  TableBody as ReactAriaTableBody,
   Row as ReactAriaTableRow,
   Column as ReactAriaTableColumn,
   Cell as ReactAriaTableCell,
