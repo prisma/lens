@@ -200,15 +200,17 @@ const WebsiteFooter = ({
         </a>
         <a
           className="link"
-          href={`${absoluteLinks ? "https://www.prisma.io" : ""
-            }/docs/getting-started/quickstart-typescript`}
+          href={`${
+            absoluteLinks ? "https://www.prisma.io" : ""
+          }/docs/getting-started/quickstart-typescript`}
         >
           Get Started
         </a>
         <a
           className="link"
-          href={`${absoluteLinks ? "https://www.prisma.io" : ""
-            }/docs/reference/api-reference/prisma-client-reference`}
+          href={`${
+            absoluteLinks ? "https://www.prisma.io" : ""
+          }/docs/reference/api-reference/prisma-client-reference`}
         >
           API Reference
         </a>
@@ -226,8 +228,9 @@ const WebsiteFooter = ({
         </a>
         <a
           className="link"
-          href={`${absoluteLinks ? "https://www.prisma.io" : ""
-            }/enterprise-event-2021`}
+          href={`${
+            absoluteLinks ? "https://www.prisma.io" : ""
+          }/enterprise-event-2021`}
         >
           Enterprise Event
         </a>
