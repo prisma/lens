@@ -8,7 +8,7 @@ export function useToasts() {
   return useContext(ToastContext)
 }
 
-type Toast = ToastProps & { id: number }
+type Toast = ToastProps & { toastId: number }
 export type ToastState = {
   toasts: Toast[]
   add: (props: ToastProps) => void
@@ -21,27 +21,27 @@ export function useToastState(): ToastState {
   toastsRef.current = toasts
 
   function add(toast: ToastProps) {
-    const id = Math.random() * 100
+    const toastId = Math.random() * 100
 
     setToasts([
       ...toastsRef.current,
       {
-        id,
+        toastId,
         ...toast,
         onClose: () => {
-          remove(id)
+          remove(toastId)
           toast.onClose?.()
         },
       },
     ])
 
     if (!toast.sticky) {
-      setTimeout(() => remove(id), TOAST_TIMEOUT)
+      setTimeout(() => remove(toastId), TOAST_TIMEOUT)
     }
   }
 
   function remove(id: number) {
-    setToasts(toastsRef.current.filter((t) => t.id !== id))
+    setToasts(toastsRef.current.filter((t) => t.toastId !== id))
   }
 
   return { toasts, add, remove }

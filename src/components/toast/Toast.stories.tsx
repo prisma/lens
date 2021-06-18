@@ -62,6 +62,7 @@ export const WithTriggerAndSticky = () => {
     <Button
       onPress={() =>
         toasts.add({
+          id: "success-toast",
           title: `Changes saved ${toasts.toasts.length + 1}`,
           sticky: true,
           variant: "positive",
