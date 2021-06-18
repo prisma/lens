@@ -19,7 +19,7 @@ export type ToastProps = {
 export function Toast({ id, title, variant = "neutral", onClose }: ToastProps) {
   return (
     <div
-      lens-role="toast"
+      lens-role={`toast-${variant}`}
       id={id}
       role="alert"
       className={cn(
