@@ -88,7 +88,7 @@
     "prettier": "2.3.1",
     "react": "16.14.0",
     "react-dom": "16.14.0",
-    "rollup": "2.52.1",
+    "rollup": "2.52.2",
     "rollup-plugin-copy": "3.4.0",
     "rollup-plugin-peer-deps-external": "2.2.4",
     "rollup-plugin-postcss": "4.0.0",
