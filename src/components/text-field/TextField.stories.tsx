@@ -48,3 +48,12 @@ export const WithPrefix = () => (
     onChange={action("onChange")}
   />
 )
+
+export const WithError = () => (
+  <TextField
+    type="text"
+    label="Handle"
+    error="This username is already taken"
+    onChange={action("onChange")}
+  />
+)

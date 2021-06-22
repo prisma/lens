@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from "react"
+import React, { useLayoutEffect, useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import cn from "classnames"
 import { mergeProps } from "@react-aria/utils"
@@ -15,7 +15,7 @@ export type TooltipProps = React.PropsWithChildren<{
   /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
   id?: string
   /** React Ref of an HTML Element to position this Tooltip against */
-  target: React.RefObject<HTMLElement>
+  target: React.RefObject<HTMLElement | SVGSVGElement>
   /** Position of the tooltip relative to the target. The Tooltip might still be flipped if there isn't enough space. */
   position?: Position
 }>
@@ -34,7 +34,7 @@ export function Tooltip({ id, children, target, position }: TooltipProps) {
     placement,
     arrowProps: ariaArrowProps,
   } = useOverlayPosition({
-    targetRef: target,
+    targetRef: target as React.RefObject<HTMLElement>,
     overlayRef: ref,
     shouldFlip: true,
     placement: position,
@@ -49,10 +49,20 @@ export function Tooltip({ id, children, target, position }: TooltipProps) {
   useLayoutEffect(() => {
     // Figure out overlay dimensions so we can position the arrow accordingly
     const overlayDimensions = ref.current?.getBoundingClientRect()
+    const targetDimensions = target.current?.getBoundingClientRect()
 
-    if (!overlayDimensions) {
+    if (!targetDimensions || !overlayDimensions) {
       return
     }
+
+    const left =
+      Math.abs(overlayDimensions.left - targetDimensions.left) +
+      targetDimensions.width / 2 -
+      ARROW_SIZE
+    const top =
+      Math.abs(overlayDimensions.top - targetDimensions.top) +
+      targetDimensions.height / 2 -
+      ARROW_SIZE
 
     setArrowProps({
       ...arrowProps,
@@ -61,28 +71,29 @@ export function Tooltip({ id, children, target, position }: TooltipProps) {
         ...(placement === "top"
           ? {
               top: overlayDimensions.height,
-              left: overlayDimensions.width / 2 - ARROW_SIZE,
+              left,
             }
           : undefined),
         ...(placement === "bottom"
           ? {
-              left: overlayDimensions.width / 2 - ARROW_SIZE,
+              left,
             }
           : undefined),
         ...(placement === "left"
           ? {
               left: overlayDimensions.width,
-              top: overlayDimensions.height / 2 - ARROW_SIZE,
+              top,
             }
           : undefined),
         ...(placement === "right"
           ? {
-              top: overlayDimensions.height / 2 - ARROW_SIZE,
+              top,
+              left: 0,
             }
           : undefined),
       },
     })
-  }, [placement])
+  }, [placement, window.innerWidth, window.innerHeight])
 
   return createPortal(
     <div

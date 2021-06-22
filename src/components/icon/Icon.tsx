@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react"
+import React, { useRef, forwardRef } from "react"
 import cn from "classnames"
 import { Size, sizeToNumeric } from "../../utils/sizeToNumeric"
 
@@ -17,11 +17,14 @@ export type IconProps = {
 
 export const Icon = forwardRef<SVGSVGElement, IconProps>(
   ({ id, name, size = "md", className }: IconProps, forwardedRef) => {
+    const _iconRef = useRef<SVGSVGElement>(null)
+    const iconRef = forwardedRef || _iconRef
+
     const width = sizeToNumeric(size)
     const commonProps = {
       id,
       "lens-role": "icon",
-      ref: forwardedRef,
+      ref: iconRef,
       width,
       height: width,
       className: cn(
