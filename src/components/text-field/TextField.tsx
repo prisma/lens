@@ -70,7 +70,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 
     const [isValidationEnabled, setIsValidationEnabled] = useState(false)
     const { focusProps } = useFocus({
-      onFocus: () => {
+      onBlur: () => {
         // Validation is disabled until the user touches / focuses the field at least once
         setIsValidationEnabled(true)
         setInvalidText(validator?.(value || "") || errorText)
