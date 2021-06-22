@@ -174,7 +174,7 @@ function ErrorIcon({
         />
       </div>
       {isHovered && (
-        <Tooltip target={ref} position="right">
+        <Tooltip target={ref} position="top">
           {text}
         </Tooltip>
       )}
