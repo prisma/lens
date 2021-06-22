@@ -13,6 +13,7 @@ export type ToastState = {
   toasts: Toast[]
   add: (props: ToastProps) => void
   remove: (id: number) => void
+  removeAll: () => void
 }
 
 export function useToastState(): ToastState {
@@ -44,5 +45,9 @@ export function useToastState(): ToastState {
     setToasts(toastsRef.current.filter((t) => t.toastId !== id))
   }
 
-  return { toasts, add, remove }
+  function removeAll() {
+    setToasts([])
+  }
+
+  return { toasts, add, remove, removeAll }
 }

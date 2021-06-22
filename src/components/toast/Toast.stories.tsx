@@ -2,6 +2,7 @@ import { action } from "@storybook/addon-actions"
 import { Toast } from "./Toast"
 import { useToasts } from "./useToasts"
 import { Button } from "../button/Button"
+import { ButtonGroup } from "../button-group/ButtonGroup"
 
 export const Default = (props) => <Toast {...props} />
 Default.storyName = "[Controlled]"
@@ -10,7 +11,7 @@ export default {
   component: Toast,
   argTypes: {
     title: { defaultValue: "This might take a while" },
-    variant: { control: { type: "inline-radio" }, defaultValue: "neutral" },
+    // variant: { control: { type: "inline-radio" }, defaultValue: "neutral" },
   },
 }
 
@@ -52,6 +53,29 @@ export const WithTriggerAndAutoVanishing = () => {
     >
       Save Changes
     </Button>
+  )
+}
+
+export const WithClearButton = () => {
+  const toasts = useToasts()
+
+  return (
+    <div className="flex space-x-4">
+      <Button
+        onPress={() =>
+          toasts.add({
+            title: `Changes saved ${toasts.toasts.length + 1}`,
+            variant: "positive",
+            sticky: true,
+          })
+        }
+      >
+        Save Changes
+      </Button>
+      <Button variant="negative" onPress={() => toasts.removeAll()}>
+        Remove all Toasts
+      </Button>
+    </div>
   )
 }
 
