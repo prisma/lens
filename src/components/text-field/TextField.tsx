@@ -1,13 +1,13 @@
-import React, { useRef, forwardRef } from "react"
+import React, { useRef, forwardRef, useState } from "react"
 import cn from "classnames"
 import { useTextField } from "@react-aria/textfield"
-import { useFocusWithin, useHover } from "@react-aria/interactions"
+import { useFocus, useFocusWithin, useHover } from "@react-aria/interactions"
 import { Label } from "../label/Label"
 import { FocusRing } from "../focus-ring/FocusRing"
 import { Icon } from "../icon/Icon"
 import { Tooltip } from "../tooltip/Tooltip"
 import { useFocusable } from "@react-aria/focus"
-import { mergeProps } from "@react-aria/utils"
+import { chain, mergeProps } from "@react-aria/utils"
 
 export type TextFieldProps = {
   /** A React ref to attach to the rendered Button */
@@ -18,8 +18,8 @@ export type TextFieldProps = {
   autoFocus?: boolean
   /** Initial value to populate the TextField with */
   defaultValue?: string
-  /** An optional error to show below the TextField */
-  error?: string
+  /** An optional error to show next to the TextField */
+  errorText?: string
   /** Hints at the type of data that might be entered into this TextField */
   inputMode?: "text" | "email" | "tel" | "url" | "numeric" | "decimal"
   /** Controls if this TextField is disabled */
@@ -38,6 +38,8 @@ export type TextFieldProps = {
   prefix?: string
   /** The type of input to render */
   type?: "text" | "email" | "tel" | "url" | "numeric" | "decimal"
+  /** An custom function that runs for every change to validate the value. Return `undefined` if the value is valid, and a string describing the error otherwise */
+  validator?: (v: string) => string | undefined
   /** The value of the TextField */
   value?: string
 }
@@ -48,7 +50,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       id,
       autoFocus = false,
       defaultValue,
-      error,
+      errorText,
       inputMode,
       isDisabled = false,
       isReadOnly = false,
@@ -58,12 +60,26 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       placeholder,
       prefix,
       type = "text",
+      validator,
       value,
     }: TextFieldProps,
     forwardedRef
   ) => {
     const _inputRef = useRef<HTMLInputElement>(null)
     const inputRef = forwardedRef || _inputRef
+
+    const [isValidationEnabled, setIsValidationEnabled] = useState(false)
+    const { focusProps } = useFocus({
+      onFocus: () => {
+        // Validation is disabled until the user touches / focuses the field at least once
+        setIsValidationEnabled(true)
+        setInvalidText(validator?.(value || "") || errorText)
+      },
+    })
+
+    const [invalidText, setInvalidText] = useState<string | undefined>(
+      errorText || undefined
+    ) // If there's no validator, then the presence of `errorText` controls `invalid`
     const { labelProps, inputProps } = useTextField(
       {
         id,
@@ -74,11 +90,15 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         isReadOnly,
         label,
         name,
-        onChange,
+        onChange: chain(onChange, (v: string) => {
+          isValidationEnabled
+            ? setInvalidText(validator?.(v) || errorText)
+            : setInvalidText(undefined)
+        }),
         placeholder,
         type,
         value,
-        validationState: error ? "invalid" : undefined,
+        validationState: !!invalidText ? "invalid" : undefined,
       },
       inputRef as React.RefObject<HTMLInputElement>
     )
@@ -86,8 +106,6 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     const { focusWithinProps } = useFocusWithin({
       isDisabled,
     })
-
-    const isInvalid = !!inputProps["aria-invalid"]
 
     return (
       <div className={cn("table-row w-full")}>
@@ -106,7 +124,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
                   "bg-gray-100 dark:bg-gray-800": isDisabled,
                   "bg-white dark:bg-gray-900": !isDisabled,
                   "cursor-not-allowed": isDisabled,
-                  "border-2 border-red-500 dark:border-red-500": isInvalid,
+                  "border-2 border-red-500 dark:border-red-500": !!invalidText,
                 }
               )}
             >
@@ -125,14 +143,17 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
               <input
                 ref={inputRef}
                 lens-role="text-field"
-                {...(inputProps as React.InputHTMLAttributes<HTMLInputElement>)}
+                {...(mergeProps(
+                  focusProps,
+                  inputProps
+                ) as React.InputHTMLAttributes<HTMLInputElement>)}
                 className={cn("flex-grow input", "px-3 py-1.5", {
                   disabled: isDisabled,
                 })}
                 required
               />
 
-              <ErrorIcon text={error} visible={isInvalid} />
+              <ErrorIcon text={invalidText} />
             </div>
           </section>
         </FocusRing>
@@ -142,21 +163,16 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 )
 
 type ErrorIconProps = {
-  /** Controls if the error icon should show */
-  visible: boolean
   /** The error text */
   text?: string
 }
 
-function ErrorIcon({
-  text = "This field is invalid",
-  visible,
-}: ErrorIconProps) {
+function ErrorIcon({ text }: ErrorIconProps) {
   const ref = useRef<HTMLDivElement>(null)
   const { focusableProps } = useFocusable({ excludeFromTabOrder: false }, ref)
   const { hoverProps, isHovered } = useHover({})
 
-  if (!visible) {
+  if (!text) {
     return null
   }
 
