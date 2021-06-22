@@ -168,7 +168,7 @@ function ErrorIcon({
         {...mergeProps(focusableProps, hoverProps)}
       >
         <Icon
-          name="alert-circle"
+          name="x-circle"
           className="text-red-500 dark:text-red-500"
           size="sm"
         />
