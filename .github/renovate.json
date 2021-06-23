@@ -1,6 +1,5 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "schedule": ["before 3am on the first day of the month"],
   "semanticCommits": "enabled",
   "dependencyDashboard": true,
   "rebaseWhen": "conflicted",
@@ -10,7 +9,8 @@
       "matchPackagePatterns": ["*"],
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "all non-major dependencies",
-      "groupSlug": "all-minor-patch"
+      "groupSlug": "all-minor-patch",
+      "schedule": ["before 3am on the first day of the month"]
     }
   ]
 }
