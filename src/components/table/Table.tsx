@@ -16,6 +16,13 @@ import {
   Column as ReactAriaTableColumn,
   Cell as ReactAriaTableCell,
 } from "@react-stately/table"
+import {
+  TableHeaderProps as ReactAriaTableHeaderProps,
+  TableBodyProps as ReactAriaTableBodyProps,
+  RowProps as ReactAriaTableRowProps,
+  ColumnProps as ReactAriaTableColumnProps,
+  CellProps as ReactAriaTableCellProps,
+} from "@react-types/table"
 
 // @ts-expect-error: We cannot provide a valid initial value, but TSC does not understand that it is okay
 const TableContext = createContext<TableState<TableValue>>(null)
@@ -62,7 +69,7 @@ function TableContainer({ id, label, children }: TableContainerProps) {
     selectionMode: "none",
     children,
   })
-  const { gridProps } = useTable({ ref, id, "aria-label": label }, state)
+  const { gridProps } = useTable({ id, "aria-label": label }, state, ref)
 
   return (
     <TableContext.Provider value={state}>
@@ -107,7 +114,7 @@ type TableHeaderRowProps = {
 function TableHeaderRow({ row }: TableHeaderRowProps) {
   const state = useContext(TableContext)
   const ref = useRef<HTMLTableRowElement>(null)
-  const { rowProps } = useTableRow({ node: row, ref }, state)
+  const { rowProps } = useTableRow({ node: row }, state, ref)
 
   return (
     <tr
@@ -130,8 +137,9 @@ function TableColumnHeader({ column }: TableColumnHeaderProps) {
   const state = useContext(TableContext)
   const ref = useRef<HTMLTableHeaderCellElement>(null)
   const { columnHeaderProps } = useTableColumnHeader(
-    { node: column, ref },
-    state
+    { node: column },
+    state,
+    ref
   )
 
   return (
@@ -167,7 +175,7 @@ type TableRowProps = {
 function TableRow({ row }: TableRowProps) {
   const ref = useRef<HTMLTableRowElement>(null)
   const state = useContext(TableContext)
-  const { rowProps } = useTableRow({ node: row, ref }, state)
+  const { rowProps } = useTableRow({ node: row }, state, ref)
 
   return (
     <tr
@@ -192,7 +200,7 @@ type TableCellProps = {
 function TableCell({ cell }: TableCellProps) {
   const ref = useRef<HTMLTableDataCellElement>(null)
   const state = useContext(TableContext)
-  const { gridCellProps } = useTableCell({ node: cell, ref }, state)
+  const { gridCellProps } = useTableCell({ node: cell }, state, ref)
 
   return (
     <td
@@ -211,9 +219,13 @@ function TableCell({ cell }: TableCellProps) {
 
 export const Table = {
   Container: TableContainer,
-  Header: ReactAriaTableHeader,
-  Body: ReactAriaTableBody,
-  Row: ReactAriaTableRow,
-  Column: ReactAriaTableColumn,
-  Cell: ReactAriaTableCell,
+  Header: ReactAriaTableHeader as React.FC<
+    ReactAriaTableHeaderProps<TableValue>
+  >,
+  Body: ReactAriaTableBody as React.FC<ReactAriaTableBodyProps<TableValue>>,
+  Row: ReactAriaTableRow as React.FC<ReactAriaTableRowProps>,
+  Column: ReactAriaTableColumn as React.FC<
+    ReactAriaTableColumnProps<TableValue>
+  >,
+  Cell: ReactAriaTableCell as React.FC<ReactAriaTableCellProps>,
 }

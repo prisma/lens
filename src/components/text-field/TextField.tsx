@@ -18,7 +18,7 @@ export type TextFieldProps = {
   autoFocus?: boolean
   /** Initial value to populate the TextField with */
   defaultValue?: string
-  /** An optional error to show next to the TextField */
+  /** An optional error to show next to the TextField. If a `validator` is also supplied, the `validator` takes precendence */
   errorText?: string
   /** Hints at the type of data that might be entered into this TextField */
   inputMode?: "text" | "email" | "tel" | "url" | "numeric" | "decimal"
@@ -68,18 +68,18 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     const _inputRef = useRef<HTMLInputElement>(null)
     const inputRef = forwardedRef || _inputRef
 
-    const [isValidationEnabled, setIsValidationEnabled] = useState(false)
+    const [isValidatorEnabled, setisValidatorEnabled] = useState(false)
+    const [invalidText, setInvalidText] = useState<string | undefined>()
     const { focusProps } = useFocus({
       onBlur: () => {
         // Validation is disabled until the user touches / focuses the field at least once
-        setIsValidationEnabled(true)
-        setInvalidText(validator?.(value || "") || errorText)
+        setisValidatorEnabled(true)
+        setInvalidText(validator?.(value || ""))
       },
     })
 
-    const [invalidText, setInvalidText] = useState<string | undefined>(
-      errorText || undefined
-    ) // If there's no validator, then the presence of `errorText` controls `invalid`
+    const hasError = invalidText || errorText
+
     const { labelProps, inputProps } = useTextField(
       {
         id,
@@ -91,14 +91,14 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         label,
         name,
         onChange: chain(onChange, (v: string) => {
-          isValidationEnabled
-            ? setInvalidText(validator?.(v) || errorText)
+          isValidatorEnabled
+            ? setInvalidText(validator?.(v))
             : setInvalidText(undefined)
         }),
         placeholder,
         type,
         value,
-        validationState: !!invalidText ? "invalid" : undefined,
+        validationState: hasError ? "invalid" : undefined,
       },
       inputRef as React.RefObject<HTMLInputElement>
     )
@@ -124,7 +124,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
                   "bg-gray-100 dark:bg-gray-800": isDisabled,
                   "bg-white dark:bg-gray-900": !isDisabled,
                   "cursor-not-allowed": isDisabled,
-                  "border-2 border-red-500 dark:border-red-500": !!invalidText,
+                  "border-2 border-red-500 dark:border-red-500": hasError,
                 }
               )}
             >
@@ -153,7 +153,8 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
                 required
               />
 
-              <ErrorIcon text={invalidText} />
+              {/* We want to make it so that if an `errorText` is supplied, it will always show up, even if `isValidatorEnabled` is false */}
+              <ErrorIcon text={invalidText || errorText} />
             </div>
           </section>
         </FocusRing>
