@@ -44,15 +44,14 @@ export const WithPlaceholder = () => {
 }
 
 export const WithPrefix = () => {
-  const [value, setValue] = useState("")
+  const [value, setValue] = useState("lens")
 
   return (
     <TextField
       type="text"
       label="Handle"
       value={value}
-      prefix="cloud.prisma.io/spacex/"
-      defaultValue="falcon-9"
+      prefix="cloud.prisma.io/prisma/"
       onChange={chain(action("onChange"), setValue)}
     />
   )

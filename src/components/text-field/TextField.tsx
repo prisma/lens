@@ -14,8 +14,6 @@ export type TextFieldProps = {
   id?: string
   /** Controls if this TextField should steal focus when mounted */
   autoFocus?: boolean
-  /** Initial value to populate the TextField with */
-  defaultValue?: string
   /** An optional error to show next to the TextField. If a `validator` is also supplied, the `validator` takes precendence */
   errorText?: string
   /** Hints at the type of data that might be entered into this TextField */
@@ -47,7 +45,6 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     {
       id,
       autoFocus = false,
-      defaultValue,
       errorText: _errorText,
       inputMode,
       isDisabled = false,
@@ -82,7 +79,6 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       {
         id,
         autoFocus,
-        defaultValue,
         inputMode,
         isDisabled,
         isReadOnly,
