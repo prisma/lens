@@ -1,3 +1,4 @@
+import { chain } from "@react-aria/utils"
 import { action } from "@storybook/addon-actions"
 import { useState } from "react"
 import { Separator } from "../separator/Separator"
@@ -14,8 +15,8 @@ export default {
   },
 }
 
-export const WithValue = () => {
-  const [value, setValue] = useState("")
+export const WithInitialValue = () => {
+  const [value, setValue] = useState("production")
 
   return (
     <TextField
@@ -23,72 +24,91 @@ export const WithValue = () => {
       label="Environment"
       placeholder="production"
       value={value}
-      onChange={(value) => {
-        setValue(value)
-        action("onChange")(value)
-      }}
+      onChange={chain(action("onChange"), setValue)}
     />
   )
 }
 
-export const WithPlaceholder = () => (
-  <TextField
-    type="text"
-    label="Environment"
-    placeholder="production"
-    onChange={action("onChange")}
-  />
-)
+export const WithPlaceholder = () => {
+  const [value, setValue] = useState("")
 
-export const WithPrefix = () => (
-  <TextField
-    type="text"
-    label="Handle"
-    prefix="cloud.prisma.io/spacex/"
-    defaultValue="falcon-9"
-    onChange={action("onChange")}
-  />
-)
+  return (
+    <TextField
+      type="text"
+      label="Environment"
+      value={value}
+      placeholder="production"
+      onChange={chain(action("onChange"), setValue)}
+    />
+  )
+}
 
-export const WithError = () => (
-  <TextField
-    type="text"
-    label="Handle"
-    errorText="This username is already taken"
-    onChange={action("onChange")}
-  />
-)
+export const WithPrefix = () => {
+  const [value, setValue] = useState("")
 
-export const WithValidator = () => (
-  <section className="flex flex-col">
-    <div className="text-sm mb-4">
-      The following input will accept all handles except `prisma`, `lens` &
-      `world-domination`
-    </div>
+  return (
     <TextField
       type="text"
       label="Handle"
-      validator={(v) =>
-        ["prisma", "lens", "world-domination"].includes(v)
-          ? "This is a reserved keyword"
-          : undefined
-      }
-      onChange={action("onChange")}
+      value={value}
+      prefix="cloud.prisma.io/spacex/"
+      defaultValue="falcon-9"
+      onChange={chain(action("onChange"), setValue)}
     />
+  )
+}
 
-    <div className="mb-4" />
-    <Separator />
-    <div className="mb-4" />
+export const WithError = () => {
+  const [value, setValue] = useState("")
 
-    <div className="text-sm mb-4">
-      The following input is required. It will only start validation once the
-      user has "touched" it at least once.
-    </div>
+  return (
     <TextField
       type="text"
       label="Handle"
-      validator={(v) => (v ? undefined : "This field is required")}
-      onChange={action("onChange")}
+      value={value}
+      errorText="This username is already taken"
+      onChange={chain(action("onChange"), setValue)}
     />
-  </section>
-)
+  )
+}
+
+export const WithValidator = () => {
+  const [value1, setValue1] = useState("")
+  const [value2, setValue2] = useState("")
+
+  return (
+    <section className="flex flex-col">
+      <div className="text-sm mb-4">
+        The following input will accept all handles except `prisma`, `lens` &
+        `world-domination`
+      </div>
+      <TextField
+        type="text"
+        label="Handle"
+        value={value1}
+        validator={(v) =>
+          ["prisma", "lens", "world-domination"].includes(v)
+            ? "This is a reserved keyword"
+            : undefined
+        }
+        onChange={chain(action("onChange"), setValue1)}
+      />
+
+      <div className="mb-4" />
+      <Separator />
+      <div className="mb-4" />
+
+      <div className="text-sm mb-4" tabIndex={1}>
+        The following input is required. It will only start validation once the
+        user has "touched" it at least once.
+      </div>
+      <TextField
+        type="text"
+        label="Handle"
+        value={value2}
+        validator={(v) => (v ? undefined : "You must provide a handle")}
+        onChange={chain(action("onChange"), setValue2)}
+      />
+    </section>
+  )
+}

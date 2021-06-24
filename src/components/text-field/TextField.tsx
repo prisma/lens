@@ -1,12 +1,10 @@
 import React, { useRef, forwardRef, useState } from "react"
 import cn from "classnames"
 import { useTextField } from "@react-aria/textfield"
-import { useFocus, useFocusWithin, useHover } from "@react-aria/interactions"
+import { useFocus, useFocusWithin } from "@react-aria/interactions"
 import { Label } from "../label/Label"
 import { FocusRing } from "../focus-ring/FocusRing"
 import { Icon } from "../icon/Icon"
-import { Tooltip } from "../tooltip/Tooltip"
-import { useFocusable } from "@react-aria/focus"
 import { chain, mergeProps } from "@react-aria/utils"
 
 export type TextFieldProps = {
@@ -41,7 +39,7 @@ export type TextFieldProps = {
   /** An custom function that runs for every change to validate the value. Return `undefined` if the value is valid, and a string describing the error otherwise */
   validator?: (v: string) => string | undefined
   /** The value of the TextField */
-  value?: string
+  value: string
 }
 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
@@ -50,7 +48,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       id,
       autoFocus = false,
       defaultValue,
-      errorText,
+      errorText: _errorText,
       inputMode,
       isDisabled = false,
       isReadOnly = false,
@@ -68,17 +66,17 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     const _inputRef = useRef<HTMLInputElement>(null)
     const inputRef = forwardedRef || _inputRef
 
-    const [isValidatorEnabled, setisValidatorEnabled] = useState(false)
     const [invalidText, setInvalidText] = useState<string | undefined>()
     const { focusProps } = useFocus({
       onBlur: () => {
         // Validation is disabled until the user touches / focuses the field at least once
-        setisValidatorEnabled(true)
         setInvalidText(validator?.(value || ""))
       },
     })
 
-    const hasError = invalidText || errorText
+    // We want to make it so that if an `errorText` is supplied, it will always show up, even if `isValidatorEnabled` is false
+    const errorText = invalidText || _errorText
+    // console.log({ isValidatorEnabled, errorText, invalidText })
 
     const { labelProps, inputProps } = useTextField(
       {
@@ -91,14 +89,12 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         label,
         name,
         onChange: chain(onChange, (v: string) => {
-          isValidatorEnabled
-            ? setInvalidText(validator?.(v))
-            : setInvalidText(undefined)
+          setInvalidText(validator?.(v) || undefined)
         }),
         placeholder,
         type,
         value,
-        validationState: hasError ? "invalid" : undefined,
+        validationState: !!errorText ? "invalid" : undefined,
       },
       inputRef as React.RefObject<HTMLInputElement>
     )
@@ -110,21 +106,20 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     return (
       <div className={cn("table-row w-full")}>
         {label && <Label labelProps={labelProps}>{label}</Label>}
-        <FocusRing autoFocus={autoFocus} within>
-          <section className="table-cell w-full">
+        <section className="table-cell w-full">
+          <FocusRing autoFocus={autoFocus} within>
             <div
               {...focusWithinProps}
               className={cn(
-                "flex flex-grow",
+                "flex flex-grow items-center",
                 "rounded-md shadow-sm border border-gray-300 dark:border-gray-700",
                 "text-sm",
                 "overflow-hidden",
                 {
-                  "pr-1.5": prefix,
                   "bg-gray-100 dark:bg-gray-800": isDisabled,
                   "bg-white dark:bg-gray-900": !isDisabled,
                   "cursor-not-allowed": isDisabled,
-                  "border-2 border-red-500 dark:border-red-500": hasError,
+                  "border-2 border-red-500 dark:border-red-500": !!errorText,
                 }
               )}
             >
@@ -153,48 +148,42 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
                 required
               />
 
-              {/* We want to make it so that if an `errorText` is supplied, it will always show up, even if `isValidatorEnabled` is false */}
-              <ErrorIcon text={invalidText || errorText} />
+              {!!errorText && (
+                <Icon
+                  name="alert-circle"
+                  className={cn("m-2", "text-red-500 dark:text-red-500")}
+                  size="sm"
+                />
+              )}
             </div>
-          </section>
-        </FocusRing>
+          </FocusRing>
+
+          <ErrorText text={errorText} />
+        </section>
       </div>
     )
   }
 )
 
-type ErrorIconProps = {
+type ErrorTextProps = {
   /** The error text */
   text?: string
 }
 
-function ErrorIcon({ text }: ErrorIconProps) {
-  const ref = useRef<HTMLDivElement>(null)
-  const { focusableProps } = useFocusable({ excludeFromTabOrder: false }, ref)
-  const { hoverProps, isHovered } = useHover({})
-
+function ErrorText({ text }: ErrorTextProps) {
   if (!text) {
     return null
   }
 
   return (
-    <>
-      <div
-        ref={ref as any}
-        className="p-2"
-        {...mergeProps(focusableProps, hoverProps)}
-      >
-        <Icon
-          name="x-circle"
-          className="text-red-500 dark:text-red-500"
-          size="sm"
-        />
-      </div>
-      {isHovered && (
-        <Tooltip target={ref} position="top">
-          {text}
-        </Tooltip>
+    <div
+      className={cn(
+        "mt-2",
+        "text-sm text-red-500 dark:text-red-500",
+        "animate-slide-top"
       )}
-    </>
+    >
+      {text}
+    </div>
   )
 }
