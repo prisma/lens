@@ -17,7 +17,7 @@ export function Label({ id, children, labelProps }: LabelProps) {
       id={id}
       lens-role="label"
       className={cn(
-        "table-cell align-middle pr-8",
+        "table-cell pr-8",
         "whitespace-nowrap text-sm font-semibold text-gray-800 dark:text-gray-100"
       )}
     >

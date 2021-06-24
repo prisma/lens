@@ -5,6 +5,8 @@ import { Avatar } from "../avatar/Avatar"
 import { Button } from "../button/Button"
 import { Dialog } from "../dialog/Dialog"
 import { TextField } from "../text-field/TextField"
+import { useState } from "react"
+import { chain } from "@react-aria/utils"
 
 const dynamicColumns = [
   { key: "user", title: "User" },
@@ -218,53 +220,61 @@ export const WithStaticData = () => (
   </Card>
 )
 
-export const WithDynamicData = () => (
-  <Card className="px-0 py-0">
-    <Table.Container label="With dynamic data">
-      <Table.Header columns={dynamicColumns}>
-        {(column) => <Table.Column>{column.key}</Table.Column>}
-      </Table.Header>
-      <Table.Body items={dynamicData}>
-        {(user) => (
-          <Table.Row key={user.id}>
-            <Table.Cell>
-              <Avatar
-                url={user.isInvitationPending ? undefined : user.avatar}
-                label={user.isInvitationPending ? "Invited User" : user.name}
-                name={user.isInvitationPending ? "Invited User" : user.name}
-                email={user.email}
+export const WithDynamicData = () => {
+  const [username, setUsername] = useState("")
+
+  return (
+    <Card className="px-0 py-0">
+      <Table.Container label="With dynamic data">
+        <Table.Header columns={dynamicColumns}>
+          {(column) => <Table.Column>{column.key}</Table.Column>}
+        </Table.Header>
+        <Table.Body items={dynamicData}>
+          {(user) => (
+            <Table.Row key={user.id}>
+              <Table.Cell>
+                <Avatar
+                  url={user.isInvitationPending ? undefined : user.avatar}
+                  label={user.isInvitationPending ? "Invited User" : user.name}
+                  name={user.isInvitationPending ? "Invited User" : user.name}
+                  email={user.email}
+                />
+              </Table.Cell>
+              <Table.Cell>
+                {user.isInvitationPending ? "Guest" : user.role}
+              </Table.Cell>
+              <Table.Cell>
+                <Button variant="link" onPress={action("onPress")}>
+                  Edit
+                </Button>
+              </Table.Cell>
+            </Table.Row>
+          )}
+        </Table.Body>
+      </Table.Container>
+
+      <div className="px-6 py-4 border-t">
+        <Dialog.Container
+          title="Invite a user"
+          subtitle="This user must already have an account on the Prisma Data Platform"
+          icon="user-plus"
+          shouldCloseOnBlur={false}
+        >
+          <Button variant="secondary" onPress={action("onPress")}>
+            Invite a new member
+          </Button>
+
+          {(close) => (
+            <Dialog.Body>
+              <TextField
+                label="Username"
+                value={username}
+                onChange={chain(action("onChange"), setUsername)}
               />
-            </Table.Cell>
-            <Table.Cell>
-              {user.isInvitationPending ? "Guest" : user.role}
-            </Table.Cell>
-            <Table.Cell>
-              <Button variant="link" onPress={action("onPress")}>
-                Edit
-              </Button>
-            </Table.Cell>
-          </Table.Row>
-        )}
-      </Table.Body>
-    </Table.Container>
-
-    <div className="px-6 py-4 border-t">
-      <Dialog.Container
-        title="Invite a user"
-        subtitle="This user must already have an account on the Prisma Data Platform"
-        icon="user-plus"
-        shouldCloseOnBlur={false}
-      >
-        <Button variant="secondary" onPress={action("onPress")}>
-          Invite a new member
-        </Button>
-
-        {(close) => (
-          <Dialog.Body>
-            <TextField />
-          </Dialog.Body>
-        )}
-      </Dialog.Container>
-    </div>
-  </Card>
-)
+            </Dialog.Body>
+          )}
+        </Dialog.Container>
+      </div>
+    </Card>
+  )
+}

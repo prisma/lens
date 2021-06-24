@@ -39,6 +39,7 @@ export function Card({
         "px-6 py-4 w-full",
         "rounded-lg shadow-md overflow-hidden",
         "bg-white dark:bg-gray-800",
+        "transition-all",
         className
       )}
       style={{ width, height }}
