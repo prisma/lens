@@ -2,12 +2,15 @@ import React from "react"
 import cn from "classnames"
 import { Icon } from "../icon/Icon"
 import { Button } from "../button/Button"
+import { Link, LinkProps } from "../link/Link"
 
 export type ToastProps = {
   /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
   id?: string
   /** The text to display inside the Toast */
   title: string
+  /** */
+  link?: LinkProps
   /** Controls what kind of emotion this Toast represents */
   variant?: "positive" | "negative" | "neutral"
   /** Controls if this Toast does not vanish automatically */
@@ -16,7 +19,13 @@ export type ToastProps = {
   onClose?: () => void
 }
 
-export function Toast({ id, title, variant = "neutral", onClose }: ToastProps) {
+export function Toast({
+  id,
+  title,
+  link,
+  variant = "neutral",
+  onClose,
+}: ToastProps) {
   return (
     <div
       lens-role={`toast-${variant}`}
@@ -65,6 +74,7 @@ export function Toast({ id, title, variant = "neutral", onClose }: ToastProps) {
           )}
         >
           {title}
+          {link && <Link {...link}>{link.children}</Link>}
         </div>
       </section>
 
