@@ -39,6 +39,15 @@ export const Neutral = () => (
   />
 )
 
+export const WithLink = () => (
+  <Toast
+    variant="negative"
+    title="Unable to create repository, you might need to"
+    link={{ href: "https://prisma.io", children: "configure the Github App" }}
+    onClose={action("onClose")}
+  />
+)
+
 export const WithTriggerAndAutoVanishing = () => {
   const toasts = useToasts()
 
@@ -56,7 +65,7 @@ export const WithTriggerAndAutoVanishing = () => {
   )
 }
 
-export const WithClearButton = () => {
+export const WithDismissAllButton = () => {
   const toasts = useToasts()
 
   return (
@@ -73,7 +82,7 @@ export const WithClearButton = () => {
         Save Changes
       </Button>
       <Button variant="negative" onPress={() => toasts.removeAll()}>
-        Remove all Toasts
+        Dismiss all Toasts
       </Button>
     </div>
   )
