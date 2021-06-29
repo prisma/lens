@@ -9,8 +9,8 @@ export type ToastProps = {
   id?: string
   /** The text to display inside the Toast */
   title: string
-  /** */
-  link?: LinkProps & { children?: string; text?: string }
+  /** An optional (actionable) link to show at the end of the toast title */
+  link?: Omit<LinkProps, "children"> & { text: string }
   /** Controls what kind of emotion this Toast represents */
   variant?: "positive" | "negative" | "neutral"
   /** Controls if this Toast does not vanish automatically */
@@ -74,7 +74,7 @@ export function Toast({
           )}
         >
           {title}
-          {link && <Link {...link}>{link.text || link.children}</Link>}
+          {link && <Link {...link}>{link.text}</Link>}
         </div>
       </section>
 
