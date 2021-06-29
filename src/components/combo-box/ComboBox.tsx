@@ -50,16 +50,18 @@ export type ComboBoxContainerProps<OptionKey extends string> = {
   isDisabled?: boolean
   /** Controls is this ComboBox is readonly */
   isReadOnly?: boolean
+  /** A string describing what this ComboBox represents */
+  label: string
   /** A (dynamic) list of options to render within this ComboBox.
    * This may be provided upfront instead of providing static children.
    */
   options?: ComboBoxOption<OptionKey>[] | Promise<ComboBoxOption<OptionKey>[]>
-  /** A string describing what this ComboBox represents */
-  label: string
   /** Name of the value held by this ComboBox when placed inside a form */
   name?: string
   /** A value to display in the TextField when it is empty */
   placeholder?: string
+  /** The current selection */
+  selectedKey?: OptionKey
   /** Callback invoked when the ComboBox's selection changes */
   onSelectionChange?: (key: OptionKey) => void
 }
@@ -81,6 +83,7 @@ function ComboBoxContainer<OptionKey extends string>({
   label,
   name,
   placeholder = "Select an option",
+  selectedKey,
   onSelectionChange,
 }: ComboBoxContainerProps<OptionKey>) {
   const { body, footer } = useCollectionComponents({
@@ -105,6 +108,7 @@ function ComboBoxContainer<OptionKey extends string>({
     defaultFilter: contains,
     placeholder,
     shouldFlip: true,
+    selectedKey,
     onSelectionChange: onSelectionChange as (k: React.Key) => void,
   })
 
@@ -132,6 +136,7 @@ function ComboBoxContainer<OptionKey extends string>({
       defaultItems: options,
       placeholder,
       shouldFlip: true,
+      selectedKey,
       label,
       onSelectionChange: onSelectionChange as (k: React.Key) => void,
       inputRef,
