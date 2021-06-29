@@ -2,7 +2,6 @@ import { action } from "@storybook/addon-actions"
 import { Toast } from "./Toast"
 import { useToasts } from "./useToasts"
 import { Button } from "../button/Button"
-import { ButtonGroup } from "../button-group/ButtonGroup"
 
 export const Default = (props) => <Toast {...props} />
 Default.storyName = "[Controlled]"
@@ -43,7 +42,11 @@ export const WithLink = () => (
   <Toast
     variant="negative"
     title="Unable to create repository, you might need to"
-    link={{ href: "https://prisma.io", children: "configure the Github App" }}
+    link={{
+      href: "https://prisma.io",
+      text: "configure the Github App",
+      openInNewTab: true,
+    }}
     onClose={action("onClose")}
   />
 )
