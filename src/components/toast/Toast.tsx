@@ -10,7 +10,7 @@ export type ToastProps = {
   /** The text to display inside the Toast */
   title: string
   /** */
-  link?: LinkProps & { text?: string }
+  link?: LinkProps & { children?: string; text?: string }
   /** Controls what kind of emotion this Toast represents */
   variant?: "positive" | "negative" | "neutral"
   /** Controls if this Toast does not vanish automatically */
