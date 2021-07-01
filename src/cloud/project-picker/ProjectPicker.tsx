@@ -93,7 +93,7 @@ export function ProjectPicker({
         id={id}
         ref={buttonRef}
         {...buttonProps}
-        className="flex space-x-2 cursor-pointer"
+        className="flex space-x-2 cursor-pointer appearance-none"
       >
         <Icon
           name="prisma"
