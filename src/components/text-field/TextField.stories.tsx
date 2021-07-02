@@ -79,7 +79,7 @@ export const WithHelper = () => {
       type="text"
       label="Handle"
       value={value}
-      helperText="This should be something you can easily remember"
+      hint="This should be something you can easily remember"
       onChange={chain(action("onChange"), setValue)}
     />
   )
@@ -94,7 +94,7 @@ export const WithHelperAndError = () => {
       label="Handle"
       value={value}
       errorText="This username is already taken"
-      helperText="This should be something you can easily remember"
+      hint="This should be something you can easily remember"
       onChange={chain(action("onChange"), setValue)}
     />
   )

@@ -14,8 +14,8 @@ export type TextFieldProps = {
   id?: string
   /** Controls if this TextField should steal focus when mounted */
   autoFocus?: boolean
-  /** An optional helper message to show next to the TextField */
-  helperText?: string
+  /** An optional hint to show next to the TextField */
+  hint?: string
   /** An optional error to show next to the TextField. If a `validator` is also supplied, the `validator` takes precendence */
   errorText?: string
   /** Hints at the type of data that might be entered into this TextField */
@@ -48,7 +48,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       id,
       autoFocus = false,
       errorText: _errorText,
-      helperText,
+      hint,
       inputMode,
       isDisabled = false,
       isReadOnly = false,
@@ -157,7 +157,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             </div>
           </FocusRing>
 
-          {!errorText && <HelperText text={helperText} />}
+          {!errorText && <Hint text={hint} />}
           <ErrorText text={errorText} />
         </section>
       </div>
@@ -170,7 +170,7 @@ type TextProps = {
   text?: string
 }
 
-function HelperText({ text }: TextProps) {
+function Hint({ text }: TextProps) {
   if (!text) {
     return null
   }
