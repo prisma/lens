@@ -93,7 +93,7 @@ export function StackedAvatar({
       ref={ref}
       id={id}
       {...buttonProps}
-      className={cn("flex items-center", {
+      className={cn("flex items-center appearance-none", {
         "opacity-75": isPressed,
       })}
     >
