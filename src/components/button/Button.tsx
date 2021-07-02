@@ -48,7 +48,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const _ref = useRef<HTMLButtonElement>(null)
     const ref = forwardedRef || _ref
     const { buttonProps, isPressed } = useButton(
-      { id, isDisabled, autoFocus, onPress },
+      { id, isDisabled, children, autoFocus, onPress, type: "submit" },
       ref as React.RefObject<HTMLButtonElement>
     )
     const { hoverProps, isHovered } = useHover({ isDisabled })
