@@ -71,6 +71,35 @@ export const WithError = () => {
   )
 }
 
+export const WithHelper = () => {
+  const [value, setValue] = useState("")
+
+  return (
+    <TextField
+      type="text"
+      label="Handle"
+      value={value}
+      helperText="This should be something you can easily remember"
+      onChange={chain(action("onChange"), setValue)}
+    />
+  )
+}
+
+export const WithHelperAndError = () => {
+  const [value, setValue] = useState("")
+
+  return (
+    <TextField
+      type="text"
+      label="Handle"
+      value={value}
+      errorText="This username is already taken"
+      helperText="This should be something you can easily remember"
+      onChange={chain(action("onChange"), setValue)}
+    />
+  )
+}
+
 export const WithValidator = () => {
   const [value1, setValue1] = useState("")
   const [value2, setValue2] = useState("")
