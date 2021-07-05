@@ -14,7 +14,7 @@ export type TextFieldProps = {
   id?: string
   /** Controls if this TextField should steal focus when mounted */
   autoFocus?: boolean
-  /** An optional hint to show next to the TextField */
+  /** An optional hint to show next to the TextField that describes what this TextField expects */
   hint?: string
   /** An optional error to show next to the TextField. If a `validator` is also supplied, the `validator` takes precendence */
   errorText?: string
@@ -157,33 +157,20 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             </div>
           </FocusRing>
 
-          {!errorText && <Hint text={hint} />}
-          <ErrorText text={errorText} />
+          <Hint text={hint} errorText={errorText} />
         </section>
       </div>
     )
   }
 )
 
-type TextProps = {
-  /** The error text */
+type HintProps = {
   text?: string
+  errorText?: string
 }
 
-function Hint({ text }: TextProps) {
-  if (!text) {
-    return null
-  }
-
-  return (
-    <div className={cn("mt-2", "text-sm text-gray-500 dark:text-gray-500")}>
-      {text}
-    </div>
-  )
-}
-
-function ErrorText({ text }: TextProps) {
-  if (!text) {
+function Hint({ text, errorText }: HintProps) {
+  if (!text && !errorText) {
     return null
   }
 
@@ -191,11 +178,15 @@ function ErrorText({ text }: TextProps) {
     <div
       className={cn(
         "mt-2",
-        "text-sm text-red-500 dark:text-red-500",
+        "text-sm",
+        {
+          "text-red-500 dark:text-red-500": !!errorText,
+          "text-gray-600 dark:text-gray-400": !!text,
+        },
         "animate-slide-top"
       )}
     >
-      {text}
+      {errorText || text}
     </div>
   )
 }

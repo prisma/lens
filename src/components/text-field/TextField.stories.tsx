@@ -71,7 +71,7 @@ export const WithError = () => {
   )
 }
 
-export const WithHelper = () => {
+export const WithHint = () => {
   const [value, setValue] = useState("")
 
   return (
@@ -85,7 +85,7 @@ export const WithHelper = () => {
   )
 }
 
-export const WithHelperAndError = () => {
+export const WithHintAndError = () => {
   const [value, setValue] = useState("")
 
   return (
@@ -93,8 +93,8 @@ export const WithHelperAndError = () => {
       type="text"
       label="Handle"
       value={value}
-      errorText="This username is already taken"
       hint="This should be something you can easily remember"
+      errorText="This username is already taken"
       onChange={chain(action("onChange"), setValue)}
     />
   )
