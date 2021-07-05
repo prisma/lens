@@ -71,6 +71,35 @@ export const WithError = () => {
   )
 }
 
+export const WithHint = () => {
+  const [value, setValue] = useState("")
+
+  return (
+    <TextField
+      type="text"
+      label="Handle"
+      value={value}
+      hint="This should be something you can easily remember"
+      onChange={chain(action("onChange"), setValue)}
+    />
+  )
+}
+
+export const WithHintAndError = () => {
+  const [value, setValue] = useState("")
+
+  return (
+    <TextField
+      type="text"
+      label="Handle"
+      value={value}
+      hint="This should be something you can easily remember"
+      errorText="This username is already taken"
+      onChange={chain(action("onChange"), setValue)}
+    />
+  )
+}
+
 export const WithValidator = () => {
   const [value1, setValue1] = useState("")
   const [value2, setValue2] = useState("")

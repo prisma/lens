@@ -4,6 +4,7 @@
   "dependencyDashboard": true,
   "rebaseWhen": "conflicted",
   "ignoreDeps": ["styled-components", "react", "react-dom"],
+  "schedule": ["every weekend"],
   "packageRules": [
     {
       "matchPackagePatterns": ["*"],

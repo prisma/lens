@@ -5,7 +5,7 @@ import { useFocus, useFocusWithin } from "@react-aria/interactions"
 import { Label } from "../label/Label"
 import { FocusRing } from "../focus-ring/FocusRing"
 import { Icon } from "../icon/Icon"
-import { chain, mergeProps } from "@react-aria/utils"
+import { chain, mergeProps, useId } from "@react-aria/utils"
 
 export type TextFieldProps = {
   /** A React ref to attach to the rendered Button */
@@ -14,6 +14,8 @@ export type TextFieldProps = {
   id?: string
   /** Controls if this TextField should steal focus when mounted */
   autoFocus?: boolean
+  /** An optional hint to show next to the TextField that describes what this TextField expects */
+  hint?: string
   /** An optional error to show next to the TextField. If a `validator` is also supplied, the `validator` takes precendence */
   errorText?: string
   /** Hints at the type of data that might be entered into this TextField */
@@ -46,6 +48,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       id,
       autoFocus = false,
       errorText: _errorText,
+      hint,
       inputMode,
       isDisabled = false,
       isReadOnly = false,
@@ -71,6 +74,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       },
     })
 
+    const hintId = useId()
     // We want to make it so that if an `errorText` is supplied, it will always show up, even if `isValidatorEnabled` is false
     const errorText = invalidText || _errorText
     // console.log({ isValidatorEnabled, errorText, invalidText })
@@ -78,6 +82,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     const { labelProps, inputProps } = useTextField(
       {
         id,
+        "aria-describedby": errorText || hint ? hintId : undefined,
         autoFocus,
         inputMode,
         isDisabled,
@@ -154,32 +159,38 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             </div>
           </FocusRing>
 
-          <ErrorText text={errorText} />
+          <Hint id={hintId} text={hint} errorText={errorText} />
         </section>
       </div>
     )
   }
 )
 
-type ErrorTextProps = {
-  /** The error text */
+type HintProps = {
+  id: string
   text?: string
+  errorText?: string
 }
 
-function ErrorText({ text }: ErrorTextProps) {
-  if (!text) {
+function Hint({ id, text, errorText }: HintProps) {
+  if (!text && !errorText) {
     return null
   }
 
   return (
     <div
+      id={id}
       className={cn(
         "mt-2",
-        "text-sm text-red-500 dark:text-red-500",
+        "text-sm",
+        {
+          "text-red-500 dark:text-red-500": !!errorText,
+          "text-gray-600 dark:text-gray-400": !!text,
+        },
         "animate-slide-top"
       )}
     >
-      {text}
+      {errorText || text}
     </div>
   )
 }
