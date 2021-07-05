@@ -5,7 +5,7 @@ import { useFocus, useFocusWithin } from "@react-aria/interactions"
 import { Label } from "../label/Label"
 import { FocusRing } from "../focus-ring/FocusRing"
 import { Icon } from "../icon/Icon"
-import { chain, mergeProps } from "@react-aria/utils"
+import { chain, mergeProps, useId } from "@react-aria/utils"
 
 export type TextFieldProps = {
   /** A React ref to attach to the rendered Button */
@@ -74,6 +74,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       },
     })
 
+    const hintId = useId()
     // We want to make it so that if an `errorText` is supplied, it will always show up, even if `isValidatorEnabled` is false
     const errorText = invalidText || _errorText
     // console.log({ isValidatorEnabled, errorText, invalidText })
@@ -81,6 +82,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     const { labelProps, inputProps } = useTextField(
       {
         id,
+        "aria-describedby": errorText || hint ? hintId : undefined,
         autoFocus,
         inputMode,
         isDisabled,
@@ -157,7 +159,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             </div>
           </FocusRing>
 
-          <Hint text={hint} errorText={errorText} />
+          <Hint id={hintId} text={hint} errorText={errorText} />
         </section>
       </div>
     )
@@ -165,17 +167,19 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 )
 
 type HintProps = {
+  id: string
   text?: string
   errorText?: string
 }
 
-function Hint({ text, errorText }: HintProps) {
+function Hint({ id, text, errorText }: HintProps) {
   if (!text && !errorText) {
     return null
   }
 
   return (
     <div
+      id={id}
       className={cn(
         "mt-2",
         "text-sm",
