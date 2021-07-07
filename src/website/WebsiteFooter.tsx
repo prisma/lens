@@ -278,7 +278,10 @@ const WebsiteFooter = ({
     <div className="column three">
       <div className="group">
         <h3 className="header">Community</h3>
-        <a className="link" href="/ambassador">
+        <a
+          className="link"
+          href={`${absoluteLinks ? "https://www.prisma.io" : ""}/ambassador`}
+        >
           Prisma Ambassador
         </a>
         <a
@@ -286,6 +289,12 @@ const WebsiteFooter = ({
           href={`${absoluteLinks ? "https://www.prisma.io" : ""}/community`}
         >
           Meet the Community
+        </a>
+        <a
+          className="link"
+          href={`${absoluteLinks ? "https://www.prisma.io" : ""}/day`}
+        >
+          Prisma Day
         </a>
         <a className="link" href="https://slack.prisma.io/">
           Slack
