@@ -62,7 +62,7 @@ export const Default = (props) => {
       />
       <TextField
         label="Handle"
-        prefix="cloud.prisma.io/spacex/"
+        prefix="cloud.prisma.io/lens/"
         value={handle}
         onChange={chain(action("onChangeHandle"), setHandle)}
       />
@@ -107,7 +107,7 @@ export const WithValidation = () => {
         />
         <TextField
           label="Handle"
-          prefix="cloud.prisma.io/spacex/"
+          prefix="cloud.prisma.io/lens/"
           value={handle}
           validator={(v) => (v ? undefined : "This field is required")}
           onChange={chain(action("onChangeHandle"), setHandle)}
