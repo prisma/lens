@@ -118,7 +118,7 @@ function SelectContainer<OptionKey extends string>({
             ref={ref}
             {...buttonProps}
             className={cn(
-              "flex w-full items-center",
+              "inline-flex w-full items-center",
               "rounded-md shadow-sm border border-gray-300 dark:border-gray-700",
               "px-3 py-1.5",
               "text-sm",
