@@ -2,16 +2,28 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "semanticCommits": "enabled",
   "dependencyDashboard": true,
-  "rebaseWhen": "conflicted",
+  "rebaseWhen": "behind-base-branch",
   "ignoreDeps": ["styled-components", "react", "react-dom"],
-  "schedule": ["every weekend"],
+  "schedule": ["before 3am on the first day of the month"],
   "packageRules": [
     {
       "matchPackagePatterns": ["*"],
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "all non-major dependencies",
-      "groupSlug": "all-minor-patch",
-      "schedule": ["before 3am on the first day of the month"]
+      "groupSlug": "all-minor-patch"
+    },
+    {
+      "matchPackagePatterns": ["@storybook/*"],
+      "matchPackageNames": ["chromatic"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "Storybook",
+      "groupSlug": "storybook"
+    },
+    {
+      "matchPackageNames": ["typescript"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "Typescript",
+      "groupSlug": "typescript"
     }
   ]
 }
