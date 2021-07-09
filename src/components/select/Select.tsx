@@ -53,6 +53,8 @@ export type SelectContainerProps<OptionKey extends string> = {
   name?: string
   /** A value to display in the TextField when it is empty */
   placeholder?: string
+  /** The current selection */
+  selectedKey?: OptionKey
   /** Callback invoked when the Select's selection changes */
   onSelectionChange?: (key: OptionKey) => void
 }
@@ -71,6 +73,7 @@ function SelectContainer<OptionKey extends string>({
   label,
   name,
   placeholder = "Select an option",
+  selectedKey,
   onSelectionChange,
 }: SelectContainerProps<OptionKey>) {
   const ref = useRef(null)
@@ -88,6 +91,7 @@ function SelectContainer<OptionKey extends string>({
     isDisabled,
     isReadOnly,
     label,
+    selectedKey,
     onSelectionChange: onSelectionChange as (k: React.Key) => void,
   })
   const { labelProps, menuProps, triggerProps, valueProps } = useSelect(
@@ -101,6 +105,7 @@ function SelectContainer<OptionKey extends string>({
       isReadOnly,
       label,
       placeholder,
+      selectedKey,
       onSelectionChange: onSelectionChange as (k: React.Key) => void,
     },
     state,
