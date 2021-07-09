@@ -31,5 +31,5 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           tags: true
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.PRISMO_PAT }}
           branch: ${{ github.ref }}
