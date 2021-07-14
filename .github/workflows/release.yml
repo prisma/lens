@@ -28,13 +28,10 @@ jobs:
       #   env:
       #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Create empty commit
+        env:
+          PRISMO_PAT: ${{ secret.PRISMO_PAT }}
         run: |
           git config --global user.name "Prismo"
           git config --global user.email "prismabots@gmail.com"
           git commit -m "Trigger release" --allow-empty
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          tags: true
-          github_token: ${{ secrets.PRISMO_PAT }}
-          branch: ${{ github.ref }}
+          git push https://$PRISMO_PAT@github.com/prisma/lens.git
