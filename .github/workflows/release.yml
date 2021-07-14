@@ -19,14 +19,19 @@ jobs:
           scope: "@prisma"
       - name: Install dependencies
         run: npm ci
-      - name: Publish to NPM
+      # - name: Publish to NPM
+      #   run: |
+      #     git config --global user.name "Prismo"
+      #     git config --global user.email "prismabots@gmail.com"
+      #     npm version patch
+      #     npm publish
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Create empty commit
         run: |
           git config --global user.name "Prismo"
           git config --global user.email "prismabots@gmail.com"
-          npm version patch
-          npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          git commit -m "Trigger release" --allow-empty
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
