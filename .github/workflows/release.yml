@@ -28,7 +28,10 @@ jobs:
       #   env:
       #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Create empty commit
-        run: git commit -m "Trigger release" --allow-empty
+        run: |
+          git config --global user.name "Prismo"
+          git config --global user.email "prismabots@gmail.com"
+          git commit -m "Trigger release" --allow-empty
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
