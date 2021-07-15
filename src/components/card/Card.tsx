@@ -36,7 +36,7 @@ export function Card({
       id={id}
       lens-role="card"
       className={cn(
-        "w-full",
+        "px-6 py-4 w-full",
         "rounded-lg shadow-md overflow-hidden",
         "bg-white dark:bg-gray-800",
         "transition-all",
@@ -61,7 +61,7 @@ export function Card({
         </section>
       )}
 
-      <section lens-role="card-body" className="flex flex-col max-h-full">
+      <section lens-role="card-body" className="flex flex-col">
         {children}
       </section>
     </div>
