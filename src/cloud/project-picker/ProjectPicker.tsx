@@ -93,13 +93,9 @@ export function ProjectPicker({
         id={id}
         ref={buttonRef}
         {...buttonProps}
-        // className="flex space-x-2 cursor-pointer appearance-none"
-        className={cn(
-          'flex space-x-2 appearance-none',
-          {
-            'cursor-pointer': children.length > 0,
-          }
-        )}
+        className={cn("flex space-x-2 appearance-none", {
+          "cursor-pointer": children.length > 0,
+        })}
       >
         <Icon
           name="prisma"
