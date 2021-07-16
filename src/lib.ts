@@ -31,6 +31,3 @@ export * from "./components/tooltip/Tooltip"
 
 // Cloud
 export * from "./cloud/project-picker/ProjectPicker"
-
-// Utilities
-export { chain } from "@react-aria/utils"
