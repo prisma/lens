@@ -136,7 +136,7 @@ function SelectContainer<OptionKey extends string>({
                 "text-gray-800 dark:text-gray-100": state.selectedItem,
               })}
             >
-              {state.selectedItem && (
+              {state.selectedItem && state.selectedItem.props.icon && (
                 <Icon name={state.selectedItem.props.icon} size="sm" />
               )}
               <span>

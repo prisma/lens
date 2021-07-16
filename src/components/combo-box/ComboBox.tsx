@@ -160,7 +160,7 @@ function ComboBoxContainer<OptionKey extends string>({
               }
             )}
           >
-            {state.selectedItem && (
+            {state.selectedItem && state.selectedItem.props.icon && (
               <Icon name={state.selectedItem.props.icon} size="sm" />
             )}
             <input
