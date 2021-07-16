@@ -7,7 +7,7 @@ export const Default = (props) => (
   <Select.Container {...props}>
     <Select.Option key="planetscale">PlanetScale</Select.Option>
     <Select.Option key="heroku">Heroku PostgreSQL</Select.Option>
-    <Select.Option key="aws">Amazon Web Services</Select.Option>
+    <Select.Option key="railway">Railway</Select.Option>
   </Select.Container>
 )
 Default.storyName = "[Controlled]"
@@ -28,7 +28,7 @@ export const WithStaticData = () => (
   >
     <Select.Option key="planetscale">PlanetScale</Select.Option>
     <Select.Option key="heroku">Heroku PostgreSQL</Select.Option>
-    <Select.Option key="aws">Amazon Web Services</Select.Option>
+    <Select.Option key="railway">Railway</Select.Option>
   </Select.Container>
 )
 
@@ -56,7 +56,7 @@ export const WithFooter = () => (
   >
     <Select.Option key="planetscale">PlanetScale</Select.Option>
     <Select.Option key="heroku">Heroku PostgreSQL</Select.Option>
-    <Select.Option key="aws">Amazon Web Services</Select.Option>
+    <Select.Option key="railway">Railway</Select.Option>
     <Select.Footer onPress={action("onSelectFooterPress")}>
       Can't find a supported provider?{" "}
       <Link href="" openInNewTab>
@@ -74,7 +74,7 @@ export const WithPlaceholder = () => (
   >
     <Select.Option key="planetscale">PlanetScale</Select.Option>
     <Select.Option key="heroku">Heroku PostgreSQL</Select.Option>
-    <Select.Option key="aws">Amazon Web Services</Select.Option>
+    <Select.Option key="railway">Railway</Select.Option>
   </Select.Container>
 )
 
@@ -86,7 +86,7 @@ export const WithPreSelectedOption = () => (
   >
     <Select.Option key="planetscale">PlanetScale</Select.Option>
     <Select.Option key="heroku">Heroku PostgreSQL</Select.Option>
-    <Select.Option key="aws">Amazon Web Services</Select.Option>
+    <Select.Option key="railway">Railway</Select.Option>
   </Select.Container>
 )
 
@@ -102,8 +102,8 @@ export const WithIconsInOptions = () => (
     <Select.Option key="heroku" icon="heroku">
       Heroku PostgreSQL
     </Select.Option>
-    <Select.Option key="aws" icon="aws">
-      Amazon Web Services
+    <Select.Option key="railway" icon="railway">
+      Railway
     </Select.Option>
   </Select.Container>
 )
@@ -112,6 +112,6 @@ export const Disabled = () => (
   <Select.Container label="Database Provider" isDisabled>
     <Select.Option key="planetscale">PlanetScale</Select.Option>
     <Select.Option key="heroku">Heroku PostgreSQL</Select.Option>
-    <Select.Option key="aws">Amazon Web Services</Select.Option>
+    <Select.Option key="railway">Railway</Select.Option>
   </Select.Container>
 )

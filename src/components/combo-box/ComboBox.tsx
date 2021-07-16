@@ -4,7 +4,10 @@ import { useComboBox } from "@react-aria/combobox"
 import { useComboBoxState } from "@react-stately/combobox"
 import { useFilter } from "@react-aria/i18n"
 import { useButton } from "@react-aria/button"
-import { Item, Section } from "@react-stately/collections"
+import {
+  Item as ReactAriaItem,
+  Section as ReactAriaSection,
+} from "@react-stately/collections"
 import { CollectionChildren, Node } from "@react-types/shared"
 
 import { useAsyncOptions } from "../../hooks/useAsyncOptions"
@@ -145,7 +148,7 @@ function ComboBoxContainer<OptionKey extends string>({
           <div
             ref={containerRef}
             className={cn(
-              "flex items-center w-full relative",
+              "flex items-center w-full relative space-x-2",
               "rounded-md shadow-sm border border-gray-300 dark:border-gray-700",
               "px-3 py-1.5",
               "text-sm",
@@ -157,6 +160,9 @@ function ComboBoxContainer<OptionKey extends string>({
               }
             )}
           >
+            {state.selectedItem && (
+              <Icon name={state.selectedItem.props.icon} size="sm" />
+            )}
             <input
               ref={inputRef}
               type="text"
@@ -198,7 +204,11 @@ function ComboBoxContainer<OptionKey extends string>({
 
 export const ComboBox = {
   Container: ComboBoxContainer,
-  Section,
-  Option: Item,
+  Section: ReactAriaSection,
+  Option: ReactAriaItem as <Key extends string>(props: {
+    key: Key
+    children: string
+    icon?: string
+  }) => JSX.Element,
   Footer: ListBoxFooter,
 }

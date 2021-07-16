@@ -240,7 +240,7 @@ export function ListBoxOption<Key extends string>({
     state,
     ref
   )
-  const optionProps = option.props
+  const optionProps: { icon: string } = option.props
 
   return (
     <li
@@ -257,7 +257,7 @@ export function ListBoxOption<Key extends string>({
         "hover:bg-gray-100"
       )}
     >
-      <Icon name={optionProps.icon} size="sm" />
+      {optionProps.icon && <Icon name={optionProps.icon} size="sm" />}
       <span>{option.rendered}</span>
     </li>
   )
