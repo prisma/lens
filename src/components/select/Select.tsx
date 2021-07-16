@@ -2,7 +2,10 @@ import React, { useRef } from "react"
 import cn from "classnames"
 import { useSelect, HiddenSelect } from "@react-aria/select"
 import { useSelectState } from "@react-stately/select"
-import { Item, Section } from "@react-stately/collections"
+import {
+  Item as ReactAriaItem,
+  Section as ReactAriaSection,
+} from "@react-stately/collections"
 import { CollectionChildren } from "@react-types/shared"
 import { useButton } from "@react-aria/button"
 
@@ -125,16 +128,21 @@ function SelectContainer<OptionKey extends string>({
               }
             )}
           >
-            <span
+            <div
               {...valueProps}
               lens-role="selected-option"
-              className={cn("flex flex-grow", "mr-4", {
+              className={cn("flex flex-grow space-x-2", "mr-4", {
                 "text-gray-400 dark:text-gray-300": !state.selectedItem,
                 "text-gray-800 dark:text-gray-100": state.selectedItem,
               })}
             >
-              {state.selectedItem ? state.selectedItem.rendered : placeholder}
-            </span>
+              {state.selectedItem && state.selectedItem.props.icon && (
+                <Icon name={state.selectedItem.props.icon} size="sm" />
+              )}
+              <span>
+                {state.selectedItem ? state.selectedItem.rendered : placeholder}
+              </span>
+            </div>
             <Icon name="chevron-down" size="xs" />
           </button>
         </FocusRing>
@@ -165,7 +173,11 @@ function SelectContainer<OptionKey extends string>({
 
 export const Select = {
   Container: SelectContainer,
-  Section,
-  Option: Item,
+  Section: ReactAriaSection,
+  Option: ReactAriaItem as <Key extends string>(props: {
+    key: Key
+    children: string
+    icon?: string
+  }) => JSX.Element,
   Footer: ListBoxFooter,
 }

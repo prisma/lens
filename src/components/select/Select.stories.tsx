@@ -1,12 +1,13 @@
 import { action } from "@storybook/addon-actions"
 import { Select } from "./Select"
 import { Link } from "../link/Link"
+import { Icon } from "../icon/Icon"
 
 export const Default = (props) => (
   <Select.Container {...props}>
     <Select.Option key="planetscale">PlanetScale</Select.Option>
-    <Select.Option key="heroku">Heroku</Select.Option>
-    <Select.Option key="aws">Amazon Web Services</Select.Option>
+    <Select.Option key="heroku">Heroku PostgreSQL</Select.Option>
+    <Select.Option key="railway">Railway</Select.Option>
   </Select.Container>
 )
 Default.storyName = "[Controlled]"
@@ -26,8 +27,8 @@ export const WithStaticData = () => (
     onSelectionChange={action("onSelectionChange")}
   >
     <Select.Option key="planetscale">PlanetScale</Select.Option>
-    <Select.Option key="heroku">Heroku</Select.Option>
-    <Select.Option key="aws">Amazon Web Services</Select.Option>
+    <Select.Option key="heroku">Heroku PostgreSQL</Select.Option>
+    <Select.Option key="railway">Railway</Select.Option>
   </Select.Container>
 )
 
@@ -42,7 +43,7 @@ export const WithSectionsAndStaticData = () => (
     </Select.Section>
     <Select.Section title="Paid">
       <Select.Option key="planetscale">PlanetScale</Select.Option>
-      <Select.Option key="heroku">Heroku</Select.Option>
+      <Select.Option key="heroku">Heroku PostgreSQL</Select.Option>
       <Select.Option key="aws">Amazon Web Services</Select.Option>
     </Select.Section>
   </Select.Container>
@@ -54,8 +55,8 @@ export const WithFooter = () => (
     onSelectionChange={action("onSelectionChange")}
   >
     <Select.Option key="planetscale">PlanetScale</Select.Option>
-    <Select.Option key="heroku">Heroku</Select.Option>
-    <Select.Option key="aws">Amazon Web Services</Select.Option>
+    <Select.Option key="heroku">Heroku PostgreSQL</Select.Option>
+    <Select.Option key="railway">Railway</Select.Option>
     <Select.Footer onPress={action("onSelectFooterPress")}>
       Can't find a supported provider?{" "}
       <Link href="" openInNewTab>
@@ -72,8 +73,8 @@ export const WithPlaceholder = () => (
     onSelectionChange={action("onSelectionChange")}
   >
     <Select.Option key="planetscale">PlanetScale</Select.Option>
-    <Select.Option key="heroku">Heroku</Select.Option>
-    <Select.Option key="aws">Amazon Web Services</Select.Option>
+    <Select.Option key="heroku">Heroku PostgreSQL</Select.Option>
+    <Select.Option key="railway">Railway</Select.Option>
   </Select.Container>
 )
 
@@ -84,15 +85,33 @@ export const WithPreSelectedOption = () => (
     onSelectionChange={action("onSelectionChange")}
   >
     <Select.Option key="planetscale">PlanetScale</Select.Option>
-    <Select.Option key="heroku">Heroku</Select.Option>
-    <Select.Option key="aws">Amazon Web Services</Select.Option>
+    <Select.Option key="heroku">Heroku PostgreSQL</Select.Option>
+    <Select.Option key="railway">Railway</Select.Option>
+  </Select.Container>
+)
+
+export const WithIconsInOptions = () => (
+  <Select.Container
+    label="Database Provider"
+    defaultSelectedKey="heroku"
+    onSelectionChange={action("onSelectionChange")}
+  >
+    <Select.Option key="planetscale" icon="planetscale">
+      PlanetScale
+    </Select.Option>
+    <Select.Option key="heroku" icon="heroku">
+      Heroku PostgreSQL
+    </Select.Option>
+    <Select.Option key="railway" icon="railway">
+      Railway
+    </Select.Option>
   </Select.Container>
 )
 
 export const Disabled = () => (
   <Select.Container label="Database Provider" isDisabled>
     <Select.Option key="planetscale">PlanetScale</Select.Option>
-    <Select.Option key="heroku">Heroku</Select.Option>
-    <Select.Option key="aws">Amazon Web Services</Select.Option>
+    <Select.Option key="heroku">Heroku PostgreSQL</Select.Option>
+    <Select.Option key="railway">Railway</Select.Option>
   </Select.Container>
 )

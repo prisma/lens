@@ -30,4 +30,4 @@ jobs:
           git config --global user.email "prismabots@gmail.com"
           npm version patch
           npm publish
-          git push https://$PRISMO_PAT@github.com/prisma/lens.git
+          git push https://$PRISMO_PAT@github.com/prisma/lens.git --tags

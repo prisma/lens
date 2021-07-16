@@ -89,9 +89,9 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         isReadOnly,
         label,
         name,
-        onChange: chain(onChange, (v: string) => {
+        onChange: chain(onChange, (v: string) =>
           setInvalidText(validator?.(v) || undefined)
-        }),
+        ),
         placeholder,
         type,
         value,

@@ -201,6 +201,24 @@ export const WithAPreSelectedOption = () => (
   </ComboBox.Container>
 )
 
+export const WithIconsInOptions = () => (
+  <ComboBox.Container
+    label="Database Provider"
+    defaultSelectedKey="heroku"
+    onSelectionChange={action("onSelectionChange")}
+  >
+    <ComboBox.Option key="planetscale" icon="planetscale">
+      PlanetScale
+    </ComboBox.Option>
+    <ComboBox.Option key="heroku" icon="heroku">
+      Heroku PostgreSQL
+    </ComboBox.Option>
+    <ComboBox.Option key="railway" icon="railway">
+      Railway
+    </ComboBox.Option>
+  </ComboBox.Container>
+)
+
 export const Disabled = () => (
   <ComboBox.Container label="Repository" isDisabled>
     <ComboBox.Option key="prisma">prisma/prisma</ComboBox.Option>
