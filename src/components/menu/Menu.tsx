@@ -100,6 +100,8 @@ export type MenuBodyProps<OptionKey extends string> = {
   children: CollectionChildren<MenuOption<OptionKey>>
   /** A string describing what this Menu represents */
   title: string
+  /** Options for a user to anchor the menu  */
+  anchor?: "left" | "right"
   /** Callback invoked when the Menu's selection changes */
   onSelectionChange?: (key: OptionKey) => void
 }
@@ -111,6 +113,7 @@ function MenuBody<OptionKey extends string>({
   id,
   children,
   title,
+  anchor,
   onSelectionChange,
 }: MenuBodyProps<OptionKey>) {
   const context = useContext(MenuContext)
@@ -144,6 +147,32 @@ function MenuBody<OptionKey extends string>({
   })
   // Figure out trigger dimensions so we can size the overlay
   const triggerDimensions = context.triggerRef.current?.getBoundingClientRect()
+  // Useful for anchoring calculations
+  const overlayDimensions = overlayRef.current?.getBoundingClientRect()
+
+  /** Override the overlay positioning if an anchor is provided
+   * default to center alignment
+  */
+  let leftPositioning = null
+  if (triggerDimensions && overlayDimensions) {
+    leftPositioning =
+      anchor === "left"
+        ? triggerDimensions?.x
+        : anchor === "right"
+        ? triggerDimensions?.x -
+          (overlayDimensions?.width - triggerDimensions?.width)
+        : triggerDimensions?.x -
+          (overlayDimensions?.width - triggerDimensions?.width) / 2
+  }
+
+  const menuBodyStyles = {
+    ...positionProps.style,
+    minWidth: triggerDimensions?.width,
+  }
+
+  if (leftPositioning) {
+    menuBodyStyles['left'] = leftPositioning
+  }
 
   return (
     <OverlayContainer>
@@ -151,11 +180,7 @@ function MenuBody<OptionKey extends string>({
         lens-role="menu-body"
         ref={overlayRef}
         {...mergeProps(positionProps, overlayProps)}
-        style={{
-          ...positionProps.style,
-          left: triggerDimensions?.left,
-          minWidth: triggerDimensions?.width,
-        }}
+        style={menuBodyStyles}
       >
         <DismissButton onDismiss={context.close} />
         <ul
