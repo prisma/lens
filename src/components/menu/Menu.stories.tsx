@@ -75,7 +75,7 @@ export const AnchoredLeftWithStaticData = () => (
 
       <Menu.Body
         title="Project Actions"
-        anchor='left'
+        anchor="left"
         onSelectionChange={action("onSelectionChange")}
       >
         <Menu.Option key="handle">ALongUserHandle</Menu.Option>
@@ -96,7 +96,7 @@ export const AnchoredRightWithStaticData = () => (
 
       <Menu.Body
         title="Project Actions"
-        anchor='right'
+        anchor="right"
         onSelectionChange={action("onSelectionChange")}
       >
         <Menu.Option key="handle">ALongUserHandle</Menu.Option>

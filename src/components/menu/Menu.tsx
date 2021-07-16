@@ -152,7 +152,7 @@ function MenuBody<OptionKey extends string>({
 
   /** Override the overlay positioning if an anchor is provided
    * default to center alignment
-  */
+   */
   let leftPositioning = null
   if (triggerDimensions && overlayDimensions) {
     leftPositioning =
@@ -171,7 +171,7 @@ function MenuBody<OptionKey extends string>({
   }
 
   if (leftPositioning) {
-    menuBodyStyles['left'] = leftPositioning
+    menuBodyStyles["left"] = leftPositioning
   }
 
   return (
