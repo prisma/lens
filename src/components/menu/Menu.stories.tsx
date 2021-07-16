@@ -65,3 +65,45 @@ export const WithSectionsAndStaticData = () => (
     </Menu.Body>
   </Menu.Container>
 )
+
+export const AnchoredLeftWithStaticData = () => (
+  <div className="flex justify-center">
+    <Menu.Container>
+      <Button variant="quiet">
+        <Icon name="sliders" />
+      </Button>
+
+      <Menu.Body
+        title="Project Actions"
+        anchor='left'
+        onSelectionChange={action("onSelectionChange")}
+      >
+        <Menu.Option key="handle">ALongUserHandle</Menu.Option>
+        <Menu.Option key="edit">Edit</Menu.Option>
+        <Menu.Option key="invite">Invite</Menu.Option>
+        <Menu.Option key="delete">Delete</Menu.Option>
+      </Menu.Body>
+    </Menu.Container>
+  </div>
+)
+
+export const AnchoredRightWithStaticData = () => (
+  <div className="flex justify-center">
+    <Menu.Container>
+      <Button variant="quiet">
+        <Icon name="sliders" />
+      </Button>
+
+      <Menu.Body
+        title="Project Actions"
+        anchor='right'
+        onSelectionChange={action("onSelectionChange")}
+      >
+        <Menu.Option key="handle">ALongUserHandle</Menu.Option>
+        <Menu.Option key="edit">Edit</Menu.Option>
+        <Menu.Option key="invite">Invite</Menu.Option>
+        <Menu.Option key="delete">Delete</Menu.Option>
+      </Menu.Body>
+    </Menu.Container>
+  </div>
+)
