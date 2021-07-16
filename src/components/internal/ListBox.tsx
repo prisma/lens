@@ -13,9 +13,10 @@ import {
   useOverlayPosition,
 } from "@react-aria/overlays"
 import { mergeProps } from "@react-aria/utils"
+import { PressResponder } from "@react-aria/interactions"
+
 import { Loader } from "../loader/Loader"
 import { Icon } from "../icon/Icon"
-import { PressResponder } from "@react-aria/interactions"
 import { Separator } from "../separator/Separator"
 
 /**
@@ -52,7 +53,7 @@ type ListBoxOverlayProps<OptionKey extends string> = {
   loading?: boolean
   error?: Error
   /** Additional props that will be spread over the overlay component */
-  listBoxProps: React.HTMLAttributes<HTMLElement>
+  listBoxProps?: React.HTMLAttributes<HTMLElement>
 }
 
 /** An overlay that renders individual ListBox Options */
@@ -66,7 +67,7 @@ export function ListBoxOverlay<OptionKey extends string>({
   footer,
   loading,
   error,
-  listBoxProps: otherProps,
+  listBoxProps: otherProps = {},
 }: ListBoxOverlayProps<OptionKey>) {
   // The following hook calls are conditional, but they should not be a problem because they'll be called the same number of times across renders
   // listBoxRef & overlayRef values do (should) not change across renders
@@ -177,7 +178,7 @@ type ListBoxSectionProps<OptionKey extends string> = {
     | ComboBoxState<ListBoxOption<OptionKey>> // TODO:: Find a more generic type for this
 }
 /** A single ListBox Section. This is usually used to (visually) group similar `ListBoxOption`s together */
-function ListBoxSection<OptionKey extends string>({
+export function ListBoxSection<OptionKey extends string>({
   title,
   section,
   state,
@@ -220,7 +221,7 @@ type ListBoxOptionProps<Key extends string> = {
   state: SelectState<ListBoxOption<Key>> | ComboBoxState<ListBoxOption<Key>> // TODO:: Find a more generic type for this
 }
 /** A single `ListBox` Option */
-function ListBoxOption<Key extends string>({
+export function ListBoxOption<Key extends string>({
   option,
   state,
 }: ListBoxOptionProps<Key>) {
