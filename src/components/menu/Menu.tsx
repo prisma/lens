@@ -39,6 +39,8 @@ export type MenuOption<Key extends string> = {
 }
 
 export type MenuContainerProps = {
+  /** An HTML ID attribute that will be attached to the the rendered component. Useful for targeting it from tests */
+  id?: string
   /** The menu's trigger and its body, in order */
   children: [React.ReactElement, React.ReactElement]
   /** Controls if this Menu will be open by default */
@@ -51,6 +53,7 @@ export type MenuContainerProps = {
  * A Menu is an overlay that allows you select a single option, then disappears
  */
 function MenuContainer({
+  id,
   children,
   defaultOpen,
   isDisabled,
