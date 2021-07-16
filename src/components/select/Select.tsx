@@ -125,16 +125,21 @@ function SelectContainer<OptionKey extends string>({
               }
             )}
           >
-            <span
+            <div
               {...valueProps}
               lens-role="selected-option"
-              className={cn("flex flex-grow", "mr-4", {
+              className={cn("flex space-x-2", "mr-4", {
                 "text-gray-400 dark:text-gray-300": !state.selectedItem,
                 "text-gray-800 dark:text-gray-100": state.selectedItem,
               })}
             >
-              {state.selectedItem ? state.selectedItem.rendered : placeholder}
-            </span>
+              {state.selectedItem && (
+                <Icon name={state.selectedItem.props.icon} size="sm" />
+              )}
+              <span>
+                {state.selectedItem ? state.selectedItem.rendered : placeholder}
+              </span>
+            </div>
             <Icon name="chevron-down" size="xs" />
           </button>
         </FocusRing>
@@ -169,3 +174,8 @@ export const Select = {
   Option: Item,
   Footer: ListBoxFooter,
 }
+
+// TODO:: Add `icon` to Item
+// TODO:: Stricter type for Item children: strings only
+// TODO:: Type optionProps
+// TODO:: Talk to Luan about fragmented tailwind classes

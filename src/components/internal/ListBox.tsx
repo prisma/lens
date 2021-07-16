@@ -229,7 +229,7 @@ export function ListBoxOption<Key extends string>({
 
   const isDisabled = state.disabledKeys.has(option.key)
   const isFocused = state.selectionManager.focusedKey === option.key
-  const { optionProps } = useOption(
+  const { optionProps: domProps } = useOption(
     {
       key: option.key,
       isDisabled,
@@ -240,13 +240,15 @@ export function ListBoxOption<Key extends string>({
     state,
     ref
   )
+  const optionProps = option.props
 
   return (
     <li
       ref={ref}
       lens-role="listbox-option"
-      {...optionProps}
+      {...domProps}
       className={cn(
+        "flex items-center space-x-2",
         "rounded-md px-2 py-1",
         "cursor-default whitespace-nowrap",
         {
@@ -255,7 +257,8 @@ export function ListBoxOption<Key extends string>({
         "hover:bg-gray-100"
       )}
     >
-      {option.rendered}
+      <Icon name={optionProps.icon} size="sm" />
+      <span>{option.rendered}</span>
     </li>
   )
 }
