@@ -108,7 +108,7 @@ export function ListBoxOverlay<OptionKey extends string>({
     <OverlayContainer>
       <FocusScope restoreFocus>
         <div
-          id="combobox-body"
+          id="listbox-overlay"
           {...mergeProps(overlayProps, positionProps)}
           ref={overlayRef}
           style={{
@@ -192,7 +192,7 @@ export function ListBoxSection<OptionKey extends string>({
   })
 
   return (
-    <section lens-role="select-section" {...groupProps} className={cn("p-2")}>
+    <section lens-role="listbox-section" {...groupProps} className={cn("p-2")}>
       <div
         {...headingProps}
         className={cn(
