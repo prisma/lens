@@ -1,25 +1,15 @@
 import React, { useRef } from "react"
 import cn from "classnames"
 import { useSelect, HiddenSelect } from "@react-aria/select"
-import { SelectState, useSelectState } from "@react-stately/select"
+import { useSelectState } from "@react-stately/select"
 import { Item, Section } from "@react-stately/collections"
-import { CollectionChildren, Node } from "@react-types/shared"
-import { useListBox, useListBoxSection, useOption } from "@react-aria/listbox"
-import {
-  DismissButton,
-  OverlayContainer,
-  useOverlay,
-  useOverlayPosition,
-} from "@react-aria/overlays"
+import { CollectionChildren } from "@react-types/shared"
 import { useButton } from "@react-aria/button"
-import { PressResponder } from "@react-aria/interactions"
-import { FocusScope } from "@react-aria/focus"
-import { mergeProps } from "@react-aria/utils"
 
 import { useCollectionComponents } from "../../hooks/useCollectionComponents"
+import { ListBoxFooter, ListBoxOverlay } from "../internal/ListBox"
 import { Label } from "../label/Label"
 import { Icon } from "../icon/Icon"
-import { Separator } from "../separator/Separator"
 import { FocusRing } from "../focus-ring/FocusRing"
 
 /** Value for a single Option inside this Select */
@@ -80,7 +70,7 @@ function SelectContainer<OptionKey extends string>({
 
   const { body, footer } = useCollectionComponents({
     children,
-    footerType: SelectFooter,
+    footerType: ListBoxFooter,
   })
 
   const state = useSelectState({
@@ -150,10 +140,12 @@ function SelectContainer<OptionKey extends string>({
         </FocusRing>
 
         {state.isOpen && (
-          <SelectOverlay
+          <ListBoxOverlay
+            id={id}
+            label={label}
             state={state}
-            menuProps={menuProps}
-            buttonRef={ref}
+            listBoxProps={menuProps}
+            containerRef={ref}
             footer={footer}
           />
         )}
@@ -171,218 +163,9 @@ function SelectContainer<OptionKey extends string>({
   )
 }
 
-type SelectOverlayProps<OptionKey extends string> = {
-  /** Props to spread over the overlay */
-  menuProps: React.HTMLAttributes<HTMLUListElement>
-  /** The global Select state */
-  state: SelectState<SelectOption<OptionKey>>
-  /** Ref of the Select button */
-  buttonRef: React.RefObject<HTMLButtonElement>
-  /** An optional footer to render within the Overlay, after the Body */
-  footer?: React.ReactElement
-}
-
-/** An overlay that renders individual Select Options */
-function SelectOverlay<OptionKey extends string>({
-  menuProps,
-  state,
-  buttonRef,
-  footer,
-}: SelectOverlayProps<OptionKey>) {
-  const overlayRef = useRef<HTMLDivElement>(null)
-  const { overlayProps } = useOverlay(
-    {
-      isDismissable: true,
-      shouldCloseOnBlur: true,
-      onClose: state.close,
-    },
-    overlayRef
-  )
-  const { overlayProps: positionProps, placement } = useOverlayPosition({
-    overlayRef,
-    targetRef: buttonRef,
-    offset: 8,
-    containerPadding: 0,
-    onClose: state.close,
-  })
-  // Figure out button dimensions so we can size the overlay
-  const buttonDimensions = buttonRef.current?.getBoundingClientRect()
-
-  const listBoxRef = useRef<HTMLUListElement>(null)
-  const { listBoxProps } = useListBox(
-    {
-      ...menuProps,
-      disallowEmptySelection: true,
-      autoFocus: state.focusStrategy || true,
-    },
-    state,
-    listBoxRef
-  )
-
-  return (
-    <OverlayContainer>
-      <FocusScope restoreFocus>
-        <div
-          lens-role="select-body"
-          ref={overlayRef}
-          {...mergeProps(overlayProps, positionProps)}
-          style={{
-            ...positionProps.style,
-            left: buttonDimensions?.left,
-            width: buttonDimensions?.width,
-          }}
-        >
-          <DismissButton onDismiss={state.close} />
-          <ul
-            ref={listBoxRef}
-            lens-role="select-overlay"
-            {...listBoxProps}
-            className={cn("menu w-full", {
-              "animate-slide-bottom": placement === "top",
-              "animate-slide-top": placement === "bottom",
-            })}
-            style={{ maxHeight: "inherit" }}
-          >
-            {[...state.collection].map((option) => {
-              if (option.type === "section") {
-                return (
-                  <SelectSection
-                    key={option.key}
-                    title={option.rendered as string}
-                    state={state}
-                    section={option}
-                  />
-                )
-              } else if (option.type === "item") {
-                return (
-                  <SelectOption
-                    key={option.key}
-                    option={option}
-                    state={state}
-                  />
-                )
-              } else {
-                return null
-              }
-            })}
-
-            {footer}
-          </ul>
-          <DismissButton onDismiss={state.close} />
-        </div>
-      </FocusScope>
-    </OverlayContainer>
-  )
-}
-
-type SelectSectionProps<OptionKey extends string> = {
-  /** Title for this Section */
-  title: string
-  /** A group of similar options, only visual */
-  section: Node<SelectOption<OptionKey>>
-  /** The global Select state */
-  state: SelectState<SelectOption<OptionKey>>
-}
-
-function SelectSection<OptionKey extends string>({
-  title,
-  section,
-  state,
-}: SelectSectionProps<OptionKey>) {
-  const {
-    groupProps,
-    headingProps,
-    itemProps: optionProps,
-  } = useListBoxSection({
-    heading: title,
-  })
-
-  return (
-    <section lens-role="select-section" {...groupProps} className={cn("p-2")}>
-      <div
-        {...headingProps}
-        className={cn(
-          "mb-2",
-          "text-xs uppercase text-gray-500 dark:text-gray-400",
-          "select-none"
-        )}
-      >
-        {title}
-      </div>
-      <li {...optionProps}>
-        <ul>
-          {[...section.childNodes].map((i) => (
-            <SelectOption key={i.key} option={i} state={state} />
-          ))}
-        </ul>
-      </li>
-    </section>
-  )
-}
-
-type SelectOptionProps<Key extends string> = {
-  /** The option to render */
-  option: Node<SelectOption<Key>>
-  /** The global Select state */
-  state: SelectState<SelectOption<Key>>
-}
-
-/** A single Select Option */
-function SelectOption<Key extends string>({
-  option,
-  state,
-}: SelectOptionProps<Key>) {
-  const ref = useRef<HTMLLIElement>(null)
-
-  const isDisabled = state.disabledKeys.has(option.key)
-  const isFocused = state.selectionManager.focusedKey === option.key
-  const { optionProps } = useOption(
-    {
-      key: option.key,
-      isDisabled,
-      shouldSelectOnPressUp: true,
-      shouldFocusOnHover: true,
-      shouldUseVirtualFocus: true,
-    },
-    state,
-    ref
-  )
-
-  return (
-    <li
-      ref={ref}
-      lens-role="select-option"
-      {...optionProps}
-      className={cn(
-        "rounded-md px-2 py-1",
-        "cursor-default whitespace-nowrap",
-        {
-          "bg-gray-100 dark:bg-gray-800": isFocused,
-        },
-        "hover:bg-gray-100"
-      )}
-    >
-      {option.rendered}
-    </li>
-  )
-}
-
-type SelectFooterProps = React.PropsWithChildren<{
-  onPress?: () => void
-}>
-
-function SelectFooter({ children, onPress }: SelectFooterProps) {
-  return (
-    <PressResponder onPress={onPress}>
-      <Separator />
-      <div className="p-2 whitespace-nowrap">{children}</div>
-    </PressResponder>
-  )
-}
-
 export const Select = {
   Container: SelectContainer,
   Section,
   Option: Item,
-  Footer: SelectFooter,
+  Footer: ListBoxFooter,
 }

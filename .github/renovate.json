@@ -4,7 +4,7 @@
   "dependencyDashboard": true,
   "rebaseWhen": "behind-base-branch",
   "ignoreDeps": ["styled-components", "react", "react-dom"],
-  "schedule": ["before 3am on the first day of the month"],
+  "schedule": ["every weekend"],
   "packageRules": [
     {
       "matchPackagePatterns": ["*"],
