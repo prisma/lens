@@ -13,14 +13,37 @@
       "groupSlug": "all-minor-patch"
     },
     {
+      "matchPackagePatterns": [
+        "@react-aria/*",
+        "@react-stately/*",
+        "@react-types/*"
+      ],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "React-aria",
+      "groupSlug": "react-aria"
+    },
+    {
+      "matchPackagePatterns": ["@types/*"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "Types",
+      "groupSlug": "types"
+    },
+    {
+      "matchPackagePatterns": ["rollup-*"],
+      "matchPackageNames": ["rollup"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "Rollup",
+      "groupSlug": "rollup"
+    },
+    {
       "matchPackagePatterns": ["@storybook/*"],
-      "matchPackageNames": ["chromatic"],
+      "matchPackageNames": ["chromatic", "storybook-dark-mode"],
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "Storybook",
       "groupSlug": "storybook"
     },
     {
-      "matchPackageNames": ["typescript"],
+      "matchPackageNames": ["typescript", "tslib"],
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "Typescript",
       "groupSlug": "typescript"
