@@ -31,8 +31,7 @@ export default {
       },
       defaultValue: "primary",
     },
-    startIcon: iconArgType,
-    endIcon: iconArgType,
+    icon: iconArgType,
     iconSize: {
       control: {
         type: "inline-radio",
@@ -97,32 +96,18 @@ export const Quiet = () => (
   </div>
 )
 
-export const WithLeadingIcon = () => (
+export const WithIcon = () => (
   <div className="flex space-x-4">
     <Button
       variant="primary"
-      leadingIcon="database"
+      icon="database"
       onPress={action("onPress")}
     >
       Primary
     </Button>
-    <Button variant="primary" leadingIcon="database" isDisabled>
+    <Button variant="primary" icon="database" isDisabled>
       Disabled
     </Button>
   </div>
 )
 
-export const WithTrailingIcon = () => (
-  <div className="flex space-x-4">
-    <Button
-      variant="primary"
-      trailingIcon="database"
-      onPress={action("onPress")}
-    >
-      Primary
-    </Button>
-    <Button variant="primary" trailingIcon="database" isDisabled>
-      Disabled
-    </Button>
-  </div>
-)
