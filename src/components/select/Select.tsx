@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import React, { useRef, useState } from "react"
 import cn from "classnames"
 import { useSelect, HiddenSelect } from "@react-aria/select"
 import { useSelectState } from "@react-stately/select"
@@ -8,12 +8,15 @@ import {
 } from "@react-stately/collections"
 import { CollectionChildren } from "@react-types/shared"
 import { useButton } from "@react-aria/button"
+import { chain, useId, mergeProps } from "@react-aria/utils"
+import { useFocus } from "@react-aria/interactions"
 
 import { useCollectionComponents } from "../../hooks/useCollectionComponents"
 import { ListBoxFooter, ListBoxOverlay } from "../internal/ListBox"
 import { Label } from "../label/Label"
 import { Icon } from "../icon/Icon"
 import { FocusRing } from "../focus-ring/FocusRing"
+import { Hint } from "../internal/Hint"
 
 /** Value for a single Option inside this Select */
 export type SelectOption<Key extends string> = {
@@ -36,6 +39,10 @@ export type SelectContainerProps<OptionKey extends string> = {
   defaultOpen?: boolean
   /** Key of the Option that is selected when this Select is first rendered */
   defaultSelectedKey?: OptionKey
+  /** An optional hint to show next to the Select that describes what this Select expects */
+  hint?: string
+  /** An optional error to show next to the Select. If a `validator` is also supplied, the `validator` takes precendence */
+  errorText?: string
   /** Controls if this Select is disabled */
   isDisabled?: boolean
   /** Controls is this Select is readonly */
@@ -44,12 +51,14 @@ export type SelectContainerProps<OptionKey extends string> = {
   label: string
   /** Name of the value held by this Select when placed inside a form */
   name?: string
-  /** A value to display in the TextField when it is empty */
+  /** A value to display in the Select when it is empty */
   placeholder?: string
   /** The current selection */
   selectedKey?: OptionKey
   /** Callback invoked when the Select's selection changes */
   onSelectionChange?: (key: OptionKey) => void
+  /** An custom function that runs for every change to validate the value. Return `undefined` if the value is valid, and a string describing the error otherwise */
+  validator?: (v: OptionKey) => string | undefined
 }
 
 /**
@@ -61,6 +70,8 @@ function SelectContainer<OptionKey extends string>({
   children,
   defaultOpen = false,
   defaultSelectedKey,
+  errorText: _errorText,
+  hint,
   isDisabled = false,
   isReadOnly = false,
   label,
@@ -68,6 +79,7 @@ function SelectContainer<OptionKey extends string>({
   placeholder = "Select an option",
   selectedKey,
   onSelectionChange,
+  validator,
 }: SelectContainerProps<OptionKey>) {
   const ref = useRef(null)
 
@@ -75,6 +87,8 @@ function SelectContainer<OptionKey extends string>({
     children,
     footerType: ListBoxFooter,
   })
+
+  const hintId = useId()
 
   const state = useSelectState({
     autoFocus,
@@ -85,11 +99,18 @@ function SelectContainer<OptionKey extends string>({
     isReadOnly,
     label,
     selectedKey,
-    onSelectionChange: onSelectionChange as (k: React.Key) => void,
+    onSelectionChange: chain(
+      onSelectionChange as (k: React.Key) => void,
+      (v: OptionKey) => {
+        setInvalidText(validator?.(v) || undefined)
+      }
+    ),
   })
+
   const { labelProps, menuProps, triggerProps, valueProps } = useSelect(
     {
       id,
+      "aria-describedby": hintId,
       autoFocus,
       children: body,
       defaultOpen,
@@ -105,7 +126,18 @@ function SelectContainer<OptionKey extends string>({
     ref
   )
 
+  const [invalidText, setInvalidText] = useState<string | undefined>()
+  const { focusProps } = useFocus({
+    onBlur: () => {
+      // Validation is disabled until the user touches / focuses the field at least once
+      setInvalidText(validator?.(state.selectedKey as OptionKey))
+    },
+  })
+
   const { buttonProps } = useButton({ ...triggerProps, isDisabled }, ref)
+
+  // We want to make it so that if an `errorText` is supplied, it will always show up, even if `isValidatorEnabled` is false
+  const errorText = invalidText || _errorText
 
   return (
     <div id={id} className="table-row">
@@ -114,7 +146,7 @@ function SelectContainer<OptionKey extends string>({
         <FocusRing autoFocus={autoFocus} within>
           <button
             ref={ref}
-            {...buttonProps}
+            {...mergeProps(buttonProps, focusProps)}
             className={cn(
               "inline-flex w-full items-center",
               "rounded-md shadow-sm border border-gray-300 dark:border-gray-700",
@@ -146,6 +178,8 @@ function SelectContainer<OptionKey extends string>({
             <Icon name="chevron-down" size="xs" />
           </button>
         </FocusRing>
+
+        <Hint id={hintId} text={hint} errorText={errorText} />
 
         {state.isOpen && (
           <ListBoxOverlay
