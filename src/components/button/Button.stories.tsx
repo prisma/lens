@@ -98,11 +98,7 @@ export const Quiet = () => (
 
 export const WithIcon = () => (
   <div className="flex space-x-4">
-    <Button
-      variant="primary"
-      icon="database"
-      onPress={action("onPress")}
-    >
+    <Button variant="primary" icon="database" onPress={action("onPress")}>
       Primary
     </Button>
     <Button variant="primary" icon="database" isDisabled>
@@ -110,4 +106,3 @@ export const WithIcon = () => (
     </Button>
   </div>
 )
-
