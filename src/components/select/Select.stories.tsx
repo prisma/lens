@@ -115,3 +115,57 @@ export const Disabled = () => (
     <Select.Option key="railway">Railway</Select.Option>
   </Select.Container>
 )
+
+export const WithHint = () => (
+  <Select.Container
+    label="Database Provider"
+    hint="Your database will be provisioned by one of these providers"
+  >
+    <Select.Option key="planetscale">PlanetScale</Select.Option>
+    <Select.Option key="heroku">Heroku PostgreSQL</Select.Option>
+    <Select.Option key="railway">Railway</Select.Option>
+  </Select.Container>
+)
+
+export const WithError = () => (
+  <Select.Container
+    label="Database Provider"
+    errorText="Database provisioning is currently not supported"
+  >
+    <Select.Option key="planetscale">PlanetScale</Select.Option>
+    <Select.Option key="heroku">Heroku PostgreSQL</Select.Option>
+    <Select.Option key="railway">Railway</Select.Option>
+  </Select.Container>
+)
+
+export const WithHintAndError = () => (
+  <Select.Container
+    label="Database Provider"
+    hint="Your database will be provisioned by one of these providers"
+    errorText="Database provisioning is currently not supported"
+  >
+    <Select.Option key="planetscale">PlanetScale</Select.Option>
+    <Select.Option key="heroku">Heroku PostgreSQL</Select.Option>
+    <Select.Option key="railway">Railway</Select.Option>
+  </Select.Container>
+)
+
+export const WithValidator = () => (
+  <div className="flex flex-col">
+    <span className="text-sm mb-4">
+      In this story, selecting Planetscale is considered invalid
+    </span>
+    <Select.Container
+      label="Database Provider"
+      validator={(selectedKey) =>
+        selectedKey === "planetscale"
+          ? "Planetscale is not supported"
+          : undefined
+      }
+    >
+      <Select.Option key="planetscale">PlanetScale</Select.Option>
+      <Select.Option key="heroku">Heroku PostgreSQL</Select.Option>
+      <Select.Option key="railway">Railway</Select.Option>
+    </Select.Container>
+  </div>
+)

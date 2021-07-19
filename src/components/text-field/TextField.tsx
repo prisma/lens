@@ -2,10 +2,12 @@ import React, { useRef, forwardRef, useState } from "react"
 import cn from "classnames"
 import { useTextField } from "@react-aria/textfield"
 import { useFocus, useFocusWithin } from "@react-aria/interactions"
+import { chain, mergeProps, useId } from "@react-aria/utils"
+
 import { Label } from "../label/Label"
 import { FocusRing } from "../focus-ring/FocusRing"
 import { Icon } from "../icon/Icon"
-import { chain, mergeProps, useId } from "@react-aria/utils"
+import { Hint } from "../internal/Hint"
 
 export type TextFieldProps = {
   /** A React ref to attach to the rendered Button */
@@ -77,7 +79,6 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     const hintId = useId()
     // We want to make it so that if an `errorText` is supplied, it will always show up, even if `isValidatorEnabled` is false
     const errorText = invalidText || _errorText
-    // console.log({ isValidatorEnabled, errorText, invalidText })
 
     const { labelProps, inputProps } = useTextField(
       {
@@ -165,32 +166,3 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     )
   }
 )
-
-type HintProps = {
-  id: string
-  text?: string
-  errorText?: string
-}
-
-function Hint({ id, text, errorText }: HintProps) {
-  if (!text && !errorText) {
-    return null
-  }
-
-  return (
-    <div
-      id={id}
-      className={cn(
-        "mt-2",
-        "text-sm",
-        {
-          "text-red-500 dark:text-red-500": !!errorText,
-          "text-gray-600 dark:text-gray-400": !!text,
-        },
-        "animate-slide-top"
-      )}
-    >
-      {errorText || text}
-    </div>
-  )
-}
