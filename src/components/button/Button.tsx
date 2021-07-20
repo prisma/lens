@@ -19,11 +19,9 @@ export type ButtonProps = React.PropsWithChildren<{
   isDisabled?: boolean
   /** Controls if the button will grow to fill its parent */
   fillParent?: boolean
-  /** Icon element placed before the children. */
-  leadingIcon?: "database"
-  /** Icon element placed after the children. */
-  trailingIcon?: "database"
-  /** Icon element placed after the children. */
+  /** Icon element will be placed before the children. */
+  icon?: "database"
+  /** Icon element size. */
   iconSize?: "xs" | "sm" | "md" | "lg" | "xl"
   /** Callback invoked when this button is pressed */
   onPress?: () => void
@@ -37,8 +35,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       variant = "primary",
       isDisabled = false,
       fillParent = false,
-      leadingIcon,
-      trailingIcon,
+      icon,
       iconSize = "sm",
       children,
       onPress,
@@ -107,13 +104,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             }
           )}
         >
-          {leadingIcon && (
-            <Icon name={leadingIcon} size={iconSize} className="mr-1" />
-          )}
+          {icon && <Icon name={icon} size={iconSize} className="mr-1" />}
           {children}
-          {trailingIcon && (
-            <Icon name={trailingIcon} size={iconSize} className="ml-1" />
-          )}
         </button>
       </FocusRing>
     )
