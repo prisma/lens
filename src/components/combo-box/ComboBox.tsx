@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import React, { useRef, useState } from "react"
 import cn from "classnames"
 import { useComboBox } from "@react-aria/combobox"
 import { useComboBoxState } from "@react-stately/combobox"
@@ -8,7 +8,9 @@ import {
   Item as ReactAriaItem,
   Section as ReactAriaSection,
 } from "@react-stately/collections"
-import { CollectionChildren, Node } from "@react-types/shared"
+import { CollectionChildren } from "@react-types/shared"
+import { useId, mergeProps, chain } from "@react-aria/utils"
+import { useFocus } from "@react-aria/interactions"
 
 import { useAsyncOptions } from "../../hooks/useAsyncOptions"
 import { useCollectionComponents } from "../../hooks/useCollectionComponents"
@@ -16,6 +18,7 @@ import { ListBoxFooter, ListBoxOverlay } from "../internal/ListBox"
 import { Label } from "../label/Label"
 import { Icon } from "../icon/Icon"
 import { FocusRing } from "../focus-ring/FocusRing"
+import { Hint } from "../internal/Hint"
 
 /** Value for a single Option inside this ComboBox */
 export type ComboBoxOption<Key extends string> = {
@@ -38,6 +41,10 @@ export type ComboBoxContainerProps<OptionKey extends string> = {
   defaultOpen?: boolean
   /** Key of the Option that is selected when this ComboBox is first rendered */
   defaultSelectedKey?: OptionKey
+  /** An optional hint to show next to the Select that describes what this Select expects */
+  hint?: string
+  /** An optional error to show next to the Select. If a `validator` is also supplied, the `validator` takes precendence */
+  errorText?: string
   /** Controls if this ComboBox is disabled */
   isDisabled?: boolean
   /** Controls is this ComboBox is readonly */
@@ -56,6 +63,8 @@ export type ComboBoxContainerProps<OptionKey extends string> = {
   selectedKey?: OptionKey
   /** Callback invoked when the ComboBox's selection changes */
   onSelectionChange?: (key: OptionKey) => void
+  /** An custom function that runs for every change to validate the value. Return `undefined` if the value is valid, and a string describing the error otherwise */
+  validator?: (v: OptionKey) => string | undefined
 }
 
 /**
@@ -69,6 +78,8 @@ function ComboBoxContainer<OptionKey extends string>({
   defaultOpen = false,
   defaultInputValue,
   defaultSelectedKey,
+  errorText: _errorText,
+  hint,
   isDisabled = false,
   isReadOnly = false,
   options: propOptions,
@@ -77,6 +88,7 @@ function ComboBoxContainer<OptionKey extends string>({
   placeholder = "Select an option",
   selectedKey,
   onSelectionChange,
+  validator,
 }: ComboBoxContainerProps<OptionKey>) {
   const { body, footer } = useCollectionComponents({
     children,
@@ -84,6 +96,8 @@ function ComboBoxContainer<OptionKey extends string>({
   })
   const { loading, error, options } =
     useAsyncOptions<ComboBoxOption<OptionKey>>(propOptions)
+
+  const hintId = useId()
 
   const { contains } = useFilter({ sensitivity: "base" })
   const state = useComboBoxState({
@@ -101,8 +115,22 @@ function ComboBoxContainer<OptionKey extends string>({
     placeholder,
     shouldFlip: true,
     selectedKey,
-    onSelectionChange: onSelectionChange as (k: React.Key) => void,
+    onSelectionChange: chain(
+      onSelectionChange as (k: React.Key) => void,
+      (v: OptionKey) => setInvalidText(validator?.(v) || undefined)
+    ),
   })
+
+  const [invalidText, setInvalidText] = useState<string | undefined>()
+  const { focusProps } = useFocus({
+    onBlur: () => {
+      // disable validation until the user touches/ focuses the field at least once
+      setInvalidText(validator?.(state.selectedKey as OptionKey))
+    },
+  })
+
+  // We want to make it so that if an `errorText` is supplied, it will always show up, even if `isValidatorEnabled` is false
+  const errorText = invalidText || _errorText
 
   const containerRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -167,7 +195,7 @@ function ComboBoxContainer<OptionKey extends string>({
               ref={inputRef}
               type="text"
               lens-role="input"
-              {...inputProps}
+              {...mergeProps(inputProps, focusProps)}
               name={name}
               className={cn("flex-grow", "mr-4", {
                 "bg-white dark:bg-gray-900": !isDisabled,
@@ -182,6 +210,8 @@ function ComboBoxContainer<OptionKey extends string>({
             </button>
           </div>
         </FocusRing>
+
+        <Hint id={hintId} text={hint} errorText={errorText} />
 
         {state.isOpen && (
           <ListBoxOverlay
