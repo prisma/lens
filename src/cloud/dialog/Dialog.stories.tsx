@@ -6,29 +6,29 @@ export const Default = (props) => {
 
   return (
     <div
-    ref={containerRef}
-    style={{
-      backgroundColor: "lightgray",
-      width: 800,
-      height: 400,
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    }}
-  >
-    <Dialog.Container
-      parentContainerRef={containerRef}
-      title="Set up locally"
-      subtitle="This guide will help you get started with your project locally"
-      {...props}
+      ref={containerRef}
+      style={{
+        backgroundColor: "lightgray",
+        width: 800,
+        height: 400,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
     >
-      <Dialog.Body>
-        <div>Cloud Dialog Children</div>
-      </Dialog.Body>
-    </Dialog.Container>
-  </div>
+      <Dialog.Container
+        parentContainerRef={containerRef}
+        title="Set up locally"
+        subtitle="This guide will help you get started with your project locally"
+        {...props}
+      >
+        <Dialog.Body>
+          <div>Cloud Dialog Children</div>
+        </Dialog.Body>
+      </Dialog.Container>
+    </div>
   )
-} 
+}
 
 Default.storyName = "[Controlled]"
 export default {
@@ -39,7 +39,8 @@ export default {
       defaultValue: "Set up locally",
     },
     subtitle: {
-      defaultValue: "This guide will help you get started with your project locally",
+      defaultValue:
+        "This guide will help you get started with your project locally",
     },
     icon: {
       defaultValue: "download-cloud",
